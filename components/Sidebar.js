@@ -21,7 +21,7 @@ export default function Sidebar({ handleSignOut }) {
 
   return (
     <div
-      className={`bg-[#0E3658] min-h-screen ${
+      className={`bg-primary min-h-screen ${
         open ? "w-72" : "w-16"
       } duration-500 text-gray-100 px-4`}
     >
@@ -39,7 +39,7 @@ export default function Sidebar({ handleSignOut }) {
             key={i}
             className={` ${
               menu?.margin && "mt-5"
-            } group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-[#165080] rounded-md`}
+            } group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-secondary rounded-md`}
           >
             <div>{React.createElement(menu?.icon, { size: "20" })}</div>
             <h2
@@ -65,7 +65,7 @@ export default function Sidebar({ handleSignOut }) {
         {/* sign out button */}
         <button
           onClick={handleSignOut}
-          className={`group flex items-center text-sm  gap-3.5 font-medium p-2 hover:bg-[#165080] rounded-md`}
+          className={`group flex items-center text-sm  gap-3.5 font-medium p-2 hover:bg-secondary rounded-md`}
         >
           <div>{React.createElement(VscSignOut, { size: "20" })}</div>
           <h2

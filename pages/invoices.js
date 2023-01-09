@@ -68,7 +68,7 @@ export default () => {
             <hr className="md:hidden" />
             <div className="flex justify-end">
               <Link
-                className="w-fit button-custom mt-0 bg-[#0E3658]"
+                className="w-fit button-custom mt-0 bg-primary"
                 href="/addInvoice"
               >
                 <div>{React.createElement(BsPlusLg, { size: "12" })}</div>
@@ -79,7 +79,7 @@ export default () => {
 
           {/* invoices table */}
           <div
-            className={`table-div-custom my-4 md:my-12 ${
+            className={`table-div-custom my-4 md:my-12 rounded-md ${
               theme.dark ? "text-black" : ""
             }`}
           >
@@ -93,7 +93,7 @@ export default () => {
                   <h3 className="text-xl mb-4 font-bold">Loading</h3>
                   <ReactLoading
                     type="bars"
-                    color="#0E3658"
+                    color="#2b4450"
                     height={100}
                     width={50}
                   />
@@ -112,9 +112,10 @@ export default () => {
             {!loading && invoices && (
               <>
                 {/* large screen view */}
-                <div className="overflow-auto rounded-lg shadow hidden md:block">
+                <div className="overflow-auto shadow hidden md:block">
                   <table className="w-full">
-                    <thead className="bg-gray-50 border-b-2 border-gray-200">
+                    {/* <thead className="bg-gray-50 border-b-2 border-gray-200"> */}
+                    <thead className="bg-gray-50 border-b-1 border-gray-200">
                       <tr>
                         <th className="w-36 p-3 text-sm font-semibold tracking-wide text-left">
                           Invoice No.
@@ -140,7 +141,7 @@ export default () => {
                     <tbody className="divide-y divide-gray-100">
                       {paginateInvoice.map((invoice) => (
                         <tr className="bg-white" key={invoice._id}>
-                          <td className="p-3 text-sm text-[#0E3658] font-bold whitespace-nowrap">
+                          <td className="p-3 text-sm text-primary font-bold whitespace-nowrap">
                             <Link
                               href={`/invoices/${invoice._id}`}
                               className="transition duration-700 hover:underline"
@@ -158,7 +159,7 @@ export default () => {
                             <span
                               className={`p-1.5 text-xs font-medium uppercase tracking-wider ${
                                 invoice.status === "paid"
-                                  ? "text-green-800 bg-green-200"
+                                  ? "text-green-800 bg-[#74EAB0]"
                                   : "text-gray-800 bg-gray-200"
                               }  rounded-lg bg-opacity-50`}
                             >
@@ -208,7 +209,7 @@ export default () => {
                         <span
                           className={`p-1.5 text-xs font-medium uppercase tracking-wider ${
                             invoice.status === "paid"
-                              ? "text-green-800 bg-green-200"
+                              ? "text-green-800 bg-[#74EAB0]"
                               : "text-gray-800 bg-gray-200"
                           } rounded-lg bg-opacity-50`}
                         >
@@ -230,7 +231,7 @@ export default () => {
 
                       <div className="text-center pt-5">
                         <Link
-                          className="py-2 px-5 text-xs font-medium uppercase tracking-wider rounded-md bg-[#246A3D] text-white"
+                          className="py-2 px-5 text-xs font-medium uppercase tracking-wider rounded-md bg-tertiary text-white"
                           href={`/invoices/${invoice._id}`}
                         >
                           View Details

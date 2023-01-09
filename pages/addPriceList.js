@@ -1,6 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
 import Head from "next/head";
+import Link from "next/link";
 import { getSession, useSession, signOut } from "next-auth/react";
+
+import { BsFillCalculatorFill } from "react-icons/bs";
+import { IoArrowBackOutline } from "react-icons/io5";
 
 import { ThemeContext } from "../context/ThemeContext";
 import Sidebar from "../components/Sidebar";
@@ -145,25 +149,40 @@ export default function addPriceList() {
             </div>
           )}
 
+          {/* header section */}
+          <div className="flex md:items-center justify-between mb-10">
+            <div className="flex items-center gap-8">
+              <Link
+                className="group button-custom bg-primary"
+                href="/priceList"
+              >
+                <div>
+                  {React.createElement(IoArrowBackOutline, { size: "12" })}
+                </div>
+                <h2 className="whitespace-pre">Back</h2>
+              </Link>
+              <h3 className="text-3xl md:text-4xl font-bold">Add Item Form</h3>
+            </div>
+            <hr className="md:hidden" />
+          </div>
+
           {/* form */}
           <form className="w-full" onSubmit={submitForm}>
-            <div className="m-auto bg-slate-50 rounded-md w-full grid lg:grid-cols-9 drop-shadow-md border border-t-8 border-t-[#0E3658]">
-              <div
+            <div className="m-auto bg-slate-50 rounded-md w-full grid lg:grid-cols-9 drop-shadow-md border border-t-8 border-t-primary">
+              {/* <div
                 className={`${styles.imgStyle} lg:col-span-6 hidden lg:block`}
               >
                 <div className={styles.illustrationImg}></div>
-              </div>
+              </div> */}
 
               {/* top */}
-              <div
-                className={`pb-8 pt-6 px-6 md:px-16 ${styles.imgStyle2} lg:col-span-3`}
-              >
+              <div className={`pb-8 pt-8 px-6 md:px-10 lg:col-span-3`}>
                 <div>
-                  <div className="title text-center mb-6">
+                  {/* <div className="title text-center mb-6">
                     <h1 className="text-gray-800 text-3xl md:text-4xl font-bold py-4">
                       Add Item Form
                     </h1>
-                  </div>
+                  </div> */}
 
                   {/* Product name */}
                   <div className="form-group mb-6">
@@ -176,7 +195,7 @@ export default function addPriceList() {
                     <input
                       autoComplete="off"
                       type="text"
-                      className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-[#0E3658] focus:outline-none"
+                      className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                       name="product_name"
                       id="product_name"
                       placeholder="Enter Product Name"
@@ -199,7 +218,7 @@ export default function addPriceList() {
                         <input
                           autoComplete="off"
                           type="number"
-                          className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-l transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-[#0E3658] focus:outline-none"
+                          className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-l transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                           name="amount"
                           id="amount"
                           placeholder="Enter Amount"
@@ -212,7 +231,7 @@ export default function addPriceList() {
                         <select
                           id="unit"
                           name="unit"
-                          className="pl-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border rounded-r border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-[#0E3658] focus:outline-none"
+                          className="pl-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border rounded-r border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                           required
                           onChange={handleChange}
                           defaultValue={""}
@@ -238,7 +257,7 @@ export default function addPriceList() {
                     <input
                       autoComplete="off"
                       type="price"
-                      className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-[#0E3658] focus:outline-none"
+                      className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                       name="price"
                       id="price"
                       placeholder="Enter Price"
@@ -262,7 +281,7 @@ export default function addPriceList() {
                     <textarea
                       autoComplete="off"
                       type="text"
-                      className="form-control block px-3 py-1.5 w-full h-32 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-[#0E3658] focus:outline-none"
+                      className="form-control block px-3 py-1.5 w-full h-32 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                       name="remarks"
                       id="remarks"
                       placeholder="Enter Remarks"
@@ -275,7 +294,7 @@ export default function addPriceList() {
                   {/* submit button */}
                   <button
                     type="submit"
-                    className="group text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-[#0E3658] text-white hover:opacity-80 transition duration-700 rounded-md"
+                    className="group text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
                   >
                     Submit
                   </button>

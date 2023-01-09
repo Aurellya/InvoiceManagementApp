@@ -351,10 +351,7 @@ export default function addInvoice() {
           {/* header section */}
           <div className="flex md:items-center justify-between mb-10">
             <div className="flex items-center gap-8">
-              <Link
-                className="group button-custom bg-[#0E3658]"
-                href="/invoices"
-              >
+              <Link className="group button-custom bg-primary" href="/invoices">
                 <div>
                   {React.createElement(IoArrowBackOutline, { size: "12" })}
                 </div>
@@ -366,7 +363,7 @@ export default function addInvoice() {
             </div>
             <hr className="md:hidden" />
             <div className="flex justify-end">
-              <button className="w-fit group button-custom bg-[#246A3D]">
+              <button className="w-fit group button-custom bg-tertiary">
                 <div>
                   {React.createElement(BsFillCalculatorFill, { size: "12" })}
                 </div>
@@ -377,7 +374,7 @@ export default function addInvoice() {
 
           {/* form */}
           <form className="w-full" onSubmit={submitForm}>
-            <div className="m-auto bg-slate-50 rounded-t-md w-full grid lg:grid-cols-12 drop-shadow-md border border-t-8 border-t-[#0E3658]">
+            <div className="m-auto bg-slate-50 rounded-t-md w-full grid lg:grid-cols-12 drop-shadow-md border border-t-8 border-t-primary">
               {/* left */}
               <div
                 className={`py-8 px-6 md:px-12 lg:col-span-3 ${styles.form_bg}`}
@@ -402,7 +399,7 @@ export default function addInvoice() {
                     <input
                       autoComplete="off"
                       type="text"
-                      className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-[#0E3658] focus:outline-none"
+                      className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                       name="cname"
                       id="cname"
                       placeholder="Enter Customer Name"
@@ -441,7 +438,7 @@ export default function addInvoice() {
                       <div>
                         <div className="form-check">
                           <input
-                            className="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-[#165081] checked:border-white focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            className="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-primary checked:border-white focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                             type="radio"
                             name="status"
                             id="flexRadioDefault1"
@@ -460,7 +457,7 @@ export default function addInvoice() {
                         </div>
                         <div className="form-check">
                           <input
-                            className="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-[#165081] checked:border-white focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            className="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-primary checked:border-white focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                             type="radio"
                             name="status"
                             id="flexRadioDefault2"
@@ -493,7 +490,7 @@ export default function addInvoice() {
                       <textarea
                         autoComplete="off"
                         type="text"
-                        className="form-control block px-3 py-1.5 w-full h-32 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-[#0E3658] focus:outline-none"
+                        className="form-control block px-3 py-1.5 w-full h-32 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                         name="notes"
                         id="notes"
                         placeholder="Enter Notes"
@@ -506,7 +503,7 @@ export default function addInvoice() {
                   <div className="text-center hidden lg:block">
                     <button
                       type="submit"
-                      className="text-sm font-bold py-2 px-8 md:px-4 bg-[#F1FAFF] text-[#0E3658] hover:opacity-70 transition duration-700 rounded-md"
+                      className="text-sm font-bold py-2 px-8 md:px-4 bg-[#F1FAFF] text-primary hover:opacity-70 transition duration-700 rounded-md"
                     >
                       Submit
                     </button>
@@ -562,7 +559,7 @@ export default function addInvoice() {
                       </thead>
 
                       <tbody
-                        className="divide-y divide-[#0E3658] md:divide-gray-100"
+                        className="divide-y divide-primary md:divide-gray-100"
                         id="invoiceForm"
                       >
                         {[...Array(noOfRows).keys()].map((i) => (
@@ -580,7 +577,7 @@ export default function addInvoice() {
                               </button>
                             </td>
 
-                            <td className="p-3 pt-0 md:pt-3 text-sm text-[#0E3658] font-bold whitespace-nowrap">
+                            <td className="p-3 pt-0 md:pt-3 text-sm text-primary font-bold whitespace-nowrap">
                               <div>
                                 <h3 className="md:hidden">Quantity</h3>
                                 <div className="relative mt-2 md:mt-0 rounded-md shadow-sm">
@@ -590,7 +587,7 @@ export default function addInvoice() {
                                     onWheel={(e) => e.target.blur()}
                                     name="amount"
                                     id={`amount-${i}`}
-                                    className="form-control block w-full pl-3 pr-16 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-[#0E3658] focus:outline-none"
+                                    className="form-control block w-full pl-3 pr-16 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                                     placeholder=""
                                     onChange={handleChangeContent}
                                     required
@@ -602,7 +599,7 @@ export default function addInvoice() {
                                     <select
                                       id={`unit-${i}`}
                                       name="unit"
-                                      className="pl-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border rounded rounded-l-sm border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-[#0E3658] focus:outline-none"
+                                      className="pl-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border rounded rounded-l-sm border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                                       onChange={handleChangeContent}
                                       required
                                       defaultValue={""}
@@ -618,14 +615,14 @@ export default function addInvoice() {
                               </div>
                             </td>
 
-                            <td className="p-3 text-sm first-line:text-[#0E3658] font-bold whitespace-nowrap">
+                            <td className="p-3 text-sm first-line:text-primary font-bold whitespace-nowrap">
                               <h3 className="md:hidden">Item Name</h3>
                               <div className="mt-2 md:mt-0">
                                 <input
                                   name="item_name"
                                   autoComplete="off"
                                   type="text"
-                                  className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-[#0E3658] focus:outline-none"
+                                  className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                                   id={`itemNameInput-${i}`}
                                   placeholder=""
                                   onChange={handleChangeContent}
@@ -634,7 +631,7 @@ export default function addInvoice() {
                               </div>
                             </td>
 
-                            <td className="p-3 text-sm text-[#0E3658] font-bold whitespace-nowrap">
+                            <td className="p-3 text-sm text-primary font-bold whitespace-nowrap">
                               <h3 className="md:hidden">Price (/pcs)</h3>
                               <div>
                                 <div className="relative mt-2 md:mt-0 rounded-md shadow-sm">
@@ -642,7 +639,7 @@ export default function addInvoice() {
                                     name="price_per_item"
                                     autoComplete="off"
                                     type="text"
-                                    className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-[#0E3658] focus:outline-none"
+                                    className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                                     id={`pricePerItemInput-${i}`}
                                     placeholder=""
                                     onFocus={(e) => onFocus(e)}
@@ -660,7 +657,7 @@ export default function addInvoice() {
                                     <select
                                       id={`price_unit-${i}`}
                                       name="price_unit"
-                                      className="pl-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border rounded rounded-l-sm border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-[#0E3658] focus:outline-none"
+                                      className="pl-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border rounded rounded-l-sm border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                                       onChange={handleChangeContent}
                                       required
                                       defaultValue={""}
@@ -676,14 +673,14 @@ export default function addInvoice() {
                               </div>
                             </td>
 
-                            <td className="p-3 mb-2 md:mb-0 text-sm text-[#0E3658] font-bold whitespace-nowrap">
+                            <td className="p-3 mb-2 md:mb-0 text-sm text-primary font-bold whitespace-nowrap">
                               <h3 className="md:hidden">Total</h3>
                               <div className="mt-2 md:mt-0">
                                 <input
                                   name="total"
                                   autoComplete="off"
                                   type="text"
-                                  className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-[#0E3658] focus:outline-none"
+                                  className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                                   id={`totalInput-${i}`}
                                   placeholder=""
                                   onFocus={(e) => {
@@ -705,7 +702,7 @@ export default function addInvoice() {
                   <div className="mt-4 mb-5 text-right mr-1">
                     {/* add button */}
                     <button
-                      className="group gap-2 h-7 px-4 bg-[#0E3658] text-white hover:opacity-80 transition duration-700 rounded-md"
+                      className="group gap-2 h-7 px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
                       onClick={addRow}
                     >
                       <FaPlus size={14} />
@@ -716,7 +713,7 @@ export default function addInvoice() {
                     {/* submit button */}
                     <button
                       type="submit"
-                      className="group text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-[#0E3658] text-white hover:opacity-80 transition duration-700 rounded-md"
+                      className="group text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
                     >
                       Submit
                     </button>

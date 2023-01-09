@@ -41,9 +41,14 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
+body {
+  @apply bg-neutral;
+}
+
 /* custom css */
 .table-div-custom {
-  @apply p-6 bg-gray-100 shadow-sm;
+  /* @apply p-6 bg-gray-100 shadow-sm; */
+  @apply p-6 bg-white shadow-sm;
 }
 
 .button-custom {

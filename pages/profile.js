@@ -32,7 +32,7 @@ export default () => {
               {session.user.email}
             </h5>
             <div className="flex items-center gap-2 my-9">
-              <button className="group flex items-center text-sm font-bold gap-2 py-2 px-4 bg-[#0E3658] text-white hover:opacity-80 transition duration-700 rounded-md">
+              <button className="group flex items-center text-sm font-bold gap-2 py-2 px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md">
                 <div>{React.createElement(AiFillEdit, { size: "12" })}</div>
                 <h2 className="whitespace-pre">Edit Details</h2>
               </button>

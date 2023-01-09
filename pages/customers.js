@@ -68,11 +68,11 @@ export default () => {
             <hr className="md:hidden" />
             <div className="flex justify-end">
               <Link
-                className="w-fit button-custom mt-0 bg-[#0E3658]"
+                className="w-fit button-custom mt-0 bg-primary"
                 href="/addCustomer"
               >
                 <div>{React.createElement(BsPlusLg, { size: "12" })}</div>
-                <h2 className="whitespace-pre">Add Customer</h2>
+                <h2 className="whitespace-pre">Create New</h2>
               </Link>
             </div>
           </div>
@@ -140,7 +140,7 @@ export default () => {
                     <tbody className="divide-y divide-gray-100">
                       {paginateCustomer.map((customer) => (
                         <tr className="bg-white" key={customer._id}>
-                          <td className="p-3 text-sm text-[#0E3658] font-bold whitespace-nowrap">
+                          <td className="p-3 text-sm text-primary font-bold whitespace-nowrap">
                             <Link
                               href={`/customers/${customer._id}`}
                               className="transition duration-700 hover:underline"
@@ -217,7 +217,7 @@ export default () => {
 
                       <div className="text-center pt-5">
                         <Link
-                          className="py-2 px-5 text-xs font-medium uppercase tracking-wider rounded-md bg-[#246A3D] text-white"
+                          className="py-2 px-5 text-xs font-medium uppercase tracking-wider rounded-md bg-tertiary text-white"
                           href={`/customers/${customer._id}`}
                         >
                           View Details

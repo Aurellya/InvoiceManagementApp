@@ -144,7 +144,7 @@ export default function editPriceList() {
           <div className="flex md:items-center justify-between flex-col md:flex-row gap-6 md:gap-0 w-fit md:w-full mb-10">
             <div className="flex items-center gap-8">
               <Link
-                className="group flex items-center text-sm font-bold gap-2 py-2 px-4 bg-[#0E3658] text-white hover:opacity-80 transition duration-700 rounded-md"
+                className="group flex items-center text-sm font-bold gap-2 py-2 px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
                 href={`/priceList/${router.query.id}`}
               >
                 <div>
@@ -247,7 +247,7 @@ export default function editPriceList() {
                         <input
                           autoComplete="off"
                           type="text"
-                          className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-[#0E3658] focus:outline-none"
+                          className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                           name="product_name"
                           id="product_name"
                           placeholder="Enter Product Name"
@@ -273,7 +273,7 @@ export default function editPriceList() {
                             <input
                               autoComplete="off"
                               type="number"
-                              className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-[#0E3658] focus:outline-none"
+                              className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                               name="amount"
                               id="amount"
                               placeholder="Enter Amount"
@@ -287,7 +287,7 @@ export default function editPriceList() {
                             <select
                               id="unit"
                               name="unit"
-                              className="pl-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border rounded rounded-l-sm border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-[#0E3658] focus:outline-none"
+                              className="pl-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border rounded rounded-l-sm border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                               required
                               onChange={handleChange}
                               defaultValue={data.unit ? data.unit : ""}
@@ -313,7 +313,7 @@ export default function editPriceList() {
                         <input
                           autoComplete="off"
                           type="price"
-                          className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-[#0E3658] focus:outline-none"
+                          className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                           name="price"
                           id="price"
                           placeholder="Enter Price"
@@ -344,7 +344,7 @@ export default function editPriceList() {
                         <textarea
                           autoComplete="off"
                           type="text"
-                          className="form-control block px-3 py-1.5 w-full md:w-96 h-32 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-[#0E3658] focus:outline-none"
+                          className="form-control block px-3 py-1.5 w-full md:w-96 h-32 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                           name="address"
                           id="address"
                           placeholder="Enter Address"
@@ -368,7 +368,7 @@ export default function editPriceList() {
                         <textarea
                           autoComplete="off"
                           type="text"
-                          className="form-control block px-3 py-1.5 w-full md:w-96 h-32 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-[#0E3658] focus:outline-none"
+                          className="form-control block px-3 py-1.5 w-full md:w-96 h-32 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                           name="remarks"
                           id="remarks"
                           placeholder="Enter Remarks"
@@ -384,7 +384,7 @@ export default function editPriceList() {
                   {/* submit button */}
                   <button
                     type="submit"
-                    className="group text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-[#0E3658] text-white hover:opacity-80 transition duration-700 rounded-md"
+                    className="group text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
                   >
                     Save
                   </button>
