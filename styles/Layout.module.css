@@ -1,7 +1,29 @@
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap");
+
 .imgStyle {
-  @apply bg-gradient-to-r from-blue-500 to-indigo-500 rounded-l-md;
-  position: relative;
+  /* @apply bg-gradient-to-r from-blue-500 to-indigo-500 rounded-l-md; */
+  /* @apply bg-gradient-to-r from-[#00C896] to-[#F2ECFF] rounded-l-md; */
+  /* @apply bg-gradient-to-r from-[#28ABF4] to-[#fff] rounded-l-md; */
+  @apply bg-gradient-to-r from-[#0097FB] to-[#F1FAFF] rounded-l-md;
+  /* position: relative; */
+  @apply flex items-center justify-center;
   overflow: hidden;
+}
+
+.imgStyle2 {
+  @apply bg-gradient-to-r from-[#F1FAFF] to-[#fff] rounded-l-md;
+}
+
+.logoBrand {
+  @apply text-6xl text-center text-[#2C2F33];
+}
+
+.illustrationImg {
+  background: url("/assets/illustration.png") no-repeat;
+  background-position: 25% 100%;
+  @apply flex items-center justify-center;
+  width: 100%;
+  height: 100%;
 }
 
 .cartoonImg {

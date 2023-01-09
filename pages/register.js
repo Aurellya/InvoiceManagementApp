@@ -114,7 +114,7 @@ export default function Register() {
             <input
               type={`${show.password ? "text" : "password"}`}
               name="password"
-              placeholder="password"
+              placeholder="Password"
               className={styles.input_text}
               {...formik.getFieldProps("password")}
             />
@@ -171,7 +171,7 @@ export default function Register() {
         {/* bottom */}
         <p className="text-center text-gray-400 ">
           Have an account?{" "}
-          <Link href={"/login"} className="text-blue-700">
+          <Link href={"/login"} className="text-[#28ABF4]">
             Sign In
           </Link>
         </p>

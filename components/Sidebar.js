@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
-import { MdOutlineDashboard, MdOutlineInventory2 } from "react-icons/md";
-import { RiSettings4Line } from "react-icons/ri";
+import { MdOutlineDashboard } from "react-icons/md";
+import { RiSettings4Line, RiFileList3Line } from "react-icons/ri";
 import { TbReportAnalytics } from "react-icons/tb";
 import { AiOutlineUser } from "react-icons/ai";
 import { VscSignOut } from "react-icons/vsc";
@@ -11,17 +11,17 @@ import Link from "next/link";
 export default function Sidebar({ handleSignOut }) {
   const menus = [
     { name: "Dashboard", link: "/", icon: MdOutlineDashboard },
-    { name: "Invoices", link: "/", icon: TbReportAnalytics },
-    { name: "Customers", link: "/", icon: IoMdContacts },
-    { name: "Inventory", link: "/", icon: MdOutlineInventory2 },
-    { name: "Setting", link: "/", icon: RiSettings4Line },
+    { name: "Invoices", link: "/invoices", icon: TbReportAnalytics },
+    { name: "Customers", link: "/customers", icon: IoMdContacts },
+    { name: "Price List", link: "/priceList", icon: RiFileList3Line },
+    { name: "Settings", link: "/settings", icon: RiSettings4Line },
     { name: "Profile", link: "/profile", icon: AiOutlineUser, margin: true },
   ];
   const [open, setOpen] = useState(false);
 
   return (
     <div
-      className={`bg-[#0e0e0e] min-h-screen ${
+      className={`bg-[#0E3658] min-h-screen ${
         open ? "w-72" : "w-16"
       } duration-500 text-gray-100 px-4`}
     >
@@ -32,14 +32,14 @@ export default function Sidebar({ handleSignOut }) {
           onClick={() => setOpen(!open)}
         />
       </div>
-      <div className="mt-4 flex flex-col gap-4 relative">
+      <div className="mt-4 flex flex-col gap-4 relative z-50">
         {menus?.map((menu, i) => (
           <Link
             href={menu?.link}
             key={i}
             className={` ${
               menu?.margin && "mt-5"
-            } group flex items-center text-sm  gap-3.5 font-medium p-2 hover:bg-gray-800 rounded-md`}
+            } group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-[#165080] rounded-md`}
           >
             <div>{React.createElement(menu?.icon, { size: "20" })}</div>
             <h2
@@ -63,10 +63,9 @@ export default function Sidebar({ handleSignOut }) {
         ))}
 
         {/* sign out button */}
-
         <button
           onClick={handleSignOut}
-          className={`group flex items-center text-sm  gap-3.5 font-medium p-2 hover:bg-gray-800 rounded-md`}
+          className={`group flex items-center text-sm  gap-3.5 font-medium p-2 hover:bg-[#165080] rounded-md`}
         >
           <div>{React.createElement(VscSignOut, { size: "20" })}</div>
           <h2

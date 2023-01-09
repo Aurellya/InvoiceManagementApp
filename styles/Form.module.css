@@ -4,33 +4,34 @@
 }
 
 .input_text {
-  @apply w-full py-4 px-6 border rounded-xl bg-slate-50;
+  @apply w-full py-4 px-6 border rounded-xl bg-[#fff];
   @apply focus:outline-none border-none;
 }
 
 .button {
-  @apply w-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-md;
-  @apply py-3 text-gray-50 text-lg border;
+  /* @apply w-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-md; */
+  @apply w-full bg-gradient-to-r from-[#0E3658] to-[#0E3658] rounded-md;
+  @apply py-3 text-gray-50 text-lg transition duration-300;
 }
 
 .button:hover {
-  @apply bg-gradient-to-r from-gray-50 to-gray-100 border-blue-500;
-  @apply text-gray-700 border;
+  /* @apply bg-gradient-to-r from-[#F2ECFF] to-[#F2ECFF] border-[#2C2F33]; */
+  @apply opacity-80;
 }
 
 .button_custom {
-  @apply w-full border py-3 flex justify-center gap-2 hover:bg-gray-200;
+  @apply w-full border border-[#0E3658] py-3 flex justify-center gap-2 hover:opacity-60 transition duration-300;
 }
 
 .input_text + * {
-  color: #cbd5e1;
+  color: #bbbbbb;
 }
 
 .input_text:focus + * {
-  color: #6366f1;
+  color: #28abf4;
 }
 
 .input_text:not([type="email"]) ~ span:hover * {
-  color: #6366f1;
+  color: #28abf4;
   cursor: pointer;
 }

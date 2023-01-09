@@ -1,17 +1,50 @@
-import Link from "next/link";
-import { getSession } from "next-auth/react";
+import React from "react";
+import Head from "next/head";
+import { getSession, useSession, signOut } from "next-auth/react";
 import Sidebar from "../components/Sidebar";
+import { AiFillEdit } from "react-icons/ai";
 
 export default () => {
-  return (
-    <section className="flex gap-6">
-      <Sidebar />
-      <main className="container mx-auto text-center py-20">
-        <h3 className="text-4xl font-bold">Profile Page</h3>
+  const { data: session } = useSession();
 
-        <Link href={"/"}>Home Page</Link>
-      </main>
-    </section>
+  function handleSignOut() {
+    signOut();
+  }
+
+  return (
+    <>
+      <Head>
+        <title>Profile Page</title>
+      </Head>
+
+      <section className="flex">
+        <Sidebar handleSignOut={handleSignOut} />
+        <main className="container py-12 mx-14">
+          <h3 className="text-4xl font-bold">Profile</h3>
+
+          <div className="details mt-10">
+            <h5>
+              <b>Username: </b>
+              {session.user.name ? session.user.name : "No Username"}
+            </h5>
+            <h5>
+              <b>Email: </b>
+              {session.user.email}
+            </h5>
+            <div className="flex items-center gap-2 my-9">
+              <button className="group flex items-center text-sm font-bold gap-2 py-2 px-4 bg-[#0E3658] text-white hover:opacity-80 transition duration-700 rounded-md">
+                <div>{React.createElement(AiFillEdit, { size: "12" })}</div>
+                <h2 className="whitespace-pre">Edit Details</h2>
+              </button>
+              {/* <button className="group flex items-center text-sm font-bold gap-2 py-2 px-4 bg-[#F44645] text-white hover:opacity-80 transition duration-700 rounded-md">
+              <div>{React.createElement(AiFillDelete, { size: "12" })}</div>
+              <h2 className="whitespace-pre">Delete Account</h2>
+            </button> */}
+            </div>
+          </div>
+        </main>
+      </section>
+    </>
   );
 };
 

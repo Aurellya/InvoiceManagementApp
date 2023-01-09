@@ -9,6 +9,7 @@ export default async function handler(req, res) {
   if (req.method === "POST") {
     if (!req.body)
       return res.status(404).json({ error: "Don't have form data...!" });
+
     const { username, email, password } = req.body;
 
     // check duplicate users
