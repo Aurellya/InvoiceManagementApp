@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 import Head from "next/head";
 // import Image from "next/image";
 // import styles from "../styles/Home.module.css";
@@ -6,6 +6,12 @@ import Link from "next/link";
 import { getSession, useSession, signOut } from "next-auth/react";
 import Sidebar from "../components/Sidebar";
 import { ThemeContext } from "../context/ThemeContext";
+
+import { GiTakeMyMoney } from "react-icons/gi";
+import { MdOutlinePeopleAlt, MdMoneyOff } from "react-icons/md";
+import { BsBoxSeam } from "react-icons/bs";
+import { FaFileInvoiceDollar } from "react-icons/fa";
+import { GoGraph } from "react-icons/go";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -64,7 +70,7 @@ function User({ session, handleSignOut }) {
           </div>
 
           <div
-            className={`table-div-custom my-4 md:my-12 rounded-md ${
+            className={`table-div-custom p-6 my-4 md:my-12 rounded-md ${
               theme.dark ? "text-black" : ""
             }`}
           >
@@ -76,7 +82,11 @@ function User({ session, handleSignOut }) {
 
             <div class="flex flex-wrap mb-2">
               <div class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pr-2">
-                <div class="bg-green-600 border rounded shadow p-2">
+                <div class="flex justify-between bg-[#d27c0bd6] border rounded shadow p-2 overflow-hidden py-3">
+                  <div className="dashboard-icon">
+                    {React.createElement(GiTakeMyMoney, { size: "80" })}
+                  </div>
+
                   <div class="flex flex-row items-center">
                     <div class="flex-shrink pl-1 pr-4">
                       <i class="fa fa-wallet fa-2x fa-fw fa-inverse"></i>
@@ -96,7 +106,11 @@ function User({ session, handleSignOut }) {
               </div>
 
               <div class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2">
-                <div class="bg-blue-600 border rounded shadow p-2">
+                <div class="flex justify-between bg-[#1E6A74] border rounded shadow p-2 overflow-hidden py-3">
+                  <div className="dashboard-icon">
+                    {React.createElement(MdOutlinePeopleAlt, { size: "80" })}
+                  </div>
+
                   <div class="flex flex-row items-center">
                     <div class="flex-shrink pl-1 pr-4">
                       <i class="fas fa-users fa-2x fa-fw fa-inverse"></i>
@@ -116,7 +130,11 @@ function User({ session, handleSignOut }) {
               </div>
 
               <div class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pr-2 xl:pr-3 xl:pl-1">
-                <div class="bg-orange-600 border rounded shadow p-2">
+                <div class="flex justify-between bg-[#7B4B4E] border rounded shadow p-2 overflow-hidden py-3">
+                  <div className="dashboard-icon">
+                    {React.createElement(MdMoneyOff, { size: "80" })}
+                  </div>
+
                   <div class="flex flex-row items-center">
                     <div class="flex-shrink pl-1 pr-4">
                       <i class="fas fa-user-plus fa-2x fa-fw fa-inverse"></i>
@@ -136,7 +154,11 @@ function User({ session, handleSignOut }) {
               </div>
 
               <div class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2 xl:pl-3 xl:pr-2">
-                <div class="bg-purple-600 border rounded shadow p-2">
+                <div class="flex justify-between bg-[#7D5878] border rounded shadow p-2 overflow-hidden py-3">
+                  <div className="dashboard-icon">
+                    {React.createElement(GoGraph, { size: "80" })}
+                  </div>
+
                   <div class="flex flex-row items-center">
                     <div class="flex-shrink pl-1 pr-4">
                       <i class="fas fa-server fa-2x fa-fw fa-inverse"></i>
@@ -151,7 +173,11 @@ function User({ session, handleSignOut }) {
               </div>
 
               <div class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pr-2 xl:pl-2 xl:pr-3">
-                <div class="bg-red-600 border rounded shadow p-2">
+                <div class="flex justify-between bg-[#8E7258] border rounded shadow p-2 overflow-hidden py-3">
+                  <div className="dashboard-icon">
+                    {React.createElement(BsBoxSeam, { size: "80" })}
+                  </div>
+
                   <div class="flex flex-row items-center">
                     <div class="flex-shrink pl-1 pr-4">
                       <i class="fas fa-tasks fa-2x fa-fw fa-inverse"></i>
@@ -166,7 +192,11 @@ function User({ session, handleSignOut }) {
               </div>
 
               <div class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2 xl:pl-1">
-                <div class="bg-pink-600 border rounded shadow p-2">
+                <div class="flex justify-between bg-[#1B9287] border rounded shadow p-2 overflow-hidden py-3">
+                  <div className="dashboard-icon">
+                    {React.createElement(FaFileInvoiceDollar, { size: "80" })}
+                  </div>
+
                   <div class="flex flex-row items-center">
                     <div class="flex-shrink pl-1 pr-4">
                       <i class="fas fa-inbox fa-2x fa-fw fa-inverse"></i>
@@ -184,6 +214,32 @@ function User({ session, handleSignOut }) {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap md:grid md:grid-cols-12 md:gap-14 my-4 md:mt-0 md:mb-12">
+            <div
+              className={`table-div-custom p-6 rounded-md col-span-7 w-full mb-4 md:mb-0 ${
+                theme.dark ? "text-black" : ""
+              }`}
+            >
+              <div>
+                <h1 className="text-lg md:text-xl mb-4">Latest Invoices</h1>
+              </div>
+
+              <div>[table]</div>
+            </div>
+
+            <div
+              className={`table-div-custom p-6 rounded-md col-span-5 w-full ${
+                theme.dark ? "text-black" : ""
+              }`}
+            >
+              <div>
+                <h1 className="text-lg md:text-xl mb-4">Trending</h1>
+              </div>
+
+              <div>[trending]</div>
             </div>
           </div>
         </main>

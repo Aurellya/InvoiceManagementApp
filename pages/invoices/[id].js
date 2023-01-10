@@ -85,9 +85,12 @@ export default function Invoice() {
 
         <main className="container py-12 mx-10 md:mx-14">
           {/* header section */}
-          <div className="flex md:items-center justify-between mb-10">
+          <div className="flex md:items-center justify-between flex-col md:flex-row gap-4 md:gap-0 w-full md:mb-12">
             <div className="flex items-center gap-8">
-              <Link className="group button-custom bg-primary" href="/invoices">
+              <Link
+                className="group flex items-center text-sm font-bold gap-2 py-2 px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
+                href="/invoices"
+              >
                 <div>
                   {React.createElement(IoArrowBackOutline, { size: "12" })}
                 </div>
@@ -95,6 +98,8 @@ export default function Invoice() {
               </Link>
               <h3 className="text-3xl md:text-4xl font-bold">Invoice</h3>
             </div>
+
+            <hr className="md:hidden mb-2" />
 
             {/* large screen view - btn group */}
             <div className="items-center gap-2 hidden md:flex">
@@ -143,7 +148,7 @@ export default function Invoice() {
           {/* error msg */}
           {errorMsg != "" && (
             <div
-              className="flex items-center bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
+              className="flex items-center bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative my-4 md:my:0"
               role="alert"
             >
               <svg
@@ -164,11 +169,11 @@ export default function Invoice() {
               {errorMsg}
 
               <button
-                class="absolute top-0 bottom-0 right-0 px-4 py-3"
+                className="absolute top-0 bottom-0 right-0 px-4 py-3"
                 onClick={() => setErrorMsg("")}
               >
                 <svg
-                  class="fill-current h-6 w-6 text-red-500"
+                  className="fill-current h-6 w-6 text-red-500"
                   role="button"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
@@ -180,217 +185,224 @@ export default function Invoice() {
             </div>
           )}
 
-          {loading && (
-            <div className="py-8">
-              <div className="mt-9 flex flex-col justify-center items-center">
-                <h3 className="text-xl mb-4 font-bold">Loading</h3>
-                <ReactLoading
-                  type="bars"
-                  color="#0E3658"
-                  height={100}
-                  width={50}
-                />
-              </div>
+          <div
+            className={`table-div-custom my-4 md:my-0 p-6 block mb-4 md:mb-0 ${
+              theme.dark ? "text-black" : ""
+            }`}
+          >
+            <div>
+              <h1 className="text-lg md:text-xl mb-4">Invoice Details</h1>
             </div>
-          )}
 
-          {!loading && !invoice && (
-            <div className="py-8">
-              <div className="mt-9 flex flex-col justify-center items-center">
-                <h3 className="text-xl mb-4 font-bold">No Data</h3>
-              </div>
-            </div>
-          )}
+            <hr />
+            <br />
 
-          {!loading && invoice && (
-            <div className="mb-10 flex gap-0 md:gap-16 flex-col md:flex-row">
-              {/* details section*/}
-              <div className="md:p-4 w-full md:w-fit">
-                <div className="">
-                  <h2 className="text-lg md:text-xl mb-3">Details</h2>
-                </div>
-
-                <hr />
-                <br />
-
-                <div className="md:flex gap-20 text-sm font-medium md:text-base whitespace-nowrap">
-                  <div>
-                    <p>
-                      <b>Invoice Id: </b>
-                    </p>
-                    <p>{invoice._id}</p>
-                    <br />
-                    <p>
-                      <b>Customer Name: </b>
-                    </p>
-                    <p>{invoice.customer_name}</p> <br />
-                  </div>
-
-                  <div>
-                    <p>
-                      <b>Date: </b>
-                    </p>
-                    <p>{invoice.date.substring(0, 10)}</p>
-                    <br />
-                    <p>
-                      <b>Status: </b>
-                    </p>
-                    <p>{invoice.status}</p>
-                    <br className="md:hidden" />
-                  </div>
-                </div>
-
-                <div className="text-sm font-medium md:text-base">
-                  <p>
-                    <b>Notes: </b>
-                  </p>
-                  <p>{invoice.notes === "-" ? "-" : invoice.notes}</p>
+            {loading && (
+              <div className="py-8">
+                <div className="mt-9 flex flex-col justify-center items-center">
+                  <h3 className="text-xl mb-4 font-bold">Loading</h3>
+                  <ReactLoading
+                    type="bars"
+                    color="#2b4450"
+                    height={100}
+                    width={50}
+                  />
                 </div>
               </div>
+            )}
 
-              <hr className="md:hidden mt-6" />
-              <br />
+            {!loading && !invoice && (
+              <div className="py-8">
+                <div className="mt-9 flex flex-col justify-center items-center">
+                  <h3 className="text-xl mb-4 font-bold">No Data</h3>
+                </div>
+              </div>
+            )}
 
-              {/* mobile view - btn group */}
-              <div className="flex items-center justify-between md:hidden">
-                <button className="group button-custom bg-tertiary">
-                  <div>
-                    {React.createElement(AiFillPrinter, { size: "12" })}
+            {!loading && invoice && (
+              <div className="flex gap-10 flex-col md:grid md:grid-cols-12">
+                {/* details section*/}
+                <div className="md:max-w-[450px] md:mt-2 md:col-span-5 w-full bg-neutral p-6 border h-fit">
+                  <div className="md:flex md:justify-between md:flex-wrap md:w-full text-sm font-medium md:text-base">
+                    <div>
+                      <p>
+                        <b>Invoice Id: </b>
+                      </p>
+                      <p className="break-all">{invoice._id}</p>
+                      <br />
+                      <p>
+                        <b>Customer Name: </b>
+                      </p>
+                      <p>{invoice.customer_name}</p> <br />
+                    </div>
+
+                    <div>
+                      <p>
+                        <b>Date: </b>
+                      </p>
+                      <p>{invoice.date.substring(0, 10)}</p>
+                      <br />
+                      <p>
+                        <b>Status: </b>
+                      </p>
+                      <p>{invoice.status}</p>
+                      <br />
+                    </div>
                   </div>
-                  <h2 className="whitespace-pre">Print Invoice</h2>
-                </button>
-                <Link
-                  className="group button-custom bg-primary"
-                  href={`/editInvoice/${router.query.id}`}
+
+                  <div className="text-sm font-medium md:text-base">
+                    <p>
+                      <b>Notes: </b>
+                    </p>
+                    <p>{invoice.notes === "-" ? "-" : invoice.notes}</p>
+                  </div>
+                </div>
+
+                {/* mobile view - btn group */}
+                <div className="grid grid-cols-7 gap-2 md:hidden">
+                  <button className="group button-custom bg-tertiary col-span-4">
+                    <div>
+                      {React.createElement(AiFillPrinter, { size: "12" })}
+                    </div>
+                    <h2 className="whitespace-pre">Print Invoice</h2>
+                  </button>
+                  <Link
+                    className="group button-custom bg-primary col-span-3"
+                    href={`/editInvoice/${router.query.id}`}
+                  >
+                    <div>{React.createElement(AiFillEdit, { size: "12" })}</div>
+                    <h2 className="whitespace-pre">Edit</h2>
+                  </Link>
+                  <div className="col-span-4"></div>
+                  <button
+                    className="group button-custom bg-[#F44645] col-span-3"
+                    onClick={showModalDeleteConfirmation}
+                  >
+                    <div>
+                      {React.createElement(AiFillDelete, { size: "12" })}
+                    </div>
+                    <h2 className="whitespace-pre">Delete</h2>
+                  </button>
+                </div>
+
+                {/* invoices */}
+                <div
+                  className={`w-full md:w-fit md:col-span-7 mt-1 md:mt-[-15px] ${
+                    theme.dark ? "text-black" : ""
+                  }`}
                 >
-                  <div>{React.createElement(AiFillEdit, { size: "12" })}</div>
-                  <h2 className="whitespace-pre">Edit</h2>
-                </Link>
-                <button
-                  className="group button-custom bg-[#F44645]"
-                  onClick={showModalDeleteConfirmation}
-                >
-                  <div>{React.createElement(AiFillDelete, { size: "12" })}</div>
-                  <h2 className="whitespace-pre">Delete</h2>
-                </button>
-              </div>
+                  <div className="flex items-center justify-between mb-4 md:mt-4">
+                    <h1 className="text-lg md:hidden">Items</h1>
+                    <h1></h1>
+                    <div className="flex md:items-center justify-between flex-col md:flex-row md:gap-10 text-sm">
+                      <p>
+                        <b>Total Items: </b>
+                        {invoice.total_items ? invoice.total_items : "-"}
+                      </p>
+                      <p>
+                        <b>Total: </b>
+                        {invoice.total
+                          ? invoice.total.toLocaleString("en-US", {
+                              style: "currency",
+                              currency: "IDR",
+                              maximumFractionDigits: 0,
+                            })
+                          : "-"}
+                      </p>
+                    </div>
+                  </div>
 
-              {/* invoices */}
-              <div
-                className={`table-div-custom mt-6 w-full md:w-fit ${
-                  theme.dark ? "text-black" : ""
-                }`}
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <h1 className="text-lg md:text-xl">Items</h1>
-                  <div className="flex md:items-center justify-between flex-col md:flex-row md:gap-10 text-sm">
-                    <p>
-                      <b>Total Items: </b>
-                      {invoice.total_items ? invoice.total_items : "-"}
-                    </p>
-                    <p>
-                      <b>Total: </b>
-                      {invoice.total
-                        ? invoice.total.toLocaleString("en-US", {
+                  {/* large screen view */}
+                  <div className="overflow-auto rounded-lg shadow hidden md:block">
+                    <table className="w-full">
+                      <thead className="bg-gray-50 border-b-2 border-gray-200">
+                        <tr>
+                          <th className="w-24 p-3 text-sm font-semibold tracking-wide text-left">
+                            Amount
+                          </th>
+                          <th className="w-96 p-3 text-sm font-semibold tracking-wide text-left">
+                            Item Name
+                          </th>
+                          <th className="w-36 p-3 text-sm font-semibold tracking-wide text-left">
+                            Price (/Unit)
+                          </th>
+                          <th className="w-32 p-3 text-sm font-semibold tracking-wide text-left">
+                            Total
+                          </th>
+                        </tr>
+                      </thead>
+
+                      <tbody className="divide-y divide-gray-100">
+                        {invoice.contents.map((content, i) => (
+                          <tr className="bg-white" key={invoice._id + "-" + i}>
+                            <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                              {content.amount + " " + content.unit}
+                            </td>
+                            <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                              {content.item_name}
+                            </td>
+                            <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                              {content.price_per_item.toLocaleString("en-US", {
+                                style: "currency",
+                                currency: "IDR",
+                                maximumFractionDigits: 0,
+                              })}{" "}
+                              /{content.price_unit}
+                            </td>
+                            <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                              {content.total.toLocaleString("en-US", {
+                                style: "currency",
+                                currency: "IDR",
+                                maximumFractionDigits: 0,
+                              })}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* mobile view */}
+                  <hr className="md:hidden" />
+                  <br className="md:hidden" />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden">
+                    {invoice.contents.map((content, i) => (
+                      <div
+                        className="bg-white space-y-3 p-4 rounded-lg shadow"
+                        key={"mobile-" + invoice._id + "-" + i}
+                      >
+                        <div className="text-sm font-medium text-black">
+                          <b>Amount: </b>
+                          {content.amount + " " + content.unit}
+                        </div>
+                        <div className="text-sm font-medium text-black">
+                          <b>Item Name: </b>
+                          {content.item_name}
+                        </div>
+                        <div className="text-sm font-medium text-black">
+                          <b>Price (/Unit): </b>
+                          {content.price_per_item.toLocaleString("en-US", {
                             style: "currency",
                             currency: "IDR",
                             maximumFractionDigits: 0,
-                          })
-                        : "-"}
-                    </p>
+                          })}{" "}
+                          /{content.price_unit}
+                        </div>
+                        <div className="text-sm font-medium text-black">
+                          <b>Total: </b>
+                          {content.total.toLocaleString("en-US", {
+                            style: "currency",
+                            currency: "IDR",
+                            maximumFractionDigits: 0,
+                          })}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
-
-                {/* large screen view */}
-                <div className="overflow-auto rounded-lg shadow hidden md:block">
-                  <table className="w-full">
-                    <thead className="bg-gray-50 border-b-2 border-gray-200">
-                      <tr>
-                        <th className="w-24 p-3 text-sm font-semibold tracking-wide text-left">
-                          Amount
-                        </th>
-                        <th className="w-96 p-3 text-sm font-semibold tracking-wide text-left">
-                          Item Name
-                        </th>
-                        <th className="w-36 p-3 text-sm font-semibold tracking-wide text-left">
-                          Price (/Unit)
-                        </th>
-                        <th className="w-32 p-3 text-sm font-semibold tracking-wide text-left">
-                          Total
-                        </th>
-                      </tr>
-                    </thead>
-
-                    <tbody className="divide-y divide-gray-100">
-                      {invoice.contents.map((content, i) => (
-                        <tr className="bg-white" key={invoice._id + "-" + i}>
-                          <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                            {content.amount + " " + content.unit}
-                          </td>
-                          <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                            {content.item_name}
-                          </td>
-                          <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                            {content.price_per_item.toLocaleString("en-US", {
-                              style: "currency",
-                              currency: "IDR",
-                              maximumFractionDigits: 0,
-                            })}{" "}
-                            /{content.price_unit}
-                          </td>
-                          <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                            {content.total.toLocaleString("en-US", {
-                              style: "currency",
-                              currency: "IDR",
-                              maximumFractionDigits: 0,
-                            })}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-
-                {/* mobile view */}
-                <hr className="md:hidden" />
-                <br className="md:hidden" />
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden">
-                  {invoice.contents.map((content, i) => (
-                    <div
-                      className="bg-white space-y-3 p-4 rounded-lg shadow"
-                      key={"mobile-" + invoice._id + "-" + i}
-                    >
-                      <div className="text-sm font-medium text-black">
-                        <b>Amount: </b>
-                        {content.amount + " " + content.unit}
-                      </div>
-                      <div className="text-sm font-medium text-black">
-                        <b>Item Name: </b>
-                        {content.item_name}
-                      </div>
-                      <div className="text-sm font-medium text-black">
-                        <b>Price (/Unit): </b>
-                        {content.price_per_item.toLocaleString("en-US", {
-                          style: "currency",
-                          currency: "IDR",
-                          maximumFractionDigits: 0,
-                        })}{" "}
-                        /{content.price_unit}
-                      </div>
-                      <div className="text-sm font-medium text-black">
-                        <b>Total: </b>
-                        {content.total.toLocaleString("en-US", {
-                          style: "currency",
-                          currency: "IDR",
-                          maximumFractionDigits: 0,
-                        })}
-                      </div>
-                    </div>
-                  ))}
-                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </main>
       </section>
     </>

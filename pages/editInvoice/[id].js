@@ -152,8 +152,6 @@ export default function editInvoice() {
       ...data,
       ["contents"]: filteredContents,
     });
-
-    // setNoOfRows(noOfRows - 1);
   };
 
   // helper function
@@ -181,7 +179,7 @@ export default function editInvoice() {
 
         if (validAmount && validUnit && validPricePerItem && validPriceUnit) {
           // show suggestion
-          let convertedUnit = 1; // default
+          let convertedUnit = 1;
           let from = row.unit;
           let to = row.price_unit;
 
@@ -325,7 +323,6 @@ export default function editInvoice() {
         document.getElementById("grandTotal").innerText
       ),
       contents: contents,
-      // contents: data.contents,
     };
 
     contents.forEach((object) => {
@@ -359,7 +356,7 @@ export default function editInvoice() {
 
         <main className="container py-12 mx-10 md:mx-14">
           {/* header section */}
-          <div className="flex md:items-center justify-between flex-col md:flex-row gap-6 md:gap-0 w-fit md:w-full mb-10">
+          <div className="flex md:items-center justify-between flex-col md:flex-row gap-4 md:gap-0 w-full md:mb-12">
             <div className="flex items-center gap-8">
               <Link
                 className="group flex items-center text-sm font-bold gap-2 py-2 px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
@@ -390,7 +387,7 @@ export default function editInvoice() {
           {/* error msg */}
           {errorMsg != "" && (
             <div
-              className="flex items-center bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
+              className="flex items-center bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative my-4 md:my:0"
               role="alert"
             >
               <svg
@@ -434,7 +431,7 @@ export default function editInvoice() {
                 <h3 className="text-xl mb-4 font-bold">Loading</h3>
                 <ReactLoading
                   type="bars"
-                  color="#0E3658"
+                  color="#2b4450"
                   height={100}
                   width={50}
                 />
@@ -451,24 +448,22 @@ export default function editInvoice() {
           )}
 
           {!loading && data && (
-            <div className="table-div-custom block mb-4 md:mb-12">
+            <div className="table-div-custom my-4 md:my-0 p-6 block mb-4 md:mb-0">
               <form className="flex w-full flex-col" onSubmit={submitForm}>
                 {/* top */}
                 <div>
                   <div className="">
-                    <h2 className="text-lg md:text-xl mb-3">
-                      Customer Details
-                    </h2>
+                    <h2 className="text-lg md:text-xl mb-3">Invoice Details</h2>
                   </div>
 
                   <hr />
                   <br />
 
-                  <div className="flex md:pr-40 md:justify-between md:px-6 flex-col md:flex-row text-sm font-bold md:font-medium md:text-base text-gray-700">
+                  <div className="md:py-2 px-0 md:px-4 flex md:justify-between flex-col md:grid md:grid-cols-12 md:gap-20 text-sm font-bold md:font-medium md:text-base text-gray-700">
                     {/* top left */}
-                    <div>
+                    <div className="md:col-span-3">
                       {/* customer name */}
-                      <div className="form-group mb-6 w-72">
+                      <div className="form-group mb-6">
                         <label
                           htmlFor="cname"
                           className="form-label inline-block mb-2"
@@ -498,7 +493,7 @@ export default function editInvoice() {
                         </label>
                         <input
                           type="text"
-                          className="form-control block px-3 py-1.5 w-72 font-normal text-gray-300 bg-white bg-clip-padding border border-solid border-gray-300 rounded m-0"
+                          className="form-control block w-full px-3 py-1.5 font-normal text-gray-400 bg-gray-200 bg-clip-padding border border-solid border-gray-300 rounded m-0"
                           name="date"
                           id="date"
                           defaultValue={
@@ -509,78 +504,79 @@ export default function editInvoice() {
                       </div>
                     </div>
 
-                    {/* top center */}
-                    {/* notes */}
-                    <div>
-                      <div className="form-group mb-6">
-                        <label
-                          htmlFor="notes"
-                          className="form-label inline-block mb-2"
-                        >
-                          Notes:
-                        </label>
-                        <textarea
-                          autoComplete="off"
-                          type="text"
-                          className="form-control block px-3 py-1.5 w-full md:w-96 h-32 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
-                          name="notes"
-                          id="notes"
-                          placeholder="Enter Notes"
-                          onChange={handleChange}
-                          defaultValue={data.notes}
-                        ></textarea>
-                      </div>
-                    </div>
-
                     {/* top right */}
-                    <div>
+                    <div className="flex flex-col-reverse md:grid md:grid-cols-8 md:gap-20 w-full md:col-span-8">
+                      {/* notes */}
+                      <div className="col-span-4">
+                        <div className="form-group mb-6">
+                          <label
+                            htmlFor="notes"
+                            className="form-label inline-block mb-2"
+                          >
+                            Notes:
+                          </label>
+                          <textarea
+                            autoComplete="off"
+                            type="text"
+                            className="form-control block px-3 py-1.5 w-full h-32 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                            name="notes"
+                            id="notes"
+                            placeholder="Enter Notes"
+                            onChange={handleChange}
+                            defaultValue={data.notes}
+                          ></textarea>
+                        </div>
+                      </div>
+
                       {/* Status */}
-                      <div className="form-group mb-6">
-                        <label
-                          htmlFor="status"
-                          className="form-label inline-block mb-3"
-                        >
-                          Status:
-                        </label>
-                        <div className="flex px-4 font-medium">
-                          <div>
-                            <div className="form-check">
-                              <input
-                                className="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-[#165081] checked:border--[#165081] focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                                type="radio"
-                                name="status"
-                                id="flexRadioDefault1"
-                                value="not paid"
-                                defaultChecked={
-                                  data.status === "paid" ? false : true
-                                }
-                                onChange={handleChange}
-                              />
-                              <label
-                                className="form-check-label inline-block text-gray-800"
-                                htmlFor="flexRadioDefault1"
-                              >
-                                Not Paid
-                              </label>
-                            </div>
-                            <div className="form-check">
-                              <input
-                                className="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-[#165081] checked:border-[#165081] focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                                type="radio"
-                                name="status"
-                                id="flexRadioDefault2"
-                                value="paid"
-                                defaultChecked={
-                                  data.status === "paid" ? true : false
-                                }
-                                onChange={handleChange}
-                              />
-                              <label
-                                className="form-check-label inline-block text-gray-800"
-                                htmlFor="flexRadioDefault2"
-                              >
-                                Paid
-                              </label>
+                      <div className="col-span-4">
+                        <div className="form-group mb-6">
+                          <label
+                            htmlFor="status"
+                            className="form-label inline-block mb-3"
+                          >
+                            Status:
+                          </label>
+                          <div className="flex px-4 font-medium">
+                            <div>
+                              <div className="form-check">
+                                <input
+                                  className="form-check-input appearance-none rounded-full h-4 w-4 border-2 border-gray-300 bg-white checked:bg-primary focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                  type="radio"
+                                  name="status"
+                                  id="flexRadioDefault1"
+                                  value="not paid"
+                                  defaultChecked={
+                                    data.status === "paid" ? false : true
+                                  }
+                                  onChange={handleChange}
+                                />
+                                <label
+                                  className="form-check-label inline-block text-gray-800"
+                                  htmlFor="flexRadioDefault1"
+                                >
+                                  Not Paid
+                                </label>
+                              </div>
+                              <div className="form-check">
+                                <input
+                                  className="form-check-input appearance-none rounded-full h-4 w-4 border-2 border-gray-300 bg-white checkedbg-primary focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                  type="radio"
+                                  name="status"
+                                  id="flexRadioDefault2"
+                                  value="paid"
+                                  defaultChecked={
+                                    data.status === "paid" ? true : false
+                                  }
+                                  onChange={handleChange}
+                                />
+                                <label
+                                  className="form-check-label inline-block text-gray-800"
+                                  htmlFor="flexRadioDefault2"
+                                >
+                                  Paid
+                                </label>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -590,208 +586,205 @@ export default function editInvoice() {
                 </div>
 
                 {/* bottom */}
-                <div className="mt-6">
-                  <div>
-                    <h2 className="text-lg md:text-xl mb-3">Invoice</h2>
-                  </div>
+                <div className="mt-6 ">
+                  <h2 className="text-lg md:text-xl mb-3">Items</h2>
+                  <hr className="mb-4" />
 
-                  <hr />
-                  <br />
+                  <div className="px-0 md:px-4">
+                    <h2 className="text-right px-4">
+                      <b>
+                        Total:{" "}
+                        <span id="grandTotal">
+                          {localStringToNumber(0).toLocaleString(undefined, {
+                            maximumFractionDigits: 0,
+                            currency: "IDR",
+                            style: "currency",
+                            currencyDisplay: "symbol",
+                          })}
+                        </span>
+                      </b>
+                    </h2>
 
-                  <h2 className="text-right px-4">
-                    <b>
-                      Total:{" "}
-                      <span id="grandTotal">
-                        {localStringToNumber(0).toLocaleString(undefined, {
-                          maximumFractionDigits: 0,
-                          currency: "IDR",
-                          style: "currency",
-                          currencyDisplay: "symbol",
-                        })}
-                      </span>
-                    </b>
-                  </h2>
+                    {/* table */}
+                    <div className="overflow-auto rounded-lg shadow mt-4">
+                      <table className="w-full">
+                        <thead className="bg-gray-50 border-b-2 border-gray-200 hidden md:table-header-group">
+                          <tr>
+                            <th className="w-12 p-3 text-sm font-semibold tracking-wide text-left"></th>
+                            <th className="w-36 p-3 text-sm font-semibold tracking-wide text-left">
+                              Quantity
+                            </th>
+                            <th className="min-w-[200px] p-3 text-sm font-semibold tracking-wide text-left">
+                              Item Name
+                            </th>
+                            <th className="w-60 p-3 text-sm font-semibold tracking-wide text-left">
+                              Price (/Unit)
+                            </th>
+                            <th className="w-48 p-3 text-sm font-semibold tracking-wide text-left">
+                              Total
+                            </th>
+                          </tr>
+                        </thead>
 
-                  {/* table */}
-                  <div className="overflow-auto rounded-lg shadow mt-4">
-                    <table className="w-full">
-                      <thead className="bg-gray-50 border-b-2 border-gray-200 hidden md:table-header-group">
-                        <tr>
-                          <th className="w-12 p-3 text-sm font-semibold tracking-wide text-left"></th>
-                          <th className="w-36 p-3 text-sm font-semibold tracking-wide text-left">
-                            Quantity
-                          </th>
-                          <th className="min-w-[200px] p-3 text-sm font-semibold tracking-wide text-left">
-                            Item Name
-                          </th>
-                          <th className="w-60 p-3 text-sm font-semibold tracking-wide text-left">
-                            Price (/Unit)
-                          </th>
-                          <th className="w-48 p-3 text-sm font-semibold tracking-wide text-left">
-                            Total
-                          </th>
-                        </tr>
-                      </thead>
+                        <tbody
+                          className="divide-y divide-primary md:divide-gray-100"
+                          id="invoiceForm"
+                        >
+                          {[...Array(noOfRows).keys()].map((i) => (
+                            <tr
+                              className="bg-white flex flex-col md:table-row"
+                              key={i}
+                              id={`tr-${i}`}
+                            >
+                              <td className="p-3 pb-0 md:pb-3 text-sm text-[#F44645] font-bold whitespace-nowrap text-right md:text-center">
+                                <button
+                                  className="mx-auto pt-1 pl-2"
+                                  onClick={(e) => deleteRow(e, i)}
+                                >
+                                  <AiFillMinusCircle size={18} />
+                                </button>
+                              </td>
+                              <td className="p-3 pt-0 md:pt-3 text-sm text-primary font-bold whitespace-nowrap">
+                                <div>
+                                  <h3 className="md:hidden">Quantity</h3>
+                                  <div className="relative mt-2 md:mt-0 rounded-md shadow-sm">
+                                    <input
+                                      autoComplete="off"
+                                      type="number"
+                                      onWheel={(e) => e.target.blur()}
+                                      name="amount"
+                                      id={`amount-${i}`}
+                                      className="form-control block w-full pl-3 pr-16 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                                      placeholder=""
+                                      onChange={handleChangeContent}
+                                      required
+                                    />
+                                    <div className="absolute inset-y-0 right-0 flex items-center">
+                                      <label htmlFor="unit" className="sr-only">
+                                        Unit
+                                      </label>
+                                      <select
+                                        id={`unit-${i}`}
+                                        name="unit"
+                                        className="pl-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border rounded rounded-l-sm border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                                        onChange={handleChangeContent}
+                                        required
+                                        defaultValue={""}
+                                      >
+                                        <option disabled value=""></option>
+                                        <option value="bh">bh</option>
+                                        <option value="ls">ls</option>
+                                        <option value="grs">grs</option>
+                                        <option value="dus">dus</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                </div>
+                              </td>
 
-                      <tbody
-                        className="divide-y divide-primary md:divide-gray-100"
-                        id="invoiceForm"
-                      >
-                        {/* {data.contents.map((content, i) => ( */}
-                        {[...Array(noOfRows).keys()].map((i) => (
-                          <tr
-                            className="bg-white flex flex-col md:table-row"
-                            key={i}
-                            id={`tr-${i}`}
-                          >
-                            <td className="p-3 pb-0 md:pb-3 text-sm text-[#F44645] font-bold whitespace-nowrap text-right md:text-center">
-                              <button
-                                className="mx-auto pt-1 pl-2"
-                                onClick={(e) => deleteRow(e, i)}
-                              >
-                                <AiFillMinusCircle size={18} />
-                              </button>
-                            </td>
-                            <td className="p-3 pt-0 md:pt-3 text-sm text-primary font-bold whitespace-nowrap">
-                              <div>
-                                <h3 className="md:hidden">Quantity</h3>
-                                <div className="relative mt-2 md:mt-0 rounded-md shadow-sm">
+                              <td className="p-3 text-sm first-line:text-primary font-bold whitespace-nowrap">
+                                <h3 className="md:hidden">Item Name</h3>
+                                <div className="mt-2 md:mt-0">
                                   <input
+                                    name="item_name"
                                     autoComplete="off"
-                                    type="number"
-                                    onWheel={(e) => e.target.blur()}
-                                    name="amount"
-                                    id={`amount-${i}`}
-                                    className="form-control block w-full pl-3 pr-16 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                                    type="text"
+                                    className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                                    id={`itemNameInput-${i}`}
                                     placeholder=""
                                     onChange={handleChangeContent}
                                     required
                                   />
-                                  <div className="absolute inset-y-0 right-0 flex items-center">
-                                    <label htmlFor="unit" className="sr-only">
-                                      Unit
-                                    </label>
-                                    <select
-                                      id={`unit-${i}`}
-                                      name="unit"
-                                      className="pl-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border rounded rounded-l-sm border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                                </div>
+                              </td>
+
+                              <td className="p-3 text-sm text-primary font-bold whitespace-nowrap">
+                                <h3 className="md:hidden">Price (/pcs)</h3>
+                                <div>
+                                  <div className="relative mt-2 md:mt-0 rounded-md shadow-sm">
+                                    <input
+                                      name="price_per_item"
+                                      autoComplete="off"
+                                      type="text"
+                                      className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                                      id={`pricePerItemInput-${i}`}
+                                      placeholder=""
+                                      onFocus={(e) => onFocus(e)}
+                                      onBlur={(e) => onBlur(e)}
                                       onChange={handleChangeContent}
                                       required
-                                      defaultValue={""}
-                                    >
-                                      <option disabled value=""></option>
-                                      <option value="bh">bh</option>
-                                      <option value="ls">ls</option>
-                                      <option value="grs">grs</option>
-                                      <option value="dus">dus</option>
-                                    </select>
+                                    />
+                                    <div className="absolute inset-y-0 right-0 flex items-center">
+                                      <label
+                                        htmlFor="price_unit"
+                                        className="sr-only"
+                                      >
+                                        Unit Item
+                                      </label>
+                                      <select
+                                        id={`price_unit-${i}`}
+                                        name="price_unit"
+                                        className="pl-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border rounded rounded-l-sm border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                                        onChange={handleChangeContent}
+                                        required
+                                        defaultValue={""}
+                                      >
+                                        <option disabled value=""></option>
+                                        <option value="bh">/bh</option>
+                                        <option value="ls">/ls</option>
+                                        <option value="grs">/grs</option>
+                                        <option value="dus">/dus</option>
+                                      </select>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            </td>
+                              </td>
 
-                            <td className="p-3 text-sm first-line:text-primary font-bold whitespace-nowrap">
-                              <h3 className="md:hidden">Item Name</h3>
-                              <div className="mt-2 md:mt-0">
-                                <input
-                                  name="item_name"
-                                  autoComplete="off"
-                                  type="text"
-                                  className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
-                                  id={`itemNameInput-${i}`}
-                                  placeholder=""
-                                  onChange={handleChangeContent}
-                                  required
-                                />
-                              </div>
-                            </td>
-
-                            <td className="p-3 text-sm text-primary font-bold whitespace-nowrap">
-                              <h3 className="md:hidden">Price (/pcs)</h3>
-                              <div>
-                                <div className="relative mt-2 md:mt-0 rounded-md shadow-sm">
+                              <td className="p-3 mb-2 md:mb-0 text-sm text-primary font-bold whitespace-nowrap">
+                                <h3 className="md:hidden">Total</h3>
+                                <div className="mt-2 md:mt-0">
                                   <input
-                                    name="price_per_item"
+                                    name="total"
                                     autoComplete="off"
                                     type="text"
                                     className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
-                                    id={`pricePerItemInput-${i}`}
+                                    id={`totalInput-${i}`}
                                     placeholder=""
-                                    onFocus={(e) => onFocus(e)}
+                                    onFocus={(e) => {
+                                      onFocus(e);
+                                      handleChangeContent(e);
+                                    }}
                                     onBlur={(e) => onBlur(e)}
                                     onChange={handleChangeContent}
                                     required
                                   />
-                                  <div className="absolute inset-y-0 right-0 flex items-center">
-                                    <label
-                                      htmlFor="price_unit"
-                                      className="sr-only"
-                                    >
-                                      Unit Item
-                                    </label>
-                                    <select
-                                      id={`price_unit-${i}`}
-                                      name="price_unit"
-                                      className="pl-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border rounded rounded-l-sm border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
-                                      onChange={handleChangeContent}
-                                      required
-                                      defaultValue={""}
-                                    >
-                                      <option disabled value=""></option>
-                                      <option value="bh">/bh</option>
-                                      <option value="ls">/ls</option>
-                                      <option value="grs">/grs</option>
-                                      <option value="dus">/dus</option>
-                                    </select>
-                                  </div>
                                 </div>
-                              </div>
-                            </td>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
 
-                            <td className="p-3 mb-2 md:mb-0 text-sm text-primary font-bold whitespace-nowrap">
-                              <h3 className="md:hidden">Total</h3>
-                              <div className="mt-2 md:mt-0">
-                                <input
-                                  name="total"
-                                  autoComplete="off"
-                                  type="text"
-                                  className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
-                                  id={`totalInput-${i}`}
-                                  placeholder=""
-                                  onFocus={(e) => {
-                                    onFocus(e);
-                                    handleChangeContent(e);
-                                  }}
-                                  onBlur={(e) => onBlur(e)}
-                                  onChange={handleChangeContent}
-                                  required
-                                />
-                              </div>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
+                    <div className="mt-4 mb-5 text-right mr-1">
+                      {/* add button */}
+                      <button
+                        className="group gap-2 h-7 px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
+                        onClick={addRow}
+                      >
+                        <FaPlus size={14} />
+                      </button>
+                    </div>
 
-                  <div className="mt-4 mb-5 text-right mr-1">
-                    {/* add button */}
-                    <button
-                      className="group gap-2 h-7 px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
-                      onClick={addRow}
-                    >
-                      <FaPlus size={14} />
-                    </button>
-                  </div>
-
-                  <div className="text-center">
-                    {/* submit button */}
-                    <button
-                      type="submit"
-                      className="group text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
-                    >
-                      Save
-                    </button>
+                    <div className="text-center">
+                      {/* submit button */}
+                      <button
+                        type="submit"
+                        className="group text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
+                      >
+                        Save
+                      </button>
+                    </div>
                   </div>
                 </div>
               </form>

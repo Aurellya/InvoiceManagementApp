@@ -93,7 +93,7 @@ export default () => {
                   <h3 className="text-xl mb-4 font-bold">Loading</h3>
                   <ReactLoading
                     type="bars"
-                    color="#0E3658"
+                    color="#2b4450"
                     height={100}
                     width={50}
                   />

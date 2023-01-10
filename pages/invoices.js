@@ -79,7 +79,7 @@ export default () => {
 
           {/* invoices table */}
           <div
-            className={`table-div-custom my-4 md:my-12 rounded-md ${
+            className={`table-div-custom p-6 my-4 md:my-12 ${
               theme.dark ? "text-black" : ""
             }`}
           >
@@ -114,8 +114,7 @@ export default () => {
                 {/* large screen view */}
                 <div className="overflow-auto shadow hidden md:block">
                   <table className="w-full">
-                    {/* <thead className="bg-gray-50 border-b-2 border-gray-200"> */}
-                    <thead className="bg-gray-50 border-b-1 border-gray-200">
+                    <thead className="bg-gray-50 border-b-2 border-gray-200">
                       <tr>
                         <th className="w-36 p-3 text-sm font-semibold tracking-wide text-left">
                           Invoice No.
@@ -231,7 +230,7 @@ export default () => {
 
                       <div className="text-center pt-5">
                         <Link
-                          className="py-2 px-5 text-xs font-medium uppercase tracking-wider rounded-md bg-tertiary text-white"
+                          className="py-2 px-5 text-xs font-medium uppercase tracking-wider rounded-md bg-complementary text-white"
                           href={`/invoices/${invoice._id}`}
                         >
                           View Details
