@@ -8,6 +8,7 @@ import { ThemeContext } from "../../context/ThemeContext";
 import Sidebar from "../../components/Sidebar";
 
 import { IoArrowBackOutline } from "react-icons/io5";
+import { TbFileInvoice } from "react-icons/tb";
 
 import ReactLoading from "react-loading";
 
@@ -141,7 +142,7 @@ export default function editPriceList() {
 
         <main className="container py-12 mx-10 md:mx-14">
           {/* header section */}
-          <div className="flex md:items-center justify-between flex-col md:flex-row gap-6 md:gap-0 w-fit md:w-full mb-10">
+          <div className="flex md:items-center justify-between flex-col md:flex-row gap-6 md:gap-0 w-fit md:w-full md:mb-12">
             <div className="flex items-center gap-8">
               <Link
                 className="group flex items-center text-sm font-bold gap-2 py-2 px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
@@ -154,14 +155,13 @@ export default function editPriceList() {
               </Link>
               <h3 className="text-3xl md:text-4xl font-bold">Edit Item Form</h3>
             </div>
-
             <hr className="md:hidden" />
           </div>
 
           {/* error msg */}
           {errorMsg != "" && (
             <div
-              className="flex items-center bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
+              className="flex items-center bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative my-4 md:my:0"
               role="alert"
             >
               <svg
@@ -198,7 +198,6 @@ export default function editPriceList() {
             </div>
           )}
 
-          {/* form */}
           {loading && (
             <div className="py-8">
               <div className="mt-9 flex flex-col justify-center items-center">
@@ -221,176 +220,161 @@ export default function editPriceList() {
             </div>
           )}
 
+          {/* contents */}
           {!loading && data && (
-            <div className="table-div-custom block mb-4 md:mb-12">
-              <form className="flex w-full flex-col" onSubmit={submitForm}>
-                {/* top */}
+            <form className="w-full" onSubmit={submitForm}>
+              <div
+                className={`table-div-custom my-4 md:my-0 px-6 pt-6 pb-1 md:p-6 ${
+                  theme.dark ? "text-black" : ""
+                }`}
+              >
                 <div>
-                  <div className="">
-                    <h2 className="text-lg md:text-xl mb-3">Item Details</h2>
+                  <h2 className="text-lg md:text-xl mb-3">Item Details</h2>
+                </div>
+
+                <hr />
+                <br />
+
+                {/* edit item form */}
+                <div className="flex flex-col lg:grid lg:grid-cols-12 lg:gap-10 pb-2 pt-3 mb-3 md:mb-0">
+                  {/* left */}
+                  <div className="text-primary lg:col-span-6 flex justify-center items-center mb-10 lg:mb-0">
+                    <div className="border-y-8 border-y-primary rounded-full w-fit p-6 lg:mt-[-100px]">
+                      {React.createElement(TbFileInvoice, { size: "200" })}
+                    </div>
+                    <div className="border-y-8 border-y-primary rounded-full w-fit p-6 hidden md:block md:ml-[-20px]">
+                      {React.createElement(TbFileInvoice, { size: "200" })}
+                    </div>
                   </div>
 
-                  <hr />
-                  <br />
+                  {/* right */}
+                  <div className="lg:col-span-4">
+                    {/* product name */}
+                    <div className="form-group mb-6">
+                      <label
+                        htmlFor="product_name"
+                        className="form-label inline-block mb-2"
+                      >
+                        <b>Product Name:</b>
+                      </label>
+                      <input
+                        autoComplete="off"
+                        type="text"
+                        className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                        name="product_name"
+                        id="product_name"
+                        placeholder="Enter Product Name"
+                        onChange={handleChange}
+                        required
+                        defaultValue={
+                          data.product_name ? data.product_name : "-"
+                        }
+                      />
+                    </div>
 
-                  <div className="flex md:pr-40 md:justify-between md:px-6 flex-col md:flex-row text-sm font-bold md:font-medium md:text-base text-gray-700">
-                    {/* top left */}
-                    <div>
-                      {/* Product name */}
-                      <div className="form-group mb-6 w-72">
+                    {/* amount */}
+                    <div className="form-group mb-6">
+                      <div>
                         <label
-                          htmlFor="product_name"
+                          htmlFor="amount"
                           className="form-label inline-block mb-2"
                         >
-                          Product Name:
+                          <b>Amount (/Unit):</b>
                         </label>
-                        <input
-                          autoComplete="off"
-                          type="text"
-                          className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
-                          name="product_name"
-                          id="product_name"
-                          placeholder="Enter Product Name"
-                          onChange={handleChange}
-                          required
-                          defaultValue={
-                            data.product_name ? data.product_name : "-"
-                          }
-                        />
-                      </div>
 
-                      {/* Amount */}
-                      <div className="form-group mb-6">
-                        <div>
-                          <label
-                            htmlFor="amount"
-                            className="form-label inline-block mb-2"
-                          >
-                            Amount (/Unit):
+                        <div className="flex">
+                          <input
+                            autoComplete="off"
+                            type="number"
+                            className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                            name="amount"
+                            id="amount"
+                            placeholder="Enter Amount"
+                            onChange={handleChange}
+                            required
+                            defaultValue={data.amount ? data.amount : 0}
+                          />
+                          <label htmlFor="unit" className="sr-only">
+                            Unit
                           </label>
-
-                          <div className="flex">
-                            <input
-                              autoComplete="off"
-                              type="number"
-                              className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
-                              name="amount"
-                              id="amount"
-                              placeholder="Enter Amount"
-                              onChange={handleChange}
-                              required
-                              defaultValue={data.amount ? data.amount : 0}
-                            />
-                            <label htmlFor="unit" className="sr-only">
-                              Unit
-                            </label>
-                            <select
-                              id="unit"
-                              name="unit"
-                              className="pl-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border rounded rounded-l-sm border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
-                              required
-                              onChange={handleChange}
-                              defaultValue={data.unit ? data.unit : ""}
-                            >
-                              <option disabled value=""></option>
-                              <option value="bh">/bh</option>
-                              <option value="ls">/ls</option>
-                              <option value="grs">/grs</option>
-                              <option value="dus">/dus</option>
-                            </select>
-                          </div>
+                          <select
+                            id="unit"
+                            name="unit"
+                            className="pl-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border rounded rounded-l-sm border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                            required
+                            onChange={handleChange}
+                            defaultValue={data.unit ? data.unit : ""}
+                          >
+                            <option disabled value=""></option>
+                            <option value="bh">/bh</option>
+                            <option value="ls">/ls</option>
+                            <option value="grs">/grs</option>
+                            <option value="dus">/dus</option>
+                          </select>
                         </div>
                       </div>
-
-                      {/* Price */}
-                      <div className="form-group mb-6">
-                        <label
-                          htmlFor="price"
-                          className="form-label inline-block mb-2"
-                        >
-                          Price:
-                        </label>
-                        <input
-                          autoComplete="off"
-                          type="price"
-                          className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
-                          name="price"
-                          id="price"
-                          placeholder="Enter Price"
-                          onChange={handleChange}
-                          onFocus={(e) => onFocus(e)}
-                          onBlur={(e) => onBlur(e)}
-                          defaultValue={data.price.toLocaleString("en-US", {
-                            style: "currency",
-                            currency: "IDR",
-                            maximumFractionDigits: 0,
-                          })}
-                          required
-                        />
-                      </div>
                     </div>
 
-                    {/* top center */}
-                    {/* notes */}
-                    <div>
-                      {/* Address */}
-                      <div className="form-group mb-6">
-                        <label
-                          htmlFor="address"
-                          className="form-label inline-block mb-2"
-                        >
-                          Address:
-                        </label>
-                        <textarea
-                          autoComplete="off"
-                          type="text"
-                          className="form-control block px-3 py-1.5 w-full md:w-96 h-32 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
-                          name="address"
-                          id="address"
-                          placeholder="Enter Address"
-                          onChange={handleChange}
-                          required
-                          defaultValue={data.address ? data.address : "-"}
-                        ></textarea>
-                      </div>
+                    {/* price */}
+                    <div className="form-group mb-6">
+                      <label
+                        htmlFor="price"
+                        className="form-label inline-block mb-2"
+                      >
+                        <b>Price:</b>
+                      </label>
+                      <input
+                        autoComplete="off"
+                        type="price"
+                        className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                        name="price"
+                        id="price"
+                        placeholder="Enter Price"
+                        onChange={handleChange}
+                        onFocus={(e) => onFocus(e)}
+                        onBlur={(e) => onBlur(e)}
+                        defaultValue={data.price.toLocaleString("en-US", {
+                          style: "currency",
+                          currency: "IDR",
+                          maximumFractionDigits: 0,
+                        })}
+                        required
+                      />
                     </div>
 
-                    {/* top right */}
-                    <div>
-                      {/* Remarks */}
-                      <div className="form-group mb-6">
-                        <label
-                          htmlFor="remarks"
-                          className="form-label inline-block mb-2"
-                        >
-                          Remarks:
-                        </label>
-                        <textarea
-                          autoComplete="off"
-                          type="text"
-                          className="form-control block px-3 py-1.5 w-full md:w-96 h-32 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
-                          name="remarks"
-                          id="remarks"
-                          placeholder="Enter Remarks"
-                          onChange={handleChange}
-                          defaultValue={data.remarks ? data.remarks : "-"}
-                        ></textarea>
-                      </div>
+                    {/* remarks */}
+                    <div className="form-group mb-6">
+                      <label
+                        htmlFor="remarks"
+                        className="form-label inline-block mb-2"
+                      >
+                        <b>Remarks:</b>
+                      </label>
+                      <textarea
+                        autoComplete="off"
+                        type="text"
+                        className="form-control block px-3 py-1.5 w-full h-32 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                        name="remarks"
+                        id="remarks"
+                        placeholder="Enter Remarks"
+                        onChange={handleChange}
+                        defaultValue={data.remarks ? data.remarks : "-"}
+                      ></textarea>
+                    </div>
+
+                    {/* submit button */}
+                    <div className="text-center">
+                      <button
+                        type="submit"
+                        className="group text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
+                      >
+                        Save
+                      </button>
                     </div>
                   </div>
                 </div>
-
-                <div className="text-center">
-                  {/* submit button */}
-                  <button
-                    type="submit"
-                    className="group text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
-                  >
-                    Save
-                  </button>
-                </div>
-              </form>
-            </div>
+              </div>
+            </form>
           )}
         </main>
       </section>

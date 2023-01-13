@@ -357,7 +357,7 @@ export default function addInvoice() {
             </div>
           )}
 
-          {/* form */}
+          {/* add invoice form */}
           <form className="w-full" onSubmit={submitForm}>
             <div
               className={`table-div-custom my-4 md:my-0 px-6 pt-6 pb-1 md:p-6 ${
@@ -396,7 +396,7 @@ export default function addInvoice() {
                     />
                   </div>
 
-                  {/* Date */}
+                  {/* date */}
                   <div className="form-group mb-6">
                     <label
                       htmlFor="date"
@@ -414,7 +414,7 @@ export default function addInvoice() {
                     />
                   </div>
 
-                  {/* Status */}
+                  {/* status */}
                   <div className="form-group mb-6">
                     <label
                       htmlFor="status"
@@ -682,8 +682,8 @@ export default function addInvoice() {
                       </table>
                     </div>
 
+                    {/* add button */}
                     <div className="mt-4 mb-5 text-right mr-1">
-                      {/* add button */}
                       <button
                         className="group gap-2 h-7 px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
                         onClick={addRow}
@@ -692,8 +692,8 @@ export default function addInvoice() {
                       </button>
                     </div>
 
+                    {/* submit button */}
                     <div className="text-center lg:hidden">
-                      {/* submit button */}
                       <button
                         type="submit"
                         className="group text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"

@@ -10,7 +10,7 @@
 
 .button {
   /* @apply w-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-md; */
-  @apply w-full bg-gradient-to-r from-[#0E3658] to-[#0E3658] rounded-md;
+  @apply w-full bg-primary rounded-md;
   @apply py-3 text-gray-50 text-lg transition duration-300;
 }
 
@@ -20,7 +20,7 @@
 }
 
 .button_custom {
-  @apply w-full border border-[#0E3658] py-3 flex justify-center gap-2 hover:opacity-60 transition duration-300;
+  @apply w-full border border-primary py-3 flex justify-center gap-2 hover:opacity-60 transition duration-300;
 }
 
 .input_text + * {
@@ -28,10 +28,10 @@
 }
 
 .input_text:focus + * {
-  color: #28abf4;
+  color: #d27c0bd6;
 }
 
 .input_text:not([type="email"]) ~ span:hover * {
-  color: #28abf4;
+  color: #d27c0bd6;
   cursor: pointer;
 }

@@ -424,7 +424,6 @@ export default function editInvoice() {
             </div>
           )}
 
-          {/* form */}
           {loading && (
             <div className="py-8">
               <div className="mt-9 flex flex-col justify-center items-center">
@@ -447,8 +446,10 @@ export default function editInvoice() {
             </div>
           )}
 
+          {/* contents */}
           {!loading && data && (
             <div className="table-div-custom my-4 md:my-0 p-6 block mb-4 md:mb-0">
+              {/* edit invoice form */}
               <form className="flex w-full flex-col" onSubmit={submitForm}>
                 {/* top */}
                 <div>
@@ -460,7 +461,6 @@ export default function editInvoice() {
                   <br />
 
                   <div className="md:py-2 px-0 md:px-4 flex md:justify-between flex-col md:grid md:grid-cols-12 md:gap-20 text-sm font-bold md:font-medium md:text-base text-gray-700">
-                    {/* top left */}
                     <div className="md:col-span-3">
                       {/* customer name */}
                       <div className="form-group mb-6">
@@ -483,7 +483,7 @@ export default function editInvoice() {
                         />
                       </div>
 
-                      {/* Date */}
+                      {/* date */}
                       <div className="form-group mb-6">
                         <label
                           htmlFor="date"
@@ -504,7 +504,6 @@ export default function editInvoice() {
                       </div>
                     </div>
 
-                    {/* top right */}
                     <div className="flex flex-col-reverse md:grid md:grid-cols-8 md:gap-20 w-full md:col-span-8">
                       {/* notes */}
                       <div className="col-span-4">
@@ -528,7 +527,7 @@ export default function editInvoice() {
                         </div>
                       </div>
 
-                      {/* Status */}
+                      {/* status */}
                       <div className="col-span-4">
                         <div className="form-group mb-6">
                           <label
@@ -766,8 +765,8 @@ export default function editInvoice() {
                       </table>
                     </div>
 
+                    {/* add button */}
                     <div className="mt-4 mb-5 text-right mr-1">
-                      {/* add button */}
                       <button
                         className="group gap-2 h-7 px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
                         onClick={addRow}
@@ -776,8 +775,8 @@ export default function editInvoice() {
                       </button>
                     </div>
 
+                    {/* submit button */}
                     <div className="text-center">
-                      {/* submit button */}
                       <button
                         type="submit"
                         className="group text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"

@@ -1,7 +1,5 @@
 import React, { useContext } from "react";
 import Head from "next/head";
-// import Image from "next/image";
-// import styles from "../styles/Home.module.css";
 import Link from "next/link";
 import { getSession, useSession, signOut } from "next-auth/react";
 import Sidebar from "../components/Sidebar";
@@ -31,16 +29,16 @@ export default function Home() {
   );
 }
 
-// Guest
+// Guest Homepage
 function Guest() {
   return (
     <main className="container mx-auto text-center py-20">
-      <h3 className="text-4xl font-bold">Guest Homepage</h3>
+      <h3 className="text-4xl font-bold">Use Login Page!</h3>
 
       <div className="flex justify-center">
         <Link
           href={"/login"}
-          className="mt-5 px-10 py-1 rounded-sm bg-indigo-500 text-gray-50"
+          className="mt-5 px-10 py-1 rounded-sm bg-primary text-gray-50"
         >
           Sign In
         </Link>
@@ -49,7 +47,7 @@ function Guest() {
   );
 }
 
-// Authorize User
+// Authorizes User Homepage
 function User({ session, handleSignOut }) {
   // theme
   const theme = useContext(ThemeContext);
@@ -69,6 +67,7 @@ function User({ session, handleSignOut }) {
             <hr className="md:hidden" />
           </div>
 
+          {/* summary dashboard */}
           <div
             className={`table-div-custom p-6 my-4 md:my-12 rounded-md ${
               theme.dark ? "text-black" : ""
@@ -217,7 +216,9 @@ function User({ session, handleSignOut }) {
             </div>
           </div>
 
+          {/* additional info */}
           <div className="flex flex-wrap md:grid md:grid-cols-12 md:gap-14 my-4 md:mt-0 md:mb-12">
+            {/* left */}
             <div
               className={`table-div-custom p-6 rounded-md col-span-7 w-full mb-4 md:mb-0 ${
                 theme.dark ? "text-black" : ""
@@ -230,6 +231,7 @@ function User({ session, handleSignOut }) {
               <div>[table]</div>
             </div>
 
+            {/* right */}
             <div
               className={`table-div-custom p-6 rounded-md col-span-5 w-full ${
                 theme.dark ? "text-black" : ""

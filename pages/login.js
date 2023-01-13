@@ -74,12 +74,6 @@ export default function Login() {
             </span>
           </div>
 
-          {/* {formik.errors.email && formik.touched.email ? (
-            <span className="text-rose-500">{formik.errors.email}</span>
-          ) : (
-            <></>
-          )} */}
-
           <div
             className={`${styles.input_group} ${
               formik.errors.password && formik.touched.password
@@ -102,12 +96,6 @@ export default function Login() {
             </span>
           </div>
 
-          {/* {formik.errors.password && formik.touched.password ? (
-            <span className="text-rose-500">{formik.errors.password}</span>
-          ) : (
-            <></>
-          )} */}
-
           {/* login buttons */}
           <div className="input-button">
             <button type="submit" className={styles.button}>
@@ -124,18 +112,11 @@ export default function Login() {
               <Image src={"/assets/google.svg"} width="20" height={20} alt="" />
             </button>
           </div>
-          {/* <div className="input-button">
-            <button type="button" className={styles.button_custom}>
-              Sign In with Github{" "}
-              <Image src={"/assets/github.svg"} width={25} height={25} alt="" />
-            </button>
-          </div> */}
         </form>
 
-        {/* bottom */}
         <p className="text-center text-gray-400 ">
           don't have an account yet?{" "}
-          <Link href={"/register"} className="text-[#0E3658] hover:underline">
+          <Link href={"/register"} className="text-primary hover:underline">
             Sign Up
           </Link>
         </p>

@@ -73,12 +73,6 @@ export default function Register() {
             </span>
           </div>
 
-          {/* {formik.errors.username && formik.touched.username ? (
-            <span className="text-rose-500">{formik.errors.username}</span>
-          ) : (
-            <></>
-          )} */}
-
           <div
             className={`${styles.input_group} ${
               formik.errors.email && formik.touched.email
@@ -97,12 +91,6 @@ export default function Register() {
               <HiAtSymbol size={25} />
             </span>
           </div>
-
-          {/* {formik.errors.email && formik.touched.email ? (
-            <span className="text-rose-500">{formik.errors.email}</span>
-          ) : (
-            <></>
-          )} */}
 
           <div
             className={`${styles.input_group} ${
@@ -126,12 +114,6 @@ export default function Register() {
             </span>
           </div>
 
-          {/* {formik.errors.password && formik.touched.password ? (
-            <span className="text-rose-500">{formik.errors.password}</span>
-          ) : (
-            <></>
-          )} */}
-
           <div
             className={`${styles.input_group} ${
               formik.errors.cpassword && formik.touched.cpassword
@@ -154,12 +136,6 @@ export default function Register() {
             </span>
           </div>
 
-          {/* {formik.errors.cpassword && formik.touched.cpassword ? (
-            <span className="text-rose-500">{formik.errors.cpassword}</span>
-          ) : (
-            <></>
-          )} */}
-
           {/* login buttons */}
           <div className="input-button">
             <button type="submit" className={styles.button}>
@@ -168,10 +144,9 @@ export default function Register() {
           </div>
         </form>
 
-        {/* bottom */}
         <p className="text-center text-gray-400 ">
           Have an account?{" "}
-          <Link href={"/login"} className="text-[#28ABF4]">
+          <Link href={"/login"} className="text-primary">
             Sign In
           </Link>
         </p>

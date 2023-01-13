@@ -52,7 +52,6 @@ body {
 
 /* custom css */
 .table-div-custom {
-  /* @apply p-6 bg-gray-100 shadow-sm; */
   @apply bg-[#F8FAFC] shadow rounded-md;
 }
 
@@ -63,7 +62,3 @@ body {
 .dashboard-icon {
   @apply flex justify-center items-center text-white opacity-25 pl-2;
 }
-
-/* .invoice-table {
-  @apply bg-gradient-to-r from-[#F1FAFF] to-[#fff];
-} */

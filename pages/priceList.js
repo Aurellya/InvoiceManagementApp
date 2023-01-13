@@ -79,7 +79,7 @@ export default () => {
 
           {/* priceLists table */}
           <div
-            className={`table-div-custom my-4 md:my-12 ${
+            className={`table-div-custom p-6 my-4 md:my-12 ${
               theme.dark ? "text-black" : ""
             }`}
           >

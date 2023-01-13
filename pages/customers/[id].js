@@ -9,6 +9,7 @@ import Sidebar from "../../components/Sidebar";
 
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { IoArrowBackOutline } from "react-icons/io5";
+import { TiUserOutline } from "react-icons/ti";
 
 import ReactLoading from "react-loading";
 
@@ -85,7 +86,7 @@ export default function Customer() {
 
         <main className="container py-12 mx-10 md:mx-14">
           {/* header section */}
-          <div className="flex md:items-center justify-between mb-10">
+          <div className="flex md:items-center justify-between flex-col md:flex-row gap-4 md:gap-0 w-full md:mb-12">
             <div className="flex items-center gap-8">
               <Link
                 className="group button-custom bg-primary"
@@ -99,7 +100,7 @@ export default function Customer() {
               <h3 className="text-3xl md:text-4xl font-bold">Customer</h3>
             </div>
 
-            {/* large screen view - btn group */}
+            {/* btn group: for large screen view */}
             <div className="items-center gap-2 hidden md:flex">
               <Link
                 className="group button-custom bg-primary"
@@ -118,9 +119,9 @@ export default function Customer() {
             </div>
           </div>
 
-          {/* Modal */}
+          {/* modal */}
           <div className="hidden" id="modal">
-            <div className="bg-slate-800 bg-opacity-50 flex justify-center items-center absolute top-0 right-0 bottom-0 left-0">
+            <div className="bg-slate-800 bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0">
               <div className="bg-white px-10 py-8 rounded-md text-center">
                 <h1 className="text-xl mb-6 font-bold">Do you Want Delete?</h1>
                 <button
@@ -142,7 +143,7 @@ export default function Customer() {
           {/* error msg */}
           {errorMsg != "" && (
             <div
-              className="flex items-center bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
+              className="flex items-center bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative my-4 md:my:0"
               role="alert"
             >
               <svg
@@ -179,102 +180,117 @@ export default function Customer() {
             </div>
           )}
 
-          {loading && (
-            <div className="py-8">
-              <div className="mt-9 flex flex-col justify-center items-center">
-                <h3 className="text-xl mb-4 font-bold">Loading</h3>
-                <ReactLoading
-                  type="bars"
-                  color="#2b4450"
-                  height={100}
-                  width={50}
-                />
-              </div>
+          {/* content */}
+          <div
+            className={`table-div-custom my-4 md:my-0 p-6 block mb-4 md:mb-0 ${
+              theme.dark ? "text-black" : ""
+            }`}
+          >
+            <div>
+              <h1 className="text-lg md:text-xl mb-3">Customer Details</h1>
             </div>
-          )}
 
-          {!loading && !customer && (
-            <div className="py-8">
-              <div className="mt-9 flex flex-col justify-center items-center">
-                <h3 className="text-xl mb-4 font-bold">No Data</h3>
-              </div>
-            </div>
-          )}
+            <hr />
+            <br />
 
-          {!loading && customer && (
-            <div className="mb-10 flex gap-0 md:gap-16 flex-col md:flex-row">
-              {/* details section*/}
-              <div className="md:p-4 w-full">
-                <div className="">
-                  <h2 className="text-lg md:text-xl mb-3">Details</h2>
-                </div>
-
-                <hr />
-                <br />
-
-                <div className="md:flex gap-20 md:gap-40 text-sm font-medium md:text-base whitespace-nowrap">
-                  <div>
-                    <p>
-                      <b>Customer No: </b>
-                    </p>
-                    <p>{customer._id}</p>
-                    <br />
-                    <p>
-                      <b>Customer Name: </b>
-                    </p>
-                    <p>{customer.name}</p>
-                    <br />
-                    <p>
-                      <b>Phone No.: </b>
-                    </p>
-                    <p>{customer.phone_no}</p>
-                    <br />
-                    <p>
-                      <b>Email: </b>
-                    </p>
-                    <p>{customer.email}</p>
-                    <br />
-                  </div>
-
-                  <div className="text-sm font-medium md:text-base">
-                    <p>
-                      <b>Address: </b>
-                    </p>
-                    <p>{customer.address}</p>
-                    <br />
-                  </div>
-
-                  <div className="text-sm font-medium md:text-base">
-                    <p>
-                      <b>Remarks: </b>
-                    </p>
-                    <p>{customer.remarks ? customer.remarks : "-"}</p>
-                  </div>
+            {loading && (
+              <div className="py-8">
+                <div className="mt-9 flex flex-col justify-center items-center">
+                  <h3 className="text-xl mb-4 font-bold">Loading</h3>
+                  <ReactLoading
+                    type="bars"
+                    color="#2b4450"
+                    height={100}
+                    width={50}
+                  />
                 </div>
               </div>
+            )}
 
-              <hr className="md:hidden mt-6" />
-              <br />
-
-              {/* mobile view - btn group */}
-              <div className="flex items-center justify-between md:hidden">
-                <Link
-                  className="group button-custom bg-primary"
-                  href={`/editCustomer/${router.query.id}`}
-                >
-                  <div>{React.createElement(AiFillEdit, { size: "12" })}</div>
-                  <h2 className="whitespace-pre">Edit</h2>
-                </Link>
-                <button
-                  className="group button-custom bg-[#F44645]"
-                  onClick={showModalDeleteConfirmation}
-                >
-                  <div>{React.createElement(AiFillDelete, { size: "12" })}</div>
-                  <h2 className="whitespace-pre">Delete</h2>
-                </button>
+            {!loading && !customer && (
+              <div className="py-8">
+                <div className="mt-9 flex flex-col justify-center items-center">
+                  <h3 className="text-xl mb-4 font-bold">No Data</h3>
+                </div>
               </div>
-            </div>
-          )}
+            )}
+
+            {/* customer details */}
+            {!loading && customer && (
+              <div className="flex flex-col lg:grid lg:grid-cols-12 lg:gap-10 pb-0 md:pb-2 pt-3">
+                {/* left */}
+                <div className="text-primary lg:col-span-4 flex justify-center items-center mb-10 lg:mb-0">
+                  <div className="border-y-8 border-y-primary rounded-full w-fit p-3">
+                    {React.createElement(TiUserOutline, { size: "220" })}
+                  </div>
+                </div>
+
+                {/* right */}
+                <div className="flex gap-0 md:gap-16 flex-col md:flex-row col-span-8">
+                  <div className="md:px-4 py-1 md:flex gap-20 md:gap-40 font-medium text-base whitespace-nowrap">
+                    <div>
+                      <p>
+                        <b>Customer No: </b>
+                      </p>
+                      <p>{customer._id}</p>
+                      <br />
+                      <p>
+                        <b>Customer Name: </b>
+                      </p>
+                      <p>{customer.name}</p>
+                      <br />
+                      <p>
+                        <b>Phone No.: </b>
+                      </p>
+                      <p>{customer.phone_no}</p>
+                      <br />
+                      <p>
+                        <b>Email: </b>
+                      </p>
+                      <p>{customer.email}</p>
+                      <br className="md:hidden" />
+                    </div>
+
+                    <div className="font-medium text-base">
+                      <p>
+                        <b>Address: </b>
+                      </p>
+                      <p>{customer.address}</p>
+                      <br />
+                      <p>
+                        <b>Remarks: </b>
+                      </p>
+                      <p>{customer.remarks ? customer.remarks : "-"}</p>
+                    </div>
+                  </div>
+
+                  <hr className="md:hidden my-6" />
+
+                  {/* btn group: for mobile view */}
+                  <div className="flex items-center justify-between md:hidden">
+                    <Link
+                      className="group button-custom bg-primary"
+                      href={`/editCustomer/${router.query.id}`}
+                    >
+                      <div>
+                        {React.createElement(AiFillEdit, { size: "12" })}
+                      </div>
+                      <h2 className="whitespace-pre">Edit</h2>
+                    </Link>
+                    <button
+                      className="group button-custom bg-[#F44645]"
+                      onClick={showModalDeleteConfirmation}
+                    >
+                      <div>
+                        {React.createElement(AiFillDelete, { size: "12" })}
+                      </div>
+                      <h2 className="whitespace-pre">Delete</h2>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         </main>
       </section>
     </>

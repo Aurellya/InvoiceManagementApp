@@ -9,6 +9,7 @@ import Sidebar from "../../components/Sidebar";
 
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { IoArrowBackOutline } from "react-icons/io5";
+import { TbFileInvoice } from "react-icons/tb";
 
 import ReactLoading from "react-loading";
 
@@ -85,7 +86,7 @@ export default function PriceList() {
 
         <main className="container py-12 mx-10 md:mx-14">
           {/* header section */}
-          <div className="flex md:items-center justify-between mb-10">
+          <div className="flex md:items-center justify-between w-full md:mb-12">
             <div className="flex items-center gap-8">
               <Link
                 className="group button-custom bg-primary"
@@ -99,7 +100,7 @@ export default function PriceList() {
               <h3 className="text-3xl md:text-4xl font-bold">Item</h3>
             </div>
 
-            {/* large screen view - btn group */}
+            {/* btn group: large screen view */}
             <div className="items-center gap-2 hidden md:flex">
               <Link
                 className="group button-custom bg-primary"
@@ -118,9 +119,9 @@ export default function PriceList() {
             </div>
           </div>
 
-          {/* Modal */}
+          {/* modal */}
           <div className="hidden" id="modal">
-            <div className="bg-slate-800 bg-opacity-50 flex justify-center items-center absolute top-0 right-0 bottom-0 left-0">
+            <div className="bg-slate-800 bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0">
               <div className="bg-white px-10 py-8 rounded-md text-center">
                 <h1 className="text-xl mb-6 font-bold">Do you Want Delete?</h1>
                 <button
@@ -142,7 +143,7 @@ export default function PriceList() {
           {/* error msg */}
           {errorMsg != "" && (
             <div
-              className="flex items-center bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
+              className="flex items-center bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative my-4 md:my:0"
               role="alert"
             >
               <svg
@@ -179,100 +180,115 @@ export default function PriceList() {
             </div>
           )}
 
-          {loading && (
-            <div className="py-8">
-              <div className="mt-9 flex flex-col justify-center items-center">
-                <h3 className="text-xl mb-4 font-bold">Loading</h3>
-                <ReactLoading
-                  type="bars"
-                  color="#2b4450"
-                  height={100}
-                  width={50}
-                />
-              </div>
+          {/* contents */}
+          <div
+            className={`table-div-custom my-4 md:my-0 p-6 block mb-4 md:mb-0 ${
+              theme.dark ? "text-black" : ""
+            }`}
+          >
+            <div>
+              <h1 className="text-lg md:text-xl mb-3">Item Details</h1>
             </div>
-          )}
 
-          {!loading && !item && (
-            <div className="py-8">
-              <div className="mt-9 flex flex-col justify-center items-center">
-                <h3 className="text-xl mb-4 font-bold">No Data</h3>
-              </div>
-            </div>
-          )}
+            <hr />
+            <br />
 
-          {!loading && item && (
-            <div className="mb-10 flex gap-0 md:gap-16 flex-col md:flex-row">
-              {/* details section*/}
-              <div className="md:p-4 w-full">
-                <div className="">
-                  <h2 className="text-lg md:text-xl mb-3">Details</h2>
-                </div>
-
-                <hr />
-                <br />
-
-                <div className="md:flex gap-20 md:gap-40 text-sm font-medium md:text-base whitespace-nowrap">
-                  <div>
-                    <p>
-                      <b>Item ID: </b>
-                    </p>
-                    <p>{item._id}</p>
-                    <br />
-                    <p>
-                      <b>Product Name: </b>
-                    </p>
-                    <p>{item.product_name}</p>
-                    <br />
-                    <p>
-                      <b> Amount (/Unit): </b>
-                    </p>
-                    <p> {item.amount + " " + item.unit}</p>
-                    <br />
-                    <p>
-                      <b>Price: </b>
-                    </p>
-                    <p>
-                      {item.price.toLocaleString("en-US", {
-                        style: "currency",
-                        currency: "IDR",
-                        maximumFractionDigits: 0,
-                      })}
-                    </p>
-                    <br />
-                  </div>
-
-                  <div className="text-sm font-medium md:text-base">
-                    <p>
-                      <b>Remarks: </b>
-                    </p>
-                    <p>{item.remarks ? item.remarks : "-"}</p>
-                  </div>
+            {loading && (
+              <div className="py-8">
+                <div className="mt-9 flex flex-col justify-center items-center">
+                  <h3 className="text-xl mb-4 font-bold">Loading</h3>
+                  <ReactLoading
+                    type="bars"
+                    color="#2b4450"
+                    height={100}
+                    width={50}
+                  />
                 </div>
               </div>
+            )}
 
-              <hr className="md:hidden mt-6" />
-              <br />
-
-              {/* mobile view - btn group */}
-              <div className="flex items-center justify-between md:hidden">
-                <Link
-                  className="group button-custom bg-primary"
-                  href={`/editPriceList/${router.query.id}`}
-                >
-                  <div>{React.createElement(AiFillEdit, { size: "12" })}</div>
-                  <h2 className="whitespace-pre">Edit</h2>
-                </Link>
-                <button
-                  className="group button-custom bg-[#F44645]"
-                  onClick={showModalDeleteConfirmation}
-                >
-                  <div>{React.createElement(AiFillDelete, { size: "12" })}</div>
-                  <h2 className="whitespace-pre">Delete</h2>
-                </button>
+            {!loading && !item && (
+              <div className="py-8">
+                <div className="mt-9 flex flex-col justify-center items-center">
+                  <h3 className="text-xl mb-4 font-bold">No Data</h3>
+                </div>
               </div>
-            </div>
-          )}
+            )}
+
+            {/* item details */}
+            {!loading && item && (
+              <div className="flex flex-col lg:grid lg:grid-cols-12 lg:gap-10 pb-0 md:pb-2 pt-3">
+                {/* left */}
+                <div className="text-primary lg:col-span-6 flex justify-center items-center mb-10 lg:mb-0">
+                  <div className="border-y-8 border-y-primary rounded-full w-fit p-6 lg:mt-[-70px]">
+                    {React.createElement(TbFileInvoice, { size: "200" })}
+                  </div>
+                  <div className="border-y-8 border-y-primary rounded-full w-fit p-6 hidden md:block md:ml-[-20px] lg:mt-[30px]">
+                    {React.createElement(TbFileInvoice, { size: "200" })}
+                  </div>
+                </div>
+
+                {/* right */}
+                <div className="lg:col-span-4">
+                  <p>
+                    <b>Item ID: </b>
+                  </p>
+                  <p>{item._id}</p>
+                  <br />
+                  <p>
+                    <b>Product Name: </b>
+                  </p>
+                  <p>{item.product_name}</p>
+                  <br />
+                  <p>
+                    <b> Amount (/Unit): </b>
+                  </p>
+                  <p> {item.amount + " " + item.unit}</p>
+                  <br />
+                  <p>
+                    <b>Price: </b>
+                  </p>
+                  <p>
+                    {item.price.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "IDR",
+                      maximumFractionDigits: 0,
+                    })}
+                  </p>
+                  <br />
+                  <p>
+                    <b>Remarks: </b>
+                  </p>
+                  <p>{item.remarks ? item.remarks : "-"}</p>
+
+                  <br className="hidden lg:block" />
+                  <hr className="md:hidden my-6" />
+
+                  {/* btn group: for mobile view */}
+                  <div className="flex items-center justify-between md:hidden">
+                    <Link
+                      className="group button-custom bg-primary"
+                      href={`/editPriceList/${router.query.id}`}
+                    >
+                      <div>
+                        {React.createElement(AiFillEdit, { size: "12" })}
+                      </div>
+                      <h2 className="whitespace-pre">Edit</h2>
+                    </Link>
+                    <button
+                      className="group button-custom bg-[#F44645]"
+                      onClick={showModalDeleteConfirmation}
+                    >
+                      <div>
+                        {React.createElement(AiFillDelete, { size: "12" })}
+                      </div>
+                      <h2 className="whitespace-pre">Delete</h2>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         </main>
       </section>
     </>

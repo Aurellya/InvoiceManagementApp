@@ -101,7 +101,7 @@ export default function Invoice() {
 
             <hr className="md:hidden mb-2" />
 
-            {/* large screen view - btn group */}
+            {/* btn group: for large screen view */}
             <div className="items-center gap-2 hidden md:flex">
               <button className="group button-custom bg-tertiary">
                 <div>{React.createElement(AiFillPrinter, { size: "12" })}</div>
@@ -124,9 +124,9 @@ export default function Invoice() {
             </div>
           </div>
 
-          {/* Modal */}
+          {/* modal */}
           <div className="hidden" id="modal">
-            <div className="bg-slate-800 bg-opacity-50 flex justify-center items-center absolute top-0 right-0 bottom-0 left-0">
+            <div className="bg-slate-800 bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0">
               <div className="bg-white px-10 py-8 rounded-md text-center">
                 <h1 className="text-xl mb-6 font-bold">Do you Want Delete?</h1>
                 <button
@@ -185,13 +185,14 @@ export default function Invoice() {
             </div>
           )}
 
+          {/* contents */}
           <div
             className={`table-div-custom my-4 md:my-0 p-6 block mb-4 md:mb-0 ${
               theme.dark ? "text-black" : ""
             }`}
           >
             <div>
-              <h1 className="text-lg md:text-xl mb-4">Invoice Details</h1>
+              <h1 className="text-lg md:text-xl mb-3">Invoice Details</h1>
             </div>
 
             <hr />
@@ -219,9 +220,10 @@ export default function Invoice() {
               </div>
             )}
 
+            {/* invoice details*/}
             {!loading && invoice && (
               <div className="flex gap-10 flex-col md:grid md:grid-cols-12">
-                {/* details section*/}
+                {/* left */}
                 <div className="md:max-w-[450px] md:mt-2 md:col-span-5 w-full bg-neutral p-6 border h-fit">
                   <div className="md:flex md:justify-between md:flex-wrap md:w-full text-sm font-medium md:text-base">
                     <div>
@@ -258,7 +260,7 @@ export default function Invoice() {
                   </div>
                 </div>
 
-                {/* mobile view - btn group */}
+                {/* btn group: for mobile view */}
                 <div className="grid grid-cols-7 gap-2 md:hidden">
                   <button className="group button-custom bg-tertiary col-span-4">
                     <div>
@@ -285,7 +287,7 @@ export default function Invoice() {
                   </button>
                 </div>
 
-                {/* invoices */}
+                {/* right */}
                 <div
                   className={`w-full md:w-fit md:col-span-7 mt-1 md:mt-[-15px] ${
                     theme.dark ? "text-black" : ""
@@ -312,7 +314,7 @@ export default function Invoice() {
                     </div>
                   </div>
 
-                  {/* large screen view */}
+                  {/* table: for large screen view */}
                   <div className="overflow-auto rounded-lg shadow hidden md:block">
                     <table className="w-full">
                       <thead className="bg-gray-50 border-b-2 border-gray-200">
@@ -362,7 +364,7 @@ export default function Invoice() {
                     </table>
                   </div>
 
-                  {/* mobile view */}
+                  {/* table: for mobile view */}
                   <hr className="md:hidden" />
                   <br className="md:hidden" />
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden">
