@@ -12,7 +12,7 @@ export default async function handler(req, res) {
         const customer = await Customers.findById(customerId);
         res.status(200).json({ data: customer });
       } catch (error) {
-        res
+        return res
           .status(400)
           .json({ message: "Failed to retrieve the Customer: " + error });
       }
@@ -41,7 +41,7 @@ export default async function handler(req, res) {
           }
         );
       } catch (error) {
-        res
+        return res
           .status(400)
           .json({ message: "Failed to update the Customer: " + error });
       }
@@ -57,7 +57,7 @@ export default async function handler(req, res) {
           }
         });
       } catch (error) {
-        res
+        return res
           .status(400)
           .json({ message: "Failed to delete the Customer: " + error });
       }

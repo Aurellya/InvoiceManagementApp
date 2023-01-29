@@ -105,7 +105,11 @@ export default function editCustomer() {
   return (
     <>
       <Head>
-        <title>Edit Customer Form</title>
+        <title>
+          {theme.language === "Bahasa"
+            ? "Formulir Edit Pelanggan"
+            : "Edit Customer Form"}
+        </title>
       </Head>
 
       <section className="flex w-full">
@@ -122,10 +126,14 @@ export default function editCustomer() {
                 <div>
                   {React.createElement(IoArrowBackOutline, { size: "12" })}
                 </div>
-                <h2 className="whitespace-pre">Back</h2>
+                <h2 className="whitespace-pre">
+                  {theme.language === "Bahasa" ? "Kembali" : "Back"}
+                </h2>
               </Link>
               <h3 className="text-3xl md:text-4xl font-bold">
-                Edit Customer Form
+                {theme.language === "Bahasa"
+                  ? "Formulir Edit Pelanggan"
+                  : "Edit Customer Form"}
               </h3>
             </div>
 
@@ -165,7 +173,9 @@ export default function editCustomer() {
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                 >
-                  <title>Close</title>
+                  <title>
+                    {theme.language === "Bahasa" ? "Tutup" : "Close"}
+                  </title>
                   <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
                 </svg>
               </button>
@@ -175,7 +185,9 @@ export default function editCustomer() {
           {loading && (
             <div className="py-8">
               <div className="mt-9 flex flex-col justify-center items-center">
-                <h3 className="text-xl mb-4 font-bold">Loading</h3>
+                <h3 className="text-xl mb-4 font-bold">
+                  {theme.language === "Bahasa" ? "Memuat" : "Loading"}
+                </h3>
                 <ReactLoading
                   type="bars"
                   color="#2b4450"
@@ -189,7 +201,9 @@ export default function editCustomer() {
           {!loading && !data && (
             <div className="py-8">
               <div className="mt-9 flex flex-col justify-center items-center">
-                <h3 className="text-xl mb-4 font-bold">No Data</h3>
+                <h3 className="text-xl mb-4 font-bold">
+                  {theme.language === "Bahasa" ? "Tidak Ada Data" : "No Data"}
+                </h3>
               </div>
             </div>
           )}
@@ -203,7 +217,11 @@ export default function editCustomer() {
                 }`}
               >
                 <div>
-                  <h2 className="text-lg md:text-xl mb-3">Customer Details</h2>
+                  <h2 className="text-lg md:text-xl mb-3">
+                    {theme.language === "Bahasa"
+                      ? "Rincican Pelanggan"
+                      : "Customer Details"}
+                  </h2>
                 </div>
 
                 <hr />
@@ -229,7 +247,11 @@ export default function editCustomer() {
                             htmlFor="name"
                             className="form-label inline-block mb-2"
                           >
-                            <b>Customer Name:</b>
+                            <b>
+                              {theme.language === "Bahasa"
+                                ? "Nama Pelanggan:"
+                                : "Customer Name:"}
+                            </b>
                           </label>
                           <input
                             autoComplete="off"
@@ -237,7 +259,11 @@ export default function editCustomer() {
                             className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                             name="name"
                             id="name"
-                            placeholder="Enter Customer Name"
+                            placeholder={
+                              theme.language === "Bahasa"
+                                ? "Masukkan Nama Pelanggan"
+                                : "Enter Customer Name"
+                            }
                             onChange={handleChange}
                             required
                             defaultValue={data.name ? data.name : "-"}
@@ -250,7 +276,11 @@ export default function editCustomer() {
                             htmlFor="phone_no"
                             className="form-label inline-block mb-2"
                           >
-                            <b>Phone No:</b>
+                            <b>
+                              {theme.language === "Bahasa"
+                                ? "Nomor Telepon:"
+                                : "Phone No:"}
+                            </b>
                           </label>
                           <input
                             autoComplete="off"
@@ -258,7 +288,11 @@ export default function editCustomer() {
                             className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                             name="phone_no"
                             id="phone_no"
-                            placeholder="Enter Phone No"
+                            placeholder={
+                              theme.language === "Bahasa"
+                                ? "Masukkan Nomot Tlp"
+                                : "Enter Phone No"
+                            }
                             onChange={handleChange}
                             required
                             defaultValue={data.phone_no ? data.phone_no : "-"}
@@ -271,7 +305,11 @@ export default function editCustomer() {
                             htmlFor="address"
                             className="form-label inline-block mb-2"
                           >
-                            <b>Address:</b>
+                            <b>
+                              {theme.language === "Bahasa"
+                                ? "Alamat:"
+                                : "Address:"}
+                            </b>
                           </label>
                           <textarea
                             autoComplete="off"
@@ -279,7 +317,11 @@ export default function editCustomer() {
                             className="form-control block px-3 py-1.5 w-full h-24 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                             name="address"
                             id="address"
-                            placeholder="Enter Address"
+                            placeholder={
+                              theme.language === "Bahasa"
+                                ? "Masukkan Alamat"
+                                : "Enter Address"
+                            }
                             onChange={handleChange}
                             required
                             defaultValue={data.address ? data.address : "-"}
@@ -303,7 +345,11 @@ export default function editCustomer() {
                             className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                             name="email"
                             id="email"
-                            placeholder="Enter Email"
+                            placeholder={
+                              theme.language === "Bahasa"
+                                ? "Masukkan Email"
+                                : "Enter Email"
+                            }
                             onChange={handleChange}
                             required
                             defaultValue={data.email ? data.email : "-"}
@@ -316,7 +362,11 @@ export default function editCustomer() {
                             htmlFor="remarks"
                             className="form-label inline-block mb-2"
                           >
-                            <b>Remarks:</b>
+                            <b>
+                              {theme.language === "Bahasa"
+                                ? "Keterangan:"
+                                : "Remarks:"}
+                            </b>
                           </label>
                           <textarea
                             autoComplete="off"
@@ -324,7 +374,11 @@ export default function editCustomer() {
                             className="form-control block px-3 py-1.5 w-full h-32 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                             name="remarks"
                             id="remarks"
-                            placeholder="Enter Remarks"
+                            placeholder={
+                              theme.language === "Bahasa"
+                                ? "Masukkan Keterangan"
+                                : "Enter Remarks"
+                            }
                             onChange={handleChange}
                             defaultValue={data.remarks ? data.remarks : "-"}
                           ></textarea>
@@ -338,7 +392,7 @@ export default function editCustomer() {
                         type="submit"
                         className="group text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
                       >
-                        Save
+                        {theme.language === "Bahasa" ? "Simpan" : "Save"}
                       </button>
                     </div>
                   </div>

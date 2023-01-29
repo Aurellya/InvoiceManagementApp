@@ -5,6 +5,7 @@ import { getSession, useSession, signOut } from "next-auth/react";
 
 import { ThemeContext } from "../context/ThemeContext";
 import Sidebar from "../components/Sidebar";
+import Calculator from "./calculator";
 
 import { AiFillMinusCircle } from "react-icons/ai";
 import { BsFillCalculatorFill } from "react-icons/bs";
@@ -278,10 +279,27 @@ export default function addInvoice() {
     // console.log(jsonData);
   };
 
+  // // function to display calculator dialog
+  // function showCalculator() {
+  //   document.getElementById("calculator").style.display = "block";
+  // }
+
+  // // function to close calculator dialog
+  // function closeCalculator(e) {
+  //   e.preventDefault();
+  //   document.getElementById("calculator").style.display = "none";
+  // }
+
+  const [showCalc, setShowCalc] = useState(false);
+
   return (
     <>
       <Head>
-        <title>Add Invoice Form</title>
+        <title>
+          {theme.language === "Bahasa"
+            ? "Formulir Buat Nota"
+            : "Add Invoice Form"}
+        </title>
       </Head>
 
       <section className="flex w-full">
@@ -298,24 +316,43 @@ export default function addInvoice() {
                 <div>
                   {React.createElement(IoArrowBackOutline, { size: "12" })}
                 </div>
-                <h2 className="whitespace-pre">Back</h2>
+                <h2 className="whitespace-pre">
+                  {theme.language === "Bahasa" ? "Kembali" : "Back"}
+                </h2>
               </Link>
               <h3 className="text-3xl md:text-4xl font-bold">
-                Add Invoice Form
+                {theme.language === "Bahasa"
+                  ? "Formulir Buat Nota"
+                  : "Add Invoice Form"}
               </h3>
             </div>
 
             <hr className="md:hidden" />
 
             <div className="flex justify-end">
-              <button className="w-fit group flex items-center text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-tertiary text-white hover:opacity-80 transition duration-700 rounded-md">
+              <button
+                // onClick={showCalculator}
+                onClick={() => setShowCalc(!showCalc)}
+                className="w-fit group flex items-center text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-tertiary text-white hover:opacity-80 transition duration-700 rounded-md"
+              >
                 <div>
                   {React.createElement(BsFillCalculatorFill, { size: "12" })}
                 </div>
-                <h2 className="whitespace-pre">Calculator</h2>
+                <h2 className="whitespace-pre">
+                  {theme.language === "Bahasa" ? "Kalkulator" : "Calculator"}
+                </h2>
               </button>
             </div>
           </div>
+
+          {/* calculator */}
+          {showCalc && (
+            <div className="" id="calculator">
+              <div className="z-20 bg-slate-800 bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0">
+                <Calculator closeCalculator={() => setShowCalc(!showCalc)} />
+              </div>
+            </div>
+          )}
 
           {/* error msg */}
           {errorMsg != "" && (
@@ -350,7 +387,9 @@ export default function addInvoice() {
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                 >
-                  <title>Close</title>
+                  <title>
+                    {theme.language === "Bahasa" ? "Tutup" : "Close"}
+                  </title>
                   <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
                 </svg>
               </button>
@@ -365,7 +404,11 @@ export default function addInvoice() {
               }`}
             >
               <div>
-                <h2 className="text-lg md:text-xl mb-3">Invoice Details</h2>
+                <h2 className="text-lg md:text-xl mb-3">
+                  {theme.language === "Bahasa"
+                    ? "Rincican Nota"
+                    : "Invoice Details"}
+                </h2>
               </div>
 
               <hr />
@@ -382,7 +425,9 @@ export default function addInvoice() {
                       htmlFor="cname"
                       className="form-label inline-block mb-2"
                     >
-                      Customer Name:
+                      {theme.language === "Bahasa"
+                        ? "Nama Pelanggan:"
+                        : "Customer Name:"}
                     </label>
                     <input
                       autoComplete="off"
@@ -390,7 +435,11 @@ export default function addInvoice() {
                       className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                       name="cname"
                       id="cname"
-                      placeholder="Enter Customer Name"
+                      placeholder={
+                        theme.language === "Bahasa"
+                          ? "Masukkan Nama Pelanggan"
+                          : "Enter Customer Name"
+                      }
                       onChange={handleChange}
                       required
                     />
@@ -402,7 +451,7 @@ export default function addInvoice() {
                       htmlFor="date"
                       className="form-label inline-block mb-2"
                     >
-                      Date:
+                      {theme.language === "Bahasa" ? "Tanggal:" : "Date:"}
                     </label>
                     <input
                       type="text"
@@ -420,7 +469,7 @@ export default function addInvoice() {
                       htmlFor="status"
                       className="form-label inline-block mb-3"
                     >
-                      Status:
+                      {theme.language === "Bahasa" ? "Pembayaran:" : "Status:"}
                     </label>
                     <div className="flex px-4 font-medium">
                       <div>
@@ -440,7 +489,7 @@ export default function addInvoice() {
                             className="form-check-label inline-block"
                             htmlFor="flexRadioDefault1"
                           >
-                            Not Paid
+                            {theme.language === "Bahasa" ? "Belum" : "Not Paid"}
                           </label>
                         </div>
                         <div className="form-check">
@@ -459,7 +508,7 @@ export default function addInvoice() {
                             className="form-check-label inline-block"
                             htmlFor="flexRadioDefault2"
                           >
-                            Paid
+                            {theme.language === "Bahasa" ? "Sudah" : "Paid"}
                           </label>
                         </div>
                       </div>
@@ -473,7 +522,7 @@ export default function addInvoice() {
                         htmlFor="notes"
                         className="form-label inline-block mb-2"
                       >
-                        Notes:
+                        {theme.language === "Bahasa" ? "Catatan:" : "Notes:"}
                       </label>
                       <textarea
                         autoComplete="off"
@@ -481,7 +530,11 @@ export default function addInvoice() {
                         className="form-control block px-3 py-1.5 w-full h-32 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                         name="notes"
                         id="notes"
-                        placeholder="Enter Notes"
+                        placeholder={
+                          theme.language === "Bahasa"
+                            ? "Masukkan Catatan"
+                            : "Enter Notes"
+                        }
                         onChange={handleChange}
                       ></textarea>
                     </div>
@@ -502,7 +555,9 @@ export default function addInvoice() {
                 <div
                   className={`lg:col-span-9 lg:block w-full lg:overflow-auto`}
                 >
-                  <h2 className="text-lg md:hidden">Items</h2>
+                  <h2 className="text-lg md:hidden">
+                    {theme.language === "Bahasa" ? "Barang" : "Items"}
+                  </h2>
                   <hr className="md:hidden mb-4" />
 
                   <div className="mb-6 px-0 md:px-6">
@@ -527,13 +582,19 @@ export default function addInvoice() {
                           <tr>
                             <th className="w-12 p-3 text-sm font-semibold tracking-wide text-left"></th>
                             <th className="w-36 p-3 text-sm font-semibold tracking-wide text-left">
-                              Quantity
+                              {theme.language === "Bahasa"
+                                ? "Jumlah"
+                                : "Quantity"}
                             </th>
                             <th className="min-w-[200px] p-3 text-sm font-semibold tracking-wide text-left">
-                              Item Name
+                              {theme.language === "Bahasa"
+                                ? "Nama Barang"
+                                : "Item Name"}
                             </th>
                             <th className="w-60 p-3 text-sm font-semibold tracking-wide text-left">
-                              Price (/Unit)
+                              {theme.language === "Bahasa"
+                                ? "Harga (/Unit)"
+                                : "Price (/Unit)"}
                             </th>
                             <th className="w-48 p-3 text-sm font-semibold tracking-wide text-left">
                               Total
@@ -562,7 +623,11 @@ export default function addInvoice() {
 
                               <td className="p-3 pt-0 md:pt-3 text-sm text-primary font-bold whitespace-nowrap">
                                 <div>
-                                  <h3 className="md:hidden">Quantity</h3>
+                                  <h3 className="md:hidden">
+                                    {theme.language === "Bahasa"
+                                      ? "Jumlah"
+                                      : "Quantity"}
+                                  </h3>
                                   <div className="relative mt-2 md:mt-0 rounded-md shadow-sm">
                                     <input
                                       autoComplete="off"
@@ -588,10 +653,26 @@ export default function addInvoice() {
                                         defaultValue={""}
                                       >
                                         <option disabled value=""></option>
-                                        <option value="bh">bh</option>
-                                        <option value="ls">ls</option>
-                                        <option value="grs">grs</option>
-                                        <option value="dus">dus</option>
+                                        <option value="bh">
+                                          {theme.language === "Bahasa"
+                                            ? "bh"
+                                            : "pcs"}
+                                        </option>
+                                        <option value="ls">
+                                          {theme.language === "Bahasa"
+                                            ? "ls"
+                                            : "doz"}
+                                        </option>
+                                        <option value="grs">
+                                          {theme.language === "Bahasa"
+                                            ? "grs"
+                                            : "gro"}
+                                        </option>
+                                        <option value="dus">
+                                          {theme.language === "Bahasa"
+                                            ? "dus"
+                                            : "box"}
+                                        </option>
                                       </select>
                                     </div>
                                   </div>
@@ -599,7 +680,11 @@ export default function addInvoice() {
                               </td>
 
                               <td className="p-3 text-sm first-line:text-primary font-bold whitespace-nowrap">
-                                <h3 className="md:hidden">Item Name</h3>
+                                <h3 className="md:hidden">
+                                  {theme.language === "Bahasa"
+                                    ? "Nama Barang"
+                                    : "Item Name"}
+                                </h3>
                                 <div className="mt-2 md:mt-0">
                                   <input
                                     name="item_name"
@@ -615,7 +700,11 @@ export default function addInvoice() {
                               </td>
 
                               <td className="p-3 text-sm text-primary font-bold whitespace-nowrap">
-                                <h3 className="md:hidden">Price (/pcs)</h3>
+                                <h3 className="md:hidden">
+                                  {theme.language === "Bahasa"
+                                    ? "Harga (/Unit)"
+                                    : "Price (/Unit)"}
+                                </h3>
                                 <div>
                                   <div className="relative mt-2 md:mt-0 rounded-md shadow-sm">
                                     <input
@@ -646,10 +735,26 @@ export default function addInvoice() {
                                         defaultValue={""}
                                       >
                                         <option disabled value=""></option>
-                                        <option value="bh">/bh</option>
-                                        <option value="ls">/ls</option>
-                                        <option value="grs">/grs</option>
-                                        <option value="dus">/dus</option>
+                                        <option value="bh">
+                                          {theme.language === "Bahasa"
+                                            ? "bh"
+                                            : "pcs"}
+                                        </option>
+                                        <option value="ls">
+                                          {theme.language === "Bahasa"
+                                            ? "ls"
+                                            : "doz"}
+                                        </option>
+                                        <option value="grs">
+                                          {theme.language === "Bahasa"
+                                            ? "grs"
+                                            : "gro"}
+                                        </option>
+                                        <option value="dus">
+                                          {theme.language === "Bahasa"
+                                            ? "dus"
+                                            : "box"}
+                                        </option>
                                       </select>
                                     </div>
                                   </div>

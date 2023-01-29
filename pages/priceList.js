@@ -55,7 +55,9 @@ export default () => {
   return (
     <>
       <Head>
-        <title>Price List</title>
+        <title>
+          {theme.language === "Bahasa" ? "Daftar Harga" : "Price List"}
+        </title>
       </Head>
 
       <section className="flex">
@@ -64,7 +66,9 @@ export default () => {
         <main className="container py-12 mx-10 md:mx-14">
           {/* header section */}
           <div className="flex md:items-center justify-between flex-col md:flex-row gap-4 md:gap-0 w-full">
-            <h3 className="text-3xl md:text-4xl font-bold">Price List</h3>
+            <h3 className="text-3xl md:text-4xl font-bold">
+              {theme.language === "Bahasa" ? "Daftar Harga" : "Price List"}
+            </h3>
             <hr className="md:hidden" />
             <div className="flex justify-end">
               <Link
@@ -72,7 +76,9 @@ export default () => {
                 href="/addPriceList"
               >
                 <div>{React.createElement(BsPlusLg, { size: "12" })}</div>
-                <h2 className="whitespace-pre">Create New</h2>
+                <h2 className="whitespace-pre">
+                  {theme.language === "Bahasa" ? "Tambahkan" : "Create New"}
+                </h2>
               </Link>
             </div>
           </div>
@@ -83,14 +89,30 @@ export default () => {
               theme.dark ? "text-black" : ""
             }`}
           >
-            <div>
-              <h1 className="text-lg md:text-xl mb-4">Item Details</h1>
+            <div className="flex justify-between">
+              <h1 className="text-lg md:text-xl mb-4">
+                {theme.language === "Bahasa" ? "Rincian Item" : "Item Details"}
+              </h1>
+              {priceLists && (
+                <h2 className="text-sm hidden md:block">
+                  <span className="font-bold">Total: </span>
+                  {priceLists.length}{" "}
+                  {theme.language === "Bahasa"
+                    ? "Jenis Barang"
+                    : priceLists.length > 1
+                    ? "Items"
+                    : "Items"}
+                </h2>
+              )}
             </div>
 
             {loading && (
               <div className="py-8">
                 <div className="mt-9 flex flex-col justify-center items-center">
-                  <h3 className="text-xl mb-4 font-bold">Loading</h3>
+                  <h3 className="text-xl mb-4 font-bold">
+                    {" "}
+                    {theme.language === "Bahasa" ? "Memuat" : "Loading"}
+                  </h3>
                   <ReactLoading
                     type="bars"
                     color="#2b4450"
@@ -104,7 +126,9 @@ export default () => {
             {!loading && !priceLists && (
               <div className="py-8">
                 <div className="mt-9 flex flex-col justify-center items-center">
-                  <h3 className="text-xl mb-4 font-bold">No Data</h3>
+                  <h3 className="text-xl mb-4 font-bold">
+                    {theme.language === "Bahasa" ? "Tidak Ada Data" : "No Data"}
+                  </h3>
                 </div>
               </div>
             )}
@@ -117,19 +141,27 @@ export default () => {
                     <thead className="bg-gray-50 border-b-2 border-gray-200">
                       <tr>
                         <th className="w-36 p-3 text-sm font-semibold tracking-wide text-left">
-                          Item ID.
+                          {theme.language === "Bahasa"
+                            ? "ID Barang"
+                            : "Item ID."}
                         </th>
                         <th className="p-3 text-sm font-semibold tracking-wide text-left">
-                          Product Name
+                          {theme.language === "Bahasa"
+                            ? "Nama Produk"
+                            : "Product Name"}
                         </th>
                         <th className="w-64 p-3 text-sm font-semibold tracking-wide text-left">
-                          Amount (/Unit)
+                          {theme.language === "Bahasa"
+                            ? "Jumlah (/Unit)"
+                            : "Amount (/Unit)"}
                         </th>
                         <th className="w-64 p-3 text-sm font-semibold tracking-wide text-left">
-                          Price
+                          {theme.language === "Bahasa" ? "Harga" : "Price"}
                         </th>
                         <th className="w-64 p-3 text-sm font-semibold tracking-wide text-left">
-                          Remarks
+                          {theme.language === "Bahasa"
+                            ? "Keterangan"
+                            : "Remarks"}
                         </th>
                       </tr>
                     </thead>
@@ -149,7 +181,16 @@ export default () => {
                             {item.product_name}
                           </td>
                           <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                            {item.amount + " " + item.unit}
+                            {item.amount + " "}
+                            {theme.language === "Bahasa"
+                              ? item.unit
+                              : item.unit == "bh"
+                              ? "pcs"
+                              : (item.unit = "ls"
+                                  ? "doz"
+                                  : item.unit == "grs"
+                                  ? "gro"
+                                  : "box")}
                           </td>
                           <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                             {item.price.toLocaleString("en-US", {
@@ -173,6 +214,17 @@ export default () => {
 
                 {/* mobile view */}
                 <hr className="md:hidden" />
+                {priceLists && (
+                  <h2 className="text-sm md:hidden mt-5 text-right">
+                    <span className="font-bold">Total: </span>
+                    {priceLists.length}{" "}
+                    {theme.language === "Bahasa"
+                      ? "Jenis Barang"
+                      : priceLists.length > 1
+                      ? "Items"
+                      : "Items"}
+                  </h2>
+                )}
                 <br className="md:hidden" />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:hidden">
                   {paginatePriceLists.map((item) => (
@@ -181,21 +233,44 @@ export default () => {
                       key={item._id}
                     >
                       <div className="text-sm font-medium text-black break-words">
-                        <b>Item ID.</b>
+                        <b>
+                          {theme.language === "Bahasa"
+                            ? "ID Barang"
+                            : "Item ID."}
+                        </b>
                         <br />
                         {item._id}
                       </div>
                       <div className="text-sm font-medium text-black">
-                        <b>Product Name: </b>
+                        <b>
+                          {theme.language === "Bahasa"
+                            ? "Nama Produk: "
+                            : "Product Name: "}
+                        </b>
                         {item.product_name}
                       </div>
                       <hr />
                       <div className="text-sm font-medium text-black">
-                        <b>Amount (/Unit): </b>
-                        {item.amount + " " + item.unit}
+                        <b>
+                          {theme.language === "Bahasa"
+                            ? "Jumlah (/Unit): "
+                            : "Amount (/Unit): "}
+                        </b>
+                        {item.amount + " "}{" "}
+                        {theme.language === "Bahasa"
+                          ? item.unit
+                          : item.unit == "bh"
+                          ? "pcs"
+                          : item.unit == "ls"
+                          ? "doz"
+                          : item.unit == "grs"
+                          ? "gro"
+                          : "box"}
                       </div>
                       <div className="text-sm font-medium text-black">
-                        <b>Price: </b>
+                        <b>
+                          {theme.language === "Bahasa" ? "Harga: " : "Price: "}
+                        </b>
                         <span className="text-sm font-medium text-black">
                           {item.price.toLocaleString("en-US", {
                             style: "currency",
@@ -205,7 +280,11 @@ export default () => {
                         </span>
                       </div>
                       <div className="text-sm font-medium text-black">
-                        <b>Remarks: </b>
+                        <b>
+                          {theme.language === "Bahasa"
+                            ? "Keterangan: "
+                            : "Remarks: "}
+                        </b>
                         {item.remarks ? item.remarks : "-"}
                       </div>
 
@@ -214,7 +293,9 @@ export default () => {
                           className="py-2 px-5 text-xs font-medium uppercase tracking-wider rounded-md bg-tertiary text-white"
                           href={`/priceList/${item._id}`}
                         >
-                          View Details
+                          {theme.language === "Bahasa"
+                            ? "Lihat Rincian"
+                            : "View Details"}
                         </Link>
                       </div>
                     </div>

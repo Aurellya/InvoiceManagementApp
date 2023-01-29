@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import _ from "lodash";
+import { ThemeContext } from "../context/ThemeContext";
 
 export default function Pagination({
   items,
@@ -7,6 +8,9 @@ export default function Pagination({
   currentPage,
   onPageChange,
 }) {
+  // theme
+  const theme = useContext(ThemeContext);
+
   const pageCount = items / pageSize;
   if (Math.ceil(pageCount) === 1) return null;
   const pages = _.range(1, pageCount + 1);
@@ -47,7 +51,9 @@ export default function Pagination({
               strokeLinejoin="round"
             />
           </svg>
-          <p className="text-sm ml-3 font-medium leading-none ">Previous</p>
+          <p className="text-sm ml-3 font-medium leading-none ">
+            {theme.language === "Bahasa" ? "Sebelumnya" : "Previous"}
+          </p>
         </div>
         <div className="sm:flex hidden">
           {pages.map((page) => (
@@ -68,7 +74,9 @@ export default function Pagination({
           className="flex items-center pt-3 text-gray-300  hover:text-[#0E3658] cursor-pointer"
           onClick={() => onPageChange(currentPage + 1)}
         >
-          <p className="text-sm font-medium leading-none mr-3">Next</p>
+          <p className="text-sm font-medium leading-none mr-3">
+            {theme.language === "Bahasa" ? "Berikutnya" : "Next"}
+          </p>
           <svg
             width="14"
             height="8"

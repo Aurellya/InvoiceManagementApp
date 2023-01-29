@@ -78,7 +78,9 @@ export default function PriceList() {
   return (
     <>
       <Head>
-        <title>Item Details</title>
+        <title>
+          {theme.language === "Bahasa" ? "Rincian Barang" : "Item Details"}
+        </title>
       </Head>
 
       <section className="flex">
@@ -95,9 +97,13 @@ export default function PriceList() {
                 <div>
                   {React.createElement(IoArrowBackOutline, { size: "12" })}
                 </div>
-                <h2 className="whitespace-pre">Back</h2>
+                <h2 className="whitespace-pre">
+                  {theme.language === "Bahasa" ? "Kembali" : "Back"}
+                </h2>
               </Link>
-              <h3 className="text-3xl md:text-4xl font-bold">Item</h3>
+              <h3 className="text-3xl md:text-4xl font-bold">
+                {theme.language === "Bahasa" ? "Barang" : "Item"}
+              </h3>
             </div>
 
             {/* btn group: large screen view */}
@@ -114,7 +120,9 @@ export default function PriceList() {
                 onClick={showModalDeleteConfirmation}
               >
                 <div>{React.createElement(AiFillDelete, { size: "12" })}</div>
-                <h2 className="whitespace-pre">Delete</h2>
+                <h2 className="whitespace-pre">
+                  {theme.language === "Bahasa" ? "Hapus" : "Delete"}
+                </h2>
               </button>
             </div>
           </div>
@@ -123,12 +131,16 @@ export default function PriceList() {
           <div className="hidden" id="modal">
             <div className="bg-slate-800 bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0">
               <div className="bg-white px-10 py-8 rounded-md text-center">
-                <h1 className="text-xl mb-6 font-bold">Do you Want Delete?</h1>
+                <h1 className="text-xl mb-6 font-bold">
+                  {theme.language === "Bahasa"
+                    ? "Apakah Kamu Yakin Mau Menghapus Nota?"
+                    : "Do you Want Delete?"}
+                </h1>
                 <button
                   className="bg-[#F44645] px-4 py-2 rounded-md text-md text-white"
                   onClick={cancelDeleteItem}
                 >
-                  Cancel
+                  {theme.language === "Bahasa" ? "Batal" : "Cancel"}
                 </button>
                 <button
                   className="bg-tertiary px-7 py-2 ml-4 rounded-md text-md text-white font-semibold"
@@ -173,7 +185,9 @@ export default function PriceList() {
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                 >
-                  <title>Close</title>
+                  <title>
+                    {theme.language === "Bahasa" ? "Tutup" : "Close"}
+                  </title>
                   <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
                 </svg>
               </button>
@@ -187,7 +201,11 @@ export default function PriceList() {
             }`}
           >
             <div>
-              <h1 className="text-lg md:text-xl mb-3">Item Details</h1>
+              <h1 className="text-lg md:text-xl mb-3">
+                {theme.language === "Bahasa"
+                  ? "Rincian Barang"
+                  : "Item Details"}
+              </h1>
             </div>
 
             <hr />
@@ -196,7 +214,9 @@ export default function PriceList() {
             {loading && (
               <div className="py-8">
                 <div className="mt-9 flex flex-col justify-center items-center">
-                  <h3 className="text-xl mb-4 font-bold">Loading</h3>
+                  <h3 className="text-xl mb-4 font-bold">
+                    {theme.language === "Bahasa" ? "Memuat" : "Loading"}
+                  </h3>
                   <ReactLoading
                     type="bars"
                     color="#2b4450"
@@ -210,7 +230,9 @@ export default function PriceList() {
             {!loading && !item && (
               <div className="py-8">
                 <div className="mt-9 flex flex-col justify-center items-center">
-                  <h3 className="text-xl mb-4 font-bold">No Data</h3>
+                  <h3 className="text-xl mb-4 font-bold">
+                    {theme.language === "Bahasa" ? "Tidak Ada Data" : "No Data"}
+                  </h3>
                 </div>
               </div>
             )}
@@ -231,22 +253,48 @@ export default function PriceList() {
                 {/* right */}
                 <div className="lg:col-span-4">
                   <p>
-                    <b>Item ID: </b>
+                    <b>
+                      {theme.language === "Bahasa"
+                        ? "ID Barang: "
+                        : "Item ID: "}
+                    </b>
                   </p>
                   <p>{item._id}</p>
                   <br />
                   <p>
-                    <b>Product Name: </b>
+                    <b>
+                      {theme.language === "Bahasa"
+                        ? "Nama Produk: "
+                        : "Product Name: "}
+                    </b>
                   </p>
                   <p>{item.product_name}</p>
                   <br />
                   <p>
-                    <b> Amount (/Unit): </b>
+                    <b>
+                      {theme.language === "Bahasa"
+                        ? "Jumlah (/Unit): "
+                        : "Amount (/Unit): "}
+                    </b>
                   </p>
-                  <p> {item.amount + " " + item.unit}</p>
+                  <p>
+                    {item.amount + " "}
+                    {theme.language === "Bahasa"
+                      ? item.unit
+                      : item.unit == "bh"
+                      ? "pcs"
+                      : item.unit == "ls"
+                      ? "doz"
+                      : item.unit == "grs"
+                      ? "gro"
+                      : "box"}
+                  </p>
                   <br />
                   <p>
-                    <b>Price: </b>
+                    <b>
+                      {" "}
+                      {theme.language === "Bahasa" ? "Harga: " : "Price: "}
+                    </b>
                   </p>
                   <p>
                     {item.price.toLocaleString("en-US", {
@@ -257,7 +305,11 @@ export default function PriceList() {
                   </p>
                   <br />
                   <p>
-                    <b>Remarks: </b>
+                    <b>
+                      {theme.language === "Bahasa"
+                        ? "Keterangan: "
+                        : "Remarks: "}
+                    </b>
                   </p>
                   <p>{item.remarks ? item.remarks : "-"}</p>
 
@@ -282,7 +334,9 @@ export default function PriceList() {
                       <div>
                         {React.createElement(AiFillDelete, { size: "12" })}
                       </div>
-                      <h2 className="whitespace-pre">Delete</h2>
+                      <h2 className="whitespace-pre">
+                        {theme.language === "Bahasa" ? "Hapus" : "Delete"}
+                      </h2>
                     </button>
                   </div>
                 </div>

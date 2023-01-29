@@ -10,7 +10,7 @@ export default async function handler(req, res) {
         const priceLists = await PriceLists.find({}).sort([["name", -1]]);
         res.status(200).json({ data: priceLists });
       } catch (error) {
-        res
+        return res
           .status(400)
           .json({ message: "Failed to retrieve the PriceList: " + error });
       }
@@ -35,7 +35,7 @@ export default async function handler(req, res) {
           }
         });
       } catch (error) {
-        res
+        return res
           .status(400)
           .json({ message: "Failed to insert the PriceList: " + error });
       }

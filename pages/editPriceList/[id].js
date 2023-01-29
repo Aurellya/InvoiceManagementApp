@@ -134,7 +134,11 @@ export default function editPriceList() {
   return (
     <>
       <Head>
-        <title>Edit Item Form</title>
+        <title>
+          {theme.language === "Bahasa"
+            ? "Formulir Edit Barang"
+            : "Edit Item Form"}
+        </title>
       </Head>
 
       <section className="flex w-full">
@@ -151,9 +155,15 @@ export default function editPriceList() {
                 <div>
                   {React.createElement(IoArrowBackOutline, { size: "12" })}
                 </div>
-                <h2 className="whitespace-pre">Back</h2>
+                <h2 className="whitespace-pre">
+                  {theme.language === "Bahasa" ? "Kembali" : "Back"}
+                </h2>
               </Link>
-              <h3 className="text-3xl md:text-4xl font-bold">Edit Item Form</h3>
+              <h3 className="text-3xl md:text-4xl font-bold">
+                {theme.language === "Bahasa"
+                  ? "Formulir Edit Barang"
+                  : "Edit Item Form"}
+              </h3>
             </div>
             <hr className="md:hidden" />
           </div>
@@ -191,7 +201,9 @@ export default function editPriceList() {
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                 >
-                  <title>Close</title>
+                  <title>
+                    {theme.language === "Bahasa" ? "Tutup" : "Close"}
+                  </title>
                   <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
                 </svg>
               </button>
@@ -201,7 +213,9 @@ export default function editPriceList() {
           {loading && (
             <div className="py-8">
               <div className="mt-9 flex flex-col justify-center items-center">
-                <h3 className="text-xl mb-4 font-bold">Loading</h3>
+                <h3 className="text-xl mb-4 font-bold">
+                  {theme.language === "Bahasa" ? "Memuat" : "Loading"}
+                </h3>
                 <ReactLoading
                   type="bars"
                   color="#0E3658"
@@ -215,7 +229,9 @@ export default function editPriceList() {
           {!loading && !data && (
             <div className="py-8">
               <div className="mt-9 flex flex-col justify-center items-center">
-                <h3 className="text-xl mb-4 font-bold">No Data</h3>
+                <h3 className="text-xl mb-4 font-bold">
+                  {theme.language === "Bahasa" ? "Tidak Ada Data" : "No Data"}
+                </h3>
               </div>
             </div>
           )}
@@ -229,7 +245,12 @@ export default function editPriceList() {
                 }`}
               >
                 <div>
-                  <h2 className="text-lg md:text-xl mb-3">Item Details</h2>
+                  <h2 className="text-lg md:text-xl mb-3">
+                    {" "}
+                    {theme.language === "Bahasa"
+                      ? "Rincican Barang"
+                      : "Item Details"}
+                  </h2>
                 </div>
 
                 <hr />
@@ -255,7 +276,12 @@ export default function editPriceList() {
                         htmlFor="product_name"
                         className="form-label inline-block mb-2"
                       >
-                        <b>Product Name:</b>
+                        <b>
+                          {" "}
+                          {theme.language === "Bahasa"
+                            ? "Nama Produk:"
+                            : "Product Name:"}
+                        </b>
                       </label>
                       <input
                         autoComplete="off"
@@ -263,7 +289,11 @@ export default function editPriceList() {
                         className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                         name="product_name"
                         id="product_name"
-                        placeholder="Enter Product Name"
+                        placeholder={
+                          theme.language === "Bahasa"
+                            ? "Masukkan Nama Produk"
+                            : "Enter Product Name"
+                        }
                         onChange={handleChange}
                         required
                         defaultValue={
@@ -279,7 +309,11 @@ export default function editPriceList() {
                           htmlFor="amount"
                           className="form-label inline-block mb-2"
                         >
-                          <b>Amount (/Unit):</b>
+                          <b>
+                            {theme.language === "Bahasa"
+                              ? "Jumlah (/Unit):"
+                              : "Amount (/Unit):"}
+                          </b>
                         </label>
 
                         <div className="flex">
@@ -289,7 +323,11 @@ export default function editPriceList() {
                             className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                             name="amount"
                             id="amount"
-                            placeholder="Enter Amount"
+                            placeholder={
+                              theme.language === "Bahasa"
+                                ? "Masukkan Jumlah"
+                                : "Enter Amount"
+                            }
                             onChange={handleChange}
                             required
                             defaultValue={data.amount ? data.amount : 0}
@@ -306,10 +344,18 @@ export default function editPriceList() {
                             defaultValue={data.unit ? data.unit : ""}
                           >
                             <option disabled value=""></option>
-                            <option value="bh">/bh</option>
-                            <option value="ls">/ls</option>
-                            <option value="grs">/grs</option>
-                            <option value="dus">/dus</option>
+                            <option value="bh">
+                              {theme.language === "Bahasa" ? "bh" : "pcs"}
+                            </option>
+                            <option value="ls">
+                              {theme.language === "Bahasa" ? "ls" : "doz"}
+                            </option>
+                            <option value="grs">
+                              {theme.language === "Bahasa" ? "grs" : "gro"}
+                            </option>
+                            <option value="dus">
+                              {theme.language === "Bahasa" ? "dus" : "box"}
+                            </option>
                           </select>
                         </div>
                       </div>
@@ -321,7 +367,9 @@ export default function editPriceList() {
                         htmlFor="price"
                         className="form-label inline-block mb-2"
                       >
-                        <b>Price:</b>
+                        <b>
+                          {theme.language === "Bahasa" ? "Harga:" : "Price:"}
+                        </b>
                       </label>
                       <input
                         autoComplete="off"
@@ -329,7 +377,11 @@ export default function editPriceList() {
                         className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                         name="price"
                         id="price"
-                        placeholder="Enter Price"
+                        placeholder={
+                          theme.language === "Bahasa"
+                            ? "Masukkan Harga"
+                            : "Enter Price"
+                        }
                         onChange={handleChange}
                         onFocus={(e) => onFocus(e)}
                         onBlur={(e) => onBlur(e)}
@@ -348,7 +400,11 @@ export default function editPriceList() {
                         htmlFor="remarks"
                         className="form-label inline-block mb-2"
                       >
-                        <b>Remarks:</b>
+                        <b>
+                          {theme.language === "Bahasa"
+                            ? "Keterangan:"
+                            : "Remarks:"}
+                        </b>
                       </label>
                       <textarea
                         autoComplete="off"
@@ -356,7 +412,11 @@ export default function editPriceList() {
                         className="form-control block px-3 py-1.5 w-full h-32 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                         name="remarks"
                         id="remarks"
-                        placeholder="Enter Remarks"
+                        placeholder={
+                          theme.language === "Bahasa"
+                            ? "Masukkan Keterangan"
+                            : "Enter Remarks"
+                        }
                         onChange={handleChange}
                         defaultValue={data.remarks ? data.remarks : "-"}
                       ></textarea>
@@ -368,7 +428,7 @@ export default function editPriceList() {
                         type="submit"
                         className="group text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
                       >
-                        Save
+                        {theme.language === "Bahasa" ? "Simpan" : "Save"}
                       </button>
                     </div>
                   </div>

@@ -10,7 +10,7 @@ export default async function handler(req, res) {
         const invoices = await Invoices.find({}).sort([["date", -1]]);
         res.status(200).json({ data: invoices });
       } catch (error) {
-        res
+        return res
           .status(400)
           .json({ message: "Failed to retrieve the Invoices: " + error });
       }
@@ -37,7 +37,7 @@ export default async function handler(req, res) {
           }
         });
       } catch (error) {
-        res
+        return res
           .status(400)
           .json({ message: "Failed to insert the Invoices: " + error });
       }

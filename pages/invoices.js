@@ -55,7 +55,7 @@ export default () => {
   return (
     <>
       <Head>
-        <title>Invoices</title>
+        <title>{theme.language === "Bahasa" ? "Nota" : "Invoices"}</title>
       </Head>
 
       <section className="flex">
@@ -64,7 +64,9 @@ export default () => {
         <main className="container py-12 mx-10 md:mx-14">
           {/* header section */}
           <div className="flex md:items-center justify-between flex-col md:flex-row gap-4 md:gap-0 w-full">
-            <h3 className="text-3xl md:text-4xl font-bold">Invoices</h3>
+            <h3 className="text-3xl md:text-4xl font-bold">
+              {theme.language === "Bahasa" ? "Nota" : "Invoices"}
+            </h3>
             <hr className="md:hidden" />
             <div className="flex justify-end">
               <Link
@@ -72,7 +74,9 @@ export default () => {
                 href="/addInvoice"
               >
                 <div>{React.createElement(BsPlusLg, { size: "12" })}</div>
-                <h2 className="whitespace-pre">Create New</h2>
+                <h2 className="whitespace-pre">
+                  {theme.language === "Bahasa" ? "Buat Nota" : "Create New"}
+                </h2>
               </Link>
             </div>
           </div>
@@ -83,14 +87,31 @@ export default () => {
               theme.dark ? "text-black" : ""
             }`}
           >
-            <div>
-              <h1 className="text-lg md:text-xl mb-4">Recent Invoices</h1>
+            <div className="flex justify-between">
+              <h1 className="text-lg md:text-xl mb-4">
+                {theme.language === "Bahasa"
+                  ? "Nota Terbaru"
+                  : "Recent Invoices"}
+              </h1>
+              {invoices && (
+                <h2 className="text-sm hidden md:block">
+                  <span className="font-bold">Total: </span>
+                  {invoices.length}{" "}
+                  {theme.language === "Bahasa"
+                    ? "Nota"
+                    : invoices.length > 1
+                    ? "Invoices"
+                    : "Invoice"}
+                </h2>
+              )}
             </div>
 
             {loading && (
               <div className="py-8">
                 <div className="mt-9 flex flex-col justify-center items-center">
-                  <h3 className="text-xl mb-4 font-bold">Loading</h3>
+                  <h3 className="text-xl mb-4 font-bold">
+                    {theme.language === "Bahasa" ? "Memuat" : "Loading"}
+                  </h3>
                   <ReactLoading
                     type="bars"
                     color="#2b4450"
@@ -104,7 +125,9 @@ export default () => {
             {!loading && !invoices && (
               <div className="py-8">
                 <div className="mt-9 flex flex-col justify-center items-center">
-                  <h3 className="text-xl mb-4 font-bold">No Data</h3>
+                  <h3 className="text-xl mb-4 font-bold">
+                    {theme.language === "Bahasa" ? "Tidak Ada Data" : "No Data"}
+                  </h3>
                 </div>
               </div>
             )}
@@ -117,19 +140,27 @@ export default () => {
                     <thead className="bg-gray-50 border-b-2 border-gray-200">
                       <tr>
                         <th className="w-36 p-3 text-sm font-semibold tracking-wide text-left">
-                          Invoice No.
+                          {theme.language === "Bahasa"
+                            ? "Nomor Nota"
+                            : "Invoice No."}
                         </th>
                         <th className="p-3 text-sm font-semibold tracking-wide text-left">
-                          Customer Name
+                          {theme.language === "Bahasa"
+                            ? "Nama Pelanggan"
+                            : "Customer Name"}
                         </th>
                         <th className="w-38 p-3 text-sm font-semibold tracking-wide text-left">
-                          Date
+                          {theme.language === "Bahasa" ? "Tanggal" : "Date"}
                         </th>
                         <th className="w-36 p-3 text-sm font-semibold tracking-wide text-left">
-                          Status
+                          {theme.language === "Bahasa"
+                            ? "Pembayaran"
+                            : "Status"}
                         </th>
                         <th className="w-36 p-3 text-sm font-semibold tracking-wide text-center">
-                          Total Items
+                          {theme.language === "Bahasa"
+                            ? "Jumlah Barang"
+                            : "Total Items"}
                         </th>
                         <th className="w-38 p-3 text-sm font-semibold tracking-wide text-left">
                           Total
@@ -183,6 +214,17 @@ export default () => {
 
                 {/* mobile view */}
                 <hr className="md:hidden" />
+                {invoices && (
+                  <h2 className="text-sm md:hidden mt-5 text-right">
+                    <span className="font-bold">Total: </span>
+                    {invoices.length}{" "}
+                    {theme.language === "Bahasa"
+                      ? "Nota"
+                      : invoices.length > 1
+                      ? "Invoices"
+                      : "Invoice"}
+                  </h2>
+                )}
                 <br className="md:hidden" />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:hidden">
                   {paginateInvoice.map((invoice) => (
@@ -191,20 +233,36 @@ export default () => {
                       key={invoice._id}
                     >
                       <div className="text-sm font-medium text-black break-words">
-                        <b>Invoice Id:</b>
+                        <b>
+                          {theme.language === "Bahasa"
+                            ? "Nomor Nota:"
+                            : "Invoice No:"}
+                        </b>
                         <br />
                         {invoice._id}
                       </div>
                       <div className="text-sm font-medium text-black">
-                        <b>Customer:</b> {invoice.customer_name}
+                        <b>
+                          {theme.language === "Bahasa"
+                            ? "Pelanggan: "
+                            : "Customer: "}
+                        </b>{" "}
+                        {invoice.customer_name}
                       </div>
                       <hr />
                       <div className="text-sm font-medium text-black">
-                        <b>Date: </b>
+                        <b>
+                          {theme.language === "Bahasa" ? "Tanggal: " : "Date: "}
+                        </b>
                         {invoice.date.substring(0, 10)}
                       </div>
                       <div className="text-sm font-medium text-black">
-                        <b>Status:</b> &nbsp;
+                        <b>
+                          {theme.language === "Bahasa"
+                            ? "Pembayaran:"
+                            : "Status:"}
+                        </b>{" "}
+                        &nbsp;
                         <span
                           className={`p-1.5 text-xs font-medium uppercase tracking-wider ${
                             invoice.status === "paid"
@@ -212,15 +270,27 @@ export default () => {
                               : "text-gray-800 bg-gray-200"
                           } rounded-lg bg-opacity-50`}
                         >
-                          {invoice.status}
+                          {theme.language === "Bahasa"
+                            ? invoice.status === "paid"
+                              ? "sudah"
+                              : "belum"
+                            : invoice.status}
                         </span>
                       </div>
                       <div className="text-sm font-medium text-black">
-                        <b>Total Items: </b>
+                        <b>
+                          {theme.language === "Bahasa"
+                            ? "Jumlah Barang: "
+                            : "Total Items: "}
+                        </b>
                         {invoice.total_items}
                       </div>
                       <div className="text-sm font-medium text-black">
-                        <b>Total Cost: </b>
+                        <b>
+                          {theme.language === "Bahasa"
+                            ? "Total Pembayaran: "
+                            : "Total Cost: "}
+                        </b>
                         {invoice.total.toLocaleString("en-US", {
                           style: "currency",
                           currency: "IDR",
@@ -233,7 +303,9 @@ export default () => {
                           className="py-2 px-5 text-xs font-medium uppercase tracking-wider rounded-md bg-complementary text-white"
                           href={`/invoices/${invoice._id}`}
                         >
-                          View Details
+                          {theme.language === "Bahasa"
+                            ? "Lihat Rincian"
+                            : "View Details"}
                         </Link>
                       </div>
                     </div>

@@ -1,0 +1,35 @@
+.button {
+  font-size: 1.5em;
+  /* border: none; */
+  border-radius: 2px;
+  margin: 0.3em;
+  padding: 6px 20px;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+.wrapper {
+  background-color: black;
+  border-radius: 1em;
+  padding: 1em;
+}
+
+.orange {
+  background-color: #ff9500;
+  color: white;
+}
+
+.grey {
+  background-color: #505050;
+  color: white;
+}
+
+.resultado {
+  color: white;
+  display: flex;
+  justify-content: flex-end; /* Ou 'right' = o resultado seria o mesmo */
+  margin-right: 1em;
+  font-size: 3.5em;
+}

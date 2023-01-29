@@ -12,7 +12,7 @@ export default async function handler(req, res) {
         const priceList = await PriceLists.findById(priceListId);
         res.status(200).json({ data: priceList });
       } catch (error) {
-        res
+        return res
           .status(400)
           .json({ message: "Failed to retrieve the PriceList: " + error });
       }
@@ -41,7 +41,7 @@ export default async function handler(req, res) {
           }
         );
       } catch (error) {
-        res
+        return res
           .status(400)
           .json({ message: "Failed to update the PriceList: " + error });
       }
@@ -57,7 +57,7 @@ export default async function handler(req, res) {
           }
         });
       } catch (error) {
-        res
+        return res
           .status(400)
           .json({ message: "Failed to delete the PriceList: " + error });
       }

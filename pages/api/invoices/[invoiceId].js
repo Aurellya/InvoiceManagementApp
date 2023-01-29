@@ -12,7 +12,7 @@ export default async function handler(req, res) {
         const invoice = await Invoices.findById(invoiceId);
         res.status(200).json({ data: invoice });
       } catch (error) {
-        res
+        return res
           .status(400)
           .json({ message: "Failed to retrieve the Invoice: " + error });
       }
@@ -43,7 +43,7 @@ export default async function handler(req, res) {
           }
         );
       } catch (error) {
-        res
+        return res
           .status(400)
           .json({ message: "Failed to update the Invoices: " + error });
       }
@@ -59,7 +59,7 @@ export default async function handler(req, res) {
           }
         });
       } catch (error) {
-        res
+        return res
           .status(400)
           .json({ message: "Failed to delete the Invoice: " + error });
       }

@@ -55,7 +55,7 @@ export default () => {
   return (
     <>
       <Head>
-        <title>Customers</title>
+        <title>{theme.language === "Bahasa" ? "Pelanggan" : "Customers"}</title>
       </Head>
 
       <section className="flex">
@@ -64,7 +64,9 @@ export default () => {
         <main className="container py-12 mx-10 md:mx-14">
           {/* header section */}
           <div className="flex md:items-center justify-between flex-col md:flex-row gap-4 md:gap-0 w-full">
-            <h3 className="text-3xl md:text-4xl font-bold">Customers</h3>
+            <h3 className="text-3xl md:text-4xl font-bold">
+              {theme.language === "Bahasa" ? "Pelanggan" : "Customers"}
+            </h3>
             <hr className="md:hidden" />
             <div className="flex justify-end">
               <Link
@@ -72,7 +74,9 @@ export default () => {
                 href="/addCustomer"
               >
                 <div>{React.createElement(BsPlusLg, { size: "12" })}</div>
-                <h2 className="whitespace-pre">Create New</h2>
+                <h2 className="whitespace-pre">
+                  {theme.language === "Bahasa" ? "Tambahkan" : "Create New"}
+                </h2>
               </Link>
             </div>
           </div>
@@ -83,14 +87,31 @@ export default () => {
               theme.dark ? "text-black" : ""
             }`}
           >
-            <div>
-              <h1 className="text-lg md:text-xl mb-4">Customer Details</h1>
+            <div className="flex justify-between">
+              <h1 className="text-lg md:text-xl mb-4">
+                {theme.language === "Bahasa"
+                  ? "Rincian Pelanggan"
+                  : "Customer Details"}
+              </h1>
+              {customers && (
+                <h2 className="text-sm hidden md:block">
+                  <span className="font-bold">Total: </span>
+                  {customers.length}{" "}
+                  {theme.language === "Bahasa"
+                    ? "Pelanggan"
+                    : customers.length > 1
+                    ? "Customers"
+                    : "Customer"}
+                </h2>
+              )}
             </div>
 
             {loading && (
               <div className="py-8">
                 <div className="mt-9 flex flex-col justify-center items-center">
-                  <h3 className="text-xl mb-4 font-bold">Loading</h3>
+                  <h3 className="text-xl mb-4 font-bold">
+                    {theme.language === "Bahasa" ? "Memuat" : "Loading"}
+                  </h3>
                   <ReactLoading
                     type="bars"
                     color="#2b4450"
@@ -104,7 +125,9 @@ export default () => {
             {!loading && !customers && (
               <div className="py-8">
                 <div className="mt-9 flex flex-col justify-center items-center">
-                  <h3 className="text-xl mb-4 font-bold">No Data</h3>
+                  <h3 className="text-xl mb-4 font-bold">
+                    {theme.language === "Bahasa" ? "Tidak Ada Data" : "No Data"}
+                  </h3>
                 </div>
               </div>
             )}
@@ -117,22 +140,30 @@ export default () => {
                     <thead className="bg-gray-50 border-b-2 border-gray-200">
                       <tr>
                         <th className="w-36 p-3 text-sm font-semibold tracking-wide text-left">
-                          Customer No.
+                          {theme.language === "Bahasa"
+                            ? "Nomor Pelanggan"
+                            : "Customer No."}
                         </th>
                         <th className="p-3 text-sm font-semibold tracking-wide text-left">
-                          Customer Name
+                          {theme.language === "Bahasa"
+                            ? "Nama Pelanggan"
+                            : "Customer Name"}
                         </th>
                         <th className="w-32 p-3 text-sm font-semibold tracking-wide text-left">
-                          Phone No.
+                          {theme.language === "Bahasa"
+                            ? "Nomor Tlp"
+                            : "Phone No."}
                         </th>
                         <th className="w-64 p-3 text-sm font-semibold tracking-wide text-left">
                           Email
                         </th>
                         <th className="w-72 p-3 text-sm font-semibold tracking-wide text-left">
-                          Address
+                          {theme.language === "Bahasa" ? "Alamat" : "Address"}
                         </th>
                         <th className="w-52 p-3 text-sm font-semibold tracking-wide text-left">
-                          Remarks
+                          {theme.language === "Bahasa"
+                            ? "Keterangan"
+                            : "Remarks"}
                         </th>
                       </tr>
                     </thead>
@@ -179,6 +210,17 @@ export default () => {
 
                 {/* mobile view */}
                 <hr className="md:hidden" />
+                {customers && (
+                  <h2 className="text-sm md:hidden mt-5 text-right">
+                    <span className="font-bold">Total: </span>
+                    {customers.length}{" "}
+                    {theme.language === "Bahasa"
+                      ? "Pelanggan"
+                      : customers.length > 1
+                      ? "Customers"
+                      : "Customer"}
+                  </h2>
+                )}
                 <br className="md:hidden" />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:hidden">
                   {paginateCustomer.map((customer) => (
@@ -187,17 +229,27 @@ export default () => {
                       key={customer._id}
                     >
                       <div className="text-sm font-medium text-black break-words">
-                        <b>Customer No.</b>
+                        <b>
+                          {theme.language === "Bahasa"
+                            ? "Nomor Pelanggan"
+                            : "Customer No."}
+                        </b>
                         <br />
                         {customer._id}
                       </div>
                       <div className="text-sm font-medium text-black">
-                        <b>Name: </b>
+                        <b>
+                          {theme.language === "Bahasa" ? "Nama: " : "Name: "}
+                        </b>
                         {customer.name}
                       </div>
                       <hr />
                       <div className="text-sm font-medium text-black">
-                        <b>Phone No.: </b>
+                        <b>
+                          {theme.language === "Bahasa"
+                            ? "Nomor Tlp: "
+                            : "Phone No: "}
+                        </b>
                         {customer.phone_no}
                       </div>
                       <div className="text-sm font-medium text-black">
@@ -207,11 +259,19 @@ export default () => {
                         </span>
                       </div>
                       <div className="text-sm font-medium text-black">
-                        <b>Address: </b>
+                        <b>
+                          {theme.language === "Bahasa"
+                            ? "Alamat: "
+                            : "Address: "}
+                        </b>
                         {customer.address}
                       </div>
                       <div className="text-sm font-medium text-black">
-                        <b>Remarks: </b>
+                        <b>
+                          {theme.language === "Bahasa"
+                            ? "Keterangan: "
+                            : "Remarks: "}
+                        </b>
                         {customer.remarks ? customer.remarks : "-"}
                       </div>
 
@@ -220,7 +280,9 @@ export default () => {
                           className="py-2 px-5 text-xs font-medium uppercase tracking-wider rounded-md bg-tertiary text-white"
                           href={`/customers/${customer._id}`}
                         >
-                          View Details
+                          {theme.language === "Bahasa"
+                            ? "Lihat Rincian"
+                            : "View Details"}
                         </Link>
                       </div>
                     </div>

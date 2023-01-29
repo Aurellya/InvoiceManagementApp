@@ -10,7 +10,7 @@ export default async function handler(req, res) {
         const customers = await Customers.find({}).sort([["name", -1]]);
         res.status(200).json({ data: customers });
       } catch (error) {
-        res
+        return res
           .status(400)
           .json({ message: "Failed to retrieve the Customers: " + error });
       }
@@ -35,7 +35,7 @@ export default async function handler(req, res) {
           }
         });
       } catch (error) {
-        res
+        return res
           .status(400)
           .json({ message: "Failed to insert the Customer: " + error });
       }

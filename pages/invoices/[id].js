@@ -77,7 +77,9 @@ export default function Invoice() {
   return (
     <>
       <Head>
-        <title>Invoice Details</title>
+        <title>
+          {theme.language === "Bahasa" ? "Rincian Nota" : "Invoice Details"}
+        </title>
       </Head>
 
       <section className="flex">
@@ -94,9 +96,13 @@ export default function Invoice() {
                 <div>
                   {React.createElement(IoArrowBackOutline, { size: "12" })}
                 </div>
-                <h2 className="whitespace-pre">Back</h2>
+                <h2 className="whitespace-pre">
+                  {theme.language === "Bahasa" ? "Kembali" : "Back"}
+                </h2>
               </Link>
-              <h3 className="text-3xl md:text-4xl font-bold">Invoice</h3>
+              <h3 className="text-3xl md:text-4xl font-bold">
+                {theme.language === "Bahasa" ? "Nota" : "Invoice"}
+              </h3>
             </div>
 
             <hr className="md:hidden mb-2" />
@@ -105,7 +111,9 @@ export default function Invoice() {
             <div className="items-center gap-2 hidden md:flex">
               <button className="group button-custom bg-tertiary">
                 <div>{React.createElement(AiFillPrinter, { size: "12" })}</div>
-                <h2 className="whitespace-pre">Print Invoice</h2>
+                <h2 className="whitespace-pre">
+                  {theme.language === "Bahasa" ? "Cetak Nota" : "Print Invoice"}
+                </h2>
               </button>
               <Link
                 className="group button-custom bg-primary"
@@ -119,7 +127,9 @@ export default function Invoice() {
                 onClick={showModalDeleteConfirmation}
               >
                 <div>{React.createElement(AiFillDelete, { size: "12" })}</div>
-                <h2 className="whitespace-pre">Delete</h2>
+                <h2 className="whitespace-pre">
+                  {theme.language === "Bahasa" ? "Hapus" : "Delete"}
+                </h2>
               </button>
             </div>
           </div>
@@ -128,12 +138,16 @@ export default function Invoice() {
           <div className="hidden" id="modal">
             <div className="bg-slate-800 bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0">
               <div className="bg-white px-10 py-8 rounded-md text-center">
-                <h1 className="text-xl mb-6 font-bold">Do you Want Delete?</h1>
+                <h1 className="text-xl mb-6 font-bold">
+                  {theme.language === "Bahasa"
+                    ? "Apakah Kamu Yakin Mau Menghapus Nota?"
+                    : "Do you Want Delete?"}
+                </h1>
                 <button
                   className="bg-[#F44645] px-4 py-2 rounded-md text-md text-white"
                   onClick={cancelDeleteInvoice}
                 >
-                  Cancel
+                  {theme.language === "Bahasa" ? "Batal" : "Cancel"}
                 </button>
                 <button
                   className="bg-tertiary px-7 py-2 ml-4 rounded-md text-md text-white font-semibold"
@@ -178,7 +192,9 @@ export default function Invoice() {
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                 >
-                  <title>Close</title>
+                  <title>
+                    {theme.language === "Bahasa" ? "Tutup" : "Close"}
+                  </title>
                   <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
                 </svg>
               </button>
@@ -192,7 +208,11 @@ export default function Invoice() {
             }`}
           >
             <div>
-              <h1 className="text-lg md:text-xl mb-3">Invoice Details</h1>
+              <h1 className="text-lg md:text-xl mb-3">
+                {theme.language === "Bahasa"
+                  ? "Rincian Nota"
+                  : "Invoice Details"}
+              </h1>
             </div>
 
             <hr />
@@ -201,7 +221,9 @@ export default function Invoice() {
             {loading && (
               <div className="py-8">
                 <div className="mt-9 flex flex-col justify-center items-center">
-                  <h3 className="text-xl mb-4 font-bold">Loading</h3>
+                  <h3 className="text-xl mb-4 font-bold">
+                    {theme.language === "Bahasa" ? "Memuat" : "Loading"}
+                  </h3>
                   <ReactLoading
                     type="bars"
                     color="#2b4450"
@@ -215,7 +237,9 @@ export default function Invoice() {
             {!loading && !invoice && (
               <div className="py-8">
                 <div className="mt-9 flex flex-col justify-center items-center">
-                  <h3 className="text-xl mb-4 font-bold">No Data</h3>
+                  <h3 className="text-xl mb-4 font-bold">
+                    {theme.language === "Bahasa" ? "Tidak Ada Data" : "No Data"}
+                  </h3>
                 </div>
               </div>
             )}
@@ -228,33 +252,55 @@ export default function Invoice() {
                   <div className="md:flex md:justify-between md:flex-wrap md:w-full text-sm font-medium md:text-base">
                     <div>
                       <p>
-                        <b>Invoice Id: </b>
+                        <b>
+                          {theme.language === "Bahasa"
+                            ? "Nomor Nota: "
+                            : "Invoice No: "}
+                        </b>
                       </p>
                       <p className="break-all">{invoice._id}</p>
                       <br />
                       <p>
-                        <b>Customer Name: </b>
+                        <b>
+                          {theme.language === "Bahasa"
+                            ? "Nama Pelanggan: "
+                            : "Customer Name: "}
+                        </b>
                       </p>
                       <p>{invoice.customer_name}</p> <br />
                     </div>
 
                     <div>
                       <p>
-                        <b>Date: </b>
+                        <b>
+                          {theme.language === "Bahasa" ? "Tanggal: " : "Date: "}
+                        </b>
                       </p>
                       <p>{invoice.date.substring(0, 10)}</p>
                       <br />
                       <p>
-                        <b>Status: </b>
+                        <b>
+                          {theme.language === "Bahasa"
+                            ? "Pembayaran: "
+                            : "Status: "}
+                        </b>
                       </p>
-                      <p>{invoice.status}</p>
+                      <p>
+                        {theme.language === "Bahasa"
+                          ? invoice.status === "paid"
+                            ? "sudah"
+                            : "belum"
+                          : invoice.status}
+                      </p>
                       <br />
                     </div>
                   </div>
 
                   <div className="text-sm font-medium md:text-base">
                     <p>
-                      <b>Notes: </b>
+                      <b>
+                        {theme.language === "Bahasa" ? "Catatan: " : "Notes: "}
+                      </b>
                     </p>
                     <p>{invoice.notes === "-" ? "-" : invoice.notes}</p>
                   </div>
@@ -266,7 +312,11 @@ export default function Invoice() {
                     <div>
                       {React.createElement(AiFillPrinter, { size: "12" })}
                     </div>
-                    <h2 className="whitespace-pre">Print Invoice</h2>
+                    <h2 className="whitespace-pre">
+                      {theme.language === "Bahasa"
+                        ? "Cetak Nota"
+                        : "Print Invoice"}
+                    </h2>
                   </button>
                   <Link
                     className="group button-custom bg-primary col-span-3"
@@ -283,7 +333,9 @@ export default function Invoice() {
                     <div>
                       {React.createElement(AiFillDelete, { size: "12" })}
                     </div>
-                    <h2 className="whitespace-pre">Delete</h2>
+                    <h2 className="whitespace-pre">
+                      {theme.language === "Bahasa" ? "Hapus" : "Delete"}
+                    </h2>
                   </button>
                 </div>
 
@@ -294,11 +346,17 @@ export default function Invoice() {
                   }`}
                 >
                   <div className="flex items-center justify-between mb-4 md:mt-4">
-                    <h1 className="text-lg md:hidden">Items</h1>
+                    <h1 className="text-lg md:hidden">
+                      {theme.language === "Bahasa" ? "Barang" : "Items"}
+                    </h1>
                     <h1></h1>
                     <div className="flex md:items-center justify-between flex-col md:flex-row md:gap-10 text-sm">
                       <p>
-                        <b>Total Items: </b>
+                        <b>
+                          {theme.language === "Bahasa"
+                            ? "Jumlah Barang: "
+                            : "Total Items: "}
+                        </b>
                         {invoice.total_items ? invoice.total_items : "-"}
                       </p>
                       <p>
@@ -320,13 +378,19 @@ export default function Invoice() {
                       <thead className="bg-gray-50 border-b-2 border-gray-200">
                         <tr>
                           <th className="w-24 p-3 text-sm font-semibold tracking-wide text-left">
-                            Amount
+                            {theme.language === "Bahasa"
+                              ? "Jumlah"
+                              : "Quantity"}
                           </th>
                           <th className="w-96 p-3 text-sm font-semibold tracking-wide text-left">
-                            Item Name
+                            {theme.language === "Bahasa"
+                              ? "Nama Barang"
+                              : "Item Name"}
                           </th>
                           <th className="w-36 p-3 text-sm font-semibold tracking-wide text-left">
-                            Price (/Unit)
+                            {theme.language === "Bahasa"
+                              ? "Harga (/Unit)"
+                              : "Price (/Unit)"}
                           </th>
                           <th className="w-32 p-3 text-sm font-semibold tracking-wide text-left">
                             Total
@@ -338,7 +402,16 @@ export default function Invoice() {
                         {invoice.contents.map((content, i) => (
                           <tr className="bg-white" key={invoice._id + "-" + i}>
                             <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                              {content.amount + " " + content.unit}
+                              {content.amount + " "}
+                              {theme.language === "Bahasa"
+                                ? content.unit
+                                : content.unit == "bh"
+                                ? "pcs"
+                                : content.unit == "ls"
+                                ? "doz"
+                                : content.unit == "grs"
+                                ? "gro"
+                                : "box"}
                             </td>
                             <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                               {content.item_name}
@@ -349,7 +422,16 @@ export default function Invoice() {
                                 currency: "IDR",
                                 maximumFractionDigits: 0,
                               })}{" "}
-                              /{content.price_unit}
+                              /
+                              {theme.language === "Bahasa"
+                                ? content.price_unit
+                                : content.price_unit == "bh"
+                                ? "pcs"
+                                : content.price_unit == "ls"
+                                ? "doz"
+                                : content.price_unit == "grs"
+                                ? "gro"
+                                : "box"}
                             </td>
                             <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                               {content.total.toLocaleString("en-US", {
@@ -374,15 +456,36 @@ export default function Invoice() {
                         key={"mobile-" + invoice._id + "-" + i}
                       >
                         <div className="text-sm font-medium text-black">
-                          <b>Amount: </b>
-                          {content.amount + " " + content.unit}
+                          <b>
+                            {theme.language === "Bahasa"
+                              ? "Jumlah: "
+                              : "Quantity: "}
+                          </b>
+                          {content.amount + " "}
+                          {theme.language === "Bahasa"
+                            ? content.unit
+                            : content.unit == "bh"
+                            ? "pcs"
+                            : content.unit == "ls"
+                            ? "doz"
+                            : content.unit == "grs"
+                            ? "gro"
+                            : "box"}
                         </div>
                         <div className="text-sm font-medium text-black">
-                          <b>Item Name: </b>
+                          <b>
+                            {theme.language === "Bahasa"
+                              ? "Nama Barang: "
+                              : "Item Name: "}
+                          </b>
                           {content.item_name}
                         </div>
                         <div className="text-sm font-medium text-black">
-                          <b>Price (/Unit): </b>
+                          <b>
+                            {theme.language === "Bahasa"
+                              ? "Harga (/Unit): "
+                              : "Price (/Unit): "}
+                          </b>
                           {content.price_per_item.toLocaleString("en-US", {
                             style: "currency",
                             currency: "IDR",

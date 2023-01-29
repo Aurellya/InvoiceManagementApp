@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { MdOutlineDashboard } from "react-icons/md";
 import { RiSettings4Line, RiFileList3Line } from "react-icons/ri";
@@ -7,6 +7,7 @@ import { AiOutlineUser } from "react-icons/ai";
 import { VscSignOut } from "react-icons/vsc";
 import { IoMdContacts } from "react-icons/io";
 import Link from "next/link";
+import { ThemeContext } from "../context/ThemeContext";
 
 export default function Sidebar({ handleSignOut }) {
   const menus = [
@@ -17,7 +18,19 @@ export default function Sidebar({ handleSignOut }) {
     { name: "Settings", link: "/settings", icon: RiSettings4Line },
     { name: "Profile", link: "/profile", icon: AiOutlineUser, margin: true },
   ];
+
+  const menus_b = [
+    { name: "Dasbor", link: "/", icon: MdOutlineDashboard },
+    { name: "Nota", link: "/invoices", icon: TbReportAnalytics },
+    { name: "Pelanggan", link: "/customers", icon: IoMdContacts },
+    { name: "Daftar Harga", link: "/priceList", icon: RiFileList3Line },
+    { name: "Pengaturan", link: "/settings", icon: RiSettings4Line },
+    { name: "Profil", link: "/profile", icon: AiOutlineUser, margin: true },
+  ];
+
   const [open, setOpen] = useState(false);
+
+  const theme = useContext(ThemeContext);
 
   return (
     <div
@@ -33,7 +46,7 @@ export default function Sidebar({ handleSignOut }) {
         />
       </div>
       <div className="mt-4 flex flex-col gap-4 relative z-50">
-        {menus?.map((menu, i) => (
+        {(theme.language === "Bahasa" ? menus_b : menus)?.map((menu, i) => (
           <Link
             href={menu?.link}
             key={i}
@@ -76,14 +89,14 @@ export default function Sidebar({ handleSignOut }) {
               !open && "opacity-0 translate-x-28 overflow-hidden"
             }`}
           >
-            Sign Out
+            {theme.language === "Bahasa" ? "Keluar" : "Sign Out"}
           </h2>
           <h2
             className={`${
               open && "hidden"
             } absolute left-48 bg-white font-semibold whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit  `}
           >
-            Sign Out
+            {theme.language === "Bahasa" ? "Keluar" : "Sign Out"}
           </h2>
         </button>
       </div>

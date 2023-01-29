@@ -72,7 +72,11 @@ export default function addCustomer() {
   return (
     <>
       <Head>
-        <title>Add Customer Form</title>
+        <title>
+          {theme.language === "Bahasa"
+            ? "Formulir Tambah Pelanggan"
+            : "Add Customer Form"}
+        </title>
       </Head>
 
       <section className="flex w-full">
@@ -89,10 +93,14 @@ export default function addCustomer() {
                 <div>
                   {React.createElement(IoArrowBackOutline, { size: "12" })}
                 </div>
-                <h2 className="whitespace-pre">Back</h2>
+                <h2 className="whitespace-pre">
+                  {theme.language === "Bahasa" ? "Kembali" : "Back"}
+                </h2>
               </Link>
               <h3 className="text-3xl md:text-4xl font-bold">
-                Add Customer Form
+                {theme.language === "Bahasa"
+                  ? "Formulir Tambah Pelanggan"
+                  : "Add Customer Form"}
               </h3>
             </div>
             <hr className="md:hidden" />
@@ -131,7 +139,9 @@ export default function addCustomer() {
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                 >
-                  <title>Close</title>
+                  <title>
+                    {theme.language === "Bahasa" ? "Tutup" : "Close"}
+                  </title>
                   <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
                 </svg>
               </button>
@@ -145,7 +155,11 @@ export default function addCustomer() {
               }`}
             >
               <div>
-                <h2 className="text-lg md:text-xl mb-3">Customer Details</h2>
+                <h2 className="text-lg md:text-xl mb-3">
+                  {theme.language === "Bahasa"
+                    ? "Rincican Pelanggan"
+                    : "Customer Details"}
+                </h2>
               </div>
 
               <hr />
@@ -171,7 +185,11 @@ export default function addCustomer() {
                           htmlFor="name"
                           className="form-label inline-block mb-2"
                         >
-                          <b>Customer Name:</b>
+                          <b>
+                            {theme.language === "Bahasa"
+                              ? "Nama Pelanggan:"
+                              : "Customer Name:"}
+                          </b>
                         </label>
                         <input
                           autoComplete="off"
@@ -179,7 +197,11 @@ export default function addCustomer() {
                           className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                           name="name"
                           id="name"
-                          placeholder="Enter Customer Name"
+                          placeholder={
+                            theme.language === "Bahasa"
+                              ? "Masukkan Nama Pelanggan"
+                              : "Enter Customer Name"
+                          }
                           onChange={handleChange}
                           required
                         />
@@ -191,7 +213,11 @@ export default function addCustomer() {
                           htmlFor="phone_no"
                           className="form-label inline-block mb-2"
                         >
-                          <b>Phone No:</b>
+                          <b>
+                            {theme.language === "Bahasa"
+                              ? "Nomor Telepon:"
+                              : "Phone No:"}
+                          </b>
                         </label>
                         <input
                           autoComplete="off"
@@ -199,7 +225,11 @@ export default function addCustomer() {
                           className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                           name="phone_no"
                           id="phone_no"
-                          placeholder="Enter Phone No"
+                          placeholder={
+                            theme.language === "Bahasa"
+                              ? "Masukkan Nomot Tlp"
+                              : "Enter Phone No"
+                          }
                           onChange={handleChange}
                           required
                         />
@@ -211,7 +241,11 @@ export default function addCustomer() {
                           htmlFor="address"
                           className="form-label inline-block mb-2"
                         >
-                          <b>Address:</b>
+                          <b>
+                            {theme.language === "Bahasa"
+                              ? "Alamat:"
+                              : "Address:"}
+                          </b>
                         </label>
                         <textarea
                           autoComplete="off"
@@ -219,7 +253,11 @@ export default function addCustomer() {
                           className="form-control block px-3 py-1.5 w-full h-24 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                           name="address"
                           id="address"
-                          placeholder="Enter Address"
+                          placeholder={
+                            theme.language === "Bahasa"
+                              ? "Masukkan Alamat"
+                              : "Enter Address"
+                          }
                           onChange={handleChange}
                           required
                         ></textarea>
@@ -242,7 +280,11 @@ export default function addCustomer() {
                           className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                           name="email"
                           id="email"
-                          placeholder="Enter Email"
+                          placeholder={
+                            theme.language === "Bahasa"
+                              ? "Masukkan Email"
+                              : "Enter Email"
+                          }
                           onChange={handleChange}
                           required
                         />
@@ -254,7 +296,11 @@ export default function addCustomer() {
                           htmlFor="remarks"
                           className="form-label inline-block mb-2"
                         >
-                          <b>Remarks:</b>
+                          <b>
+                            {theme.language === "Bahasa"
+                              ? "Keterangan:"
+                              : "Remarks:"}
+                          </b>
                         </label>
                         <textarea
                           autoComplete="off"
@@ -262,7 +308,11 @@ export default function addCustomer() {
                           className="form-control block px-3 py-1.5 w-full h-32 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
                           name="remarks"
                           id="remarks"
-                          placeholder="Enter Remarks"
+                          placeholder={
+                            theme.language === "Bahasa"
+                              ? "Masukkan Keterangan"
+                              : "Enter Remarks"
+                          }
                           onChange={handleChange}
                         ></textarea>
                       </div>
