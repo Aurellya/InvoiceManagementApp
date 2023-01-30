@@ -17,9 +17,17 @@ export default function Pagination({
 
   return (
     <div className="flex items-center justify-center pt-12 pb-4 lg:px-0 sm:px-6 px-4">
-      <div className="lg:w-3/5 w-full  flex items-center justify-between border-t border-[#0E3658]">
+      <div
+        className={`lg:w-3/5 w-full flex items-center justify-between border-t ${
+          theme.dark ? "border-neutral" : "border-[#0E3658]"
+        }`}
+      >
         <div
-          className="flex items-center pt-3 text-gray-300 hover:text-[#0E3658] cursor-pointer"
+          className={`flex items-center pt-3 cursor-pointer ${
+            theme.dark
+              ? "text-neutral hover:opacity-70"
+              : "text-gray-300 hover:text-[#0E3658]"
+          }`}
           onClick={() => onPageChange(currentPage - 1)}
         >
           <svg
@@ -62,7 +70,11 @@ export default function Pagination({
               key={page}
               className={`text-sm font-medium leading-none cursor-pointer border-t pt-3 mr-4 px-2 ${
                 page === currentPage
-                  ? "text-[#0E3658] border-[#0E3658]"
+                  ? theme.dark
+                    ? "text-neutral border-neutral"
+                    : "text-[#0E3658] border-[#0E3658]"
+                  : theme.dark
+                  ? "text-neutral hover:opacity-70 border-transparent hover:border-[#0E3658]"
                   : "text-gray-300 hover:text-[#0E3658] border-transparent hover:border-[#0E3658]"
               }`}
             >
@@ -71,7 +83,11 @@ export default function Pagination({
           ))}
         </div>
         <div
-          className="flex items-center pt-3 text-gray-300  hover:text-[#0E3658] cursor-pointer"
+          className={`flex items-center pt-3 cursor-pointer ${
+            theme.dark
+              ? "text-neutral hover:opacity-70"
+              : "text-gray-300 hover:text-[#0E3658]"
+          }`}
           onClick={() => onPageChange(currentPage + 1)}
         >
           <p className="text-sm font-medium leading-none mr-3">

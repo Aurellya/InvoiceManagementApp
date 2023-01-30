@@ -34,7 +34,9 @@ export default function Sidebar({ handleSignOut }) {
 
   return (
     <div
-      className={`bg-primary min-h-screen ${
+      className={`${
+        theme.dark ? "shadow-lg" : ""
+      } bg-primary min-h-screen ${
         open ? "w-72" : "w-16"
       } duration-500 text-gray-100 px-4`}
     >

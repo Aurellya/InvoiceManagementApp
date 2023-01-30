@@ -90,7 +90,9 @@ export default function Invoice() {
           <div className="flex md:items-center justify-between flex-col md:flex-row gap-4 md:gap-0 w-full md:mb-12">
             <div className="flex items-center gap-8">
               <Link
-                className="group flex items-center text-sm font-bold gap-2 py-2 px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
+                className={`${
+                  theme.dark ? "bg-dm_secondary" : "bg-primary"
+                } group flex items-center text-sm font-bold gap-2 py-2 px-4 text-white hover:opacity-80 transition duration-700 rounded-md`}
                 href="/invoices"
               >
                 <div>
@@ -116,7 +118,9 @@ export default function Invoice() {
                 </h2>
               </button>
               <Link
-                className="group button-custom bg-primary"
+                className={`${
+                  theme.dark ? "bg-dm_secondary" : "bg-primary"
+                } group button-custom`}
                 href={`/editInvoice/${router.query.id}`}
               >
                 <div>{React.createElement(AiFillEdit, { size: "12" })}</div>
@@ -204,7 +208,7 @@ export default function Invoice() {
           {/* contents */}
           <div
             className={`table-div-custom my-4 md:my-0 p-6 block mb-4 md:mb-0 ${
-              theme.dark ? "text-black" : ""
+              theme.dark ? "text-neutral !bg-dm_secondary" : ""
             }`}
           >
             <div>
@@ -248,7 +252,11 @@ export default function Invoice() {
             {!loading && invoice && (
               <div className="flex gap-10 flex-col md:grid md:grid-cols-12">
                 {/* left */}
-                <div className="md:max-w-[450px] md:mt-2 md:col-span-5 w-full bg-neutral p-6 border h-fit">
+                <div
+                  className={`${
+                    theme.dark ? "text-neutral !bg-dm_secondary" : "bg-neutral"
+                  } md:max-w-[450px] md:mt-2 md:col-span-5 w-full p-6 border h-fit`}
+                >
                   <div className="md:flex md:justify-between md:flex-wrap md:w-full text-sm font-medium md:text-base">
                     <div>
                       <p>
@@ -319,7 +327,7 @@ export default function Invoice() {
                     </h2>
                   </button>
                   <Link
-                    className="group button-custom bg-primary col-span-3"
+                    className={`bg-primary group button-custom col-span-3`}
                     href={`/editInvoice/${router.query.id}`}
                   >
                     <div>{React.createElement(AiFillEdit, { size: "12" })}</div>
@@ -342,7 +350,7 @@ export default function Invoice() {
                 {/* right */}
                 <div
                   className={`w-full md:w-fit md:col-span-7 mt-1 md:mt-[-15px] ${
-                    theme.dark ? "text-black" : ""
+                    theme.dark ? "text-neutral" : ""
                   }`}
                 >
                   <div className="flex items-center justify-between mb-4 md:mt-4">
@@ -375,7 +383,11 @@ export default function Invoice() {
                   {/* table: for large screen view */}
                   <div className="overflow-auto rounded-lg shadow hidden md:block">
                     <table className="w-full">
-                      <thead className="bg-gray-50 border-b-2 border-gray-200">
+                      <thead
+                        className={`${
+                          theme.dark ? "bg-primary" : "bg-gray-50"
+                        } border-b-2 border-gray-200`}
+                      >
                         <tr>
                           <th className="w-24 p-3 text-sm font-semibold tracking-wide text-left">
                             {theme.language === "Bahasa"
@@ -400,8 +412,13 @@ export default function Invoice() {
 
                       <tbody className="divide-y divide-gray-100">
                         {invoice.contents.map((content, i) => (
-                          <tr className="bg-white" key={invoice._id + "-" + i}>
-                            <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                          <tr
+                            className={`${
+                              theme.dark ? "!bg-[#99AEBA]" : "bg-white"
+                            } text-gray-700`}
+                            key={invoice._id + "-" + i}
+                          >
+                            <td className="p-3 text-sm whitespace-nowrap">
                               {content.amount + " "}
                               {theme.language === "Bahasa"
                                 ? content.unit
@@ -413,10 +430,10 @@ export default function Invoice() {
                                 ? "gro"
                                 : "box"}
                             </td>
-                            <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                            <td className="p-3 text-sm whitespace-nowrap">
                               {content.item_name}
                             </td>
-                            <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                            <td className="p-3 text-sm whitespace-nowrap">
                               {content.price_per_item.toLocaleString("en-US", {
                                 style: "currency",
                                 currency: "IDR",
@@ -433,7 +450,7 @@ export default function Invoice() {
                                 ? "gro"
                                 : "box"}
                             </td>
-                            <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                            <td className="p-3 text-sm whitespace-nowrap">
                               {content.total.toLocaleString("en-US", {
                                 style: "currency",
                                 currency: "IDR",
@@ -452,10 +469,12 @@ export default function Invoice() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden">
                     {invoice.contents.map((content, i) => (
                       <div
-                        className="bg-white space-y-3 p-4 rounded-lg shadow"
+                        className={`${
+                          theme.dark ? "!bg-[#99AEBA]" : "bg-white"
+                        } text-gray-700 space-y-3 p-4 rounded-lg shadow`}
                         key={"mobile-" + invoice._id + "-" + i}
                       >
-                        <div className="text-sm font-medium text-black">
+                        <div className="text-sm font-medium">
                           <b>
                             {theme.language === "Bahasa"
                               ? "Jumlah: "
@@ -472,7 +491,7 @@ export default function Invoice() {
                             ? "gro"
                             : "box"}
                         </div>
-                        <div className="text-sm font-medium text-black">
+                        <div className="text-sm font-medium">
                           <b>
                             {theme.language === "Bahasa"
                               ? "Nama Barang: "
@@ -480,7 +499,7 @@ export default function Invoice() {
                           </b>
                           {content.item_name}
                         </div>
-                        <div className="text-sm font-medium text-black">
+                        <div className="text-sm font-medium">
                           <b>
                             {theme.language === "Bahasa"
                               ? "Harga (/Unit): "
@@ -493,7 +512,7 @@ export default function Invoice() {
                           })}{" "}
                           /{content.price_unit}
                         </div>
-                        <div className="text-sm font-medium text-black">
+                        <div className="text-sm font-medium">
                           <b>Total: </b>
                           {content.total.toLocaleString("en-US", {
                             style: "currency",

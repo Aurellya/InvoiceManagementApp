@@ -70,7 +70,9 @@ export default () => {
             <hr className="md:hidden" />
             <div className="flex justify-end">
               <Link
-                className="w-fit button-custom mt-0 bg-primary"
+                className={`w-fit button-custom mt-0 bg-primary ${
+                  theme.dark ? "bg-dm_secondary" : "bg-primary"
+                }`}
                 href="/addCustomer"
               >
                 <div>{React.createElement(BsPlusLg, { size: "12" })}</div>
@@ -84,7 +86,7 @@ export default () => {
           {/* customers table */}
           <div
             className={`table-div-custom p-6 my-4 md:my-12 ${
-              theme.dark ? "text-black" : ""
+              theme.dark ? "text-neutral !bg-dm_secondary" : ""
             }`}
           >
             <div className="flex justify-between">
@@ -137,7 +139,11 @@ export default () => {
                 {/* large screen view */}
                 <div className="overflow-auto rounded-lg shadow hidden md:block">
                   <table className="w-full">
-                    <thead className="bg-gray-50 border-b-2 border-gray-200">
+                    <thead
+                      className={`${
+                        theme.dark ? "bg-primary" : "bg-gray-50 text-gray-700"
+                      } border-b-2 border-gray-200`}
+                    >
                       <tr>
                         <th className="w-36 p-3 text-sm font-semibold tracking-wide text-left">
                           {theme.language === "Bahasa"
@@ -170,7 +176,12 @@ export default () => {
 
                     <tbody className="divide-y divide-gray-100">
                       {paginateCustomer.map((customer) => (
-                        <tr className="bg-white" key={customer._id}>
+                        <tr
+                          className={`${
+                            theme.dark ? "!bg-[#99AEBA]" : "bg-white"
+                          } text-gray-700`}
+                          key={customer._id}
+                        >
                           <td className="p-3 text-sm text-primary font-bold whitespace-nowrap">
                             <Link
                               href={`/customers/${customer._id}`}
@@ -179,23 +190,23 @@ export default () => {
                               {customer._id}
                             </Link>
                           </td>
-                          <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                          <td className="p-3 text-sm whitespace-nowrap">
                             {customer.name}
                           </td>
-                          <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                          <td className="p-3 text-sm whitespace-nowrap">
                             {customer.phone_no}
                           </td>
-                          <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                          <td className="p-3 text-sm whitespace-nowrap">
                             {customer.email.length > 25
                               ? customer.email.slice(0, 25) + " ..."
                               : customer.email}
                           </td>
-                          <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                          <td className="p-3 text-sm whitespace-nowrap">
                             {customer.address.length > 30
                               ? customer.address.slice(0, 30) + " ..."
                               : customer.address}
                           </td>
-                          <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                          <td className="p-3 text-sm whitespace-nowrap">
                             {customer.remarks
                               ? customer.remarks.length > 20
                                 ? customer.remarks.slice(0, 20) + " ..."
@@ -225,26 +236,28 @@ export default () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:hidden">
                   {paginateCustomer.map((customer) => (
                     <div
-                      className="bg-white space-y-3 p-4 pb-6 rounded-lg shadow"
+                      className={`${
+                        theme.dark ? "!bg-[#99AEBA]" : "bg-white"
+                      } text-gray-700 space-y-3 p-4 pb-6 rounded-lg shadow`}
                       key={customer._id}
                     >
-                      <div className="text-sm font-medium text-black break-words">
+                      <div className="text-sm font-medium break-words">
                         <b>
                           {theme.language === "Bahasa"
-                            ? "Nomor Pelanggan"
-                            : "Customer No."}
+                            ? "Nomor Pelanggan: "
+                            : "Customer No: "}
                         </b>
                         <br />
                         {customer._id}
                       </div>
-                      <div className="text-sm font-medium text-black">
+                      <div className="text-sm font-medium">
                         <b>
                           {theme.language === "Bahasa" ? "Nama: " : "Name: "}
                         </b>
                         {customer.name}
                       </div>
                       <hr />
-                      <div className="text-sm font-medium text-black">
+                      <div className="text-sm font-medium">
                         <b>
                           {theme.language === "Bahasa"
                             ? "Nomor Tlp: "
@@ -252,13 +265,13 @@ export default () => {
                         </b>
                         {customer.phone_no}
                       </div>
-                      <div className="text-sm font-medium text-black">
+                      <div className="text-sm font-medium">
                         <b>Email: </b>
-                        <span className="text-sm font-medium text-black">
+                        <span className="text-sm font-medium">
                           {customer.email}
                         </span>
                       </div>
-                      <div className="text-sm font-medium text-black">
+                      <div className="text-sm font-medium">
                         <b>
                           {theme.language === "Bahasa"
                             ? "Alamat: "
@@ -266,7 +279,7 @@ export default () => {
                         </b>
                         {customer.address}
                       </div>
-                      <div className="text-sm font-medium text-black">
+                      <div className="text-sm font-medium">
                         <b>
                           {theme.language === "Bahasa"
                             ? "Keterangan: "

@@ -113,7 +113,11 @@ export default ({ closeCalculator }) => {
   }, [key]);
 
   return (
-    <div className="bg-white px-10 py-8 rounded-md text-center w-[600px] relative">
+    <div
+      className={`${
+        theme.dark ? "!bg-dm_secondary text-neutral" : "bg-white"
+      } px-10 py-8 rounded-md text-center w-[600px] relative`}
+    >
       <div className="absolute top-4 right-4">
         <button
           onClick={closeCalculator}
@@ -133,19 +137,25 @@ export default ({ closeCalculator }) => {
         </div>
         <div className="grid grid-cols-12 gap-2">
           <button
-            className={`col-span-3 border border-black ${styles.button}`}
+            className={`col-span-3 border ${
+              theme.dark ? "border-neutral" : "border-black"
+            } ${styles.button}`}
             onClick={clear}
           >
             AC
           </button>
           <button
-            className={`col-span-3 border border-black ${styles.button}`}
+            className={`col-span-3 border ${
+              theme.dark ? "border-neutral" : "border-black"
+            } ${styles.button}`}
             onClick={changeSign}
           >
             +/-
           </button>
           <button
-            className={`col-span-3 border border-black ${styles.button}`}
+            className={`col-span-3 border ${
+              theme.dark ? "border-neutral" : "border-black"
+            } ${styles.button}`}
             onClick={percentage}
           >
             %
@@ -158,21 +168,27 @@ export default ({ closeCalculator }) => {
             /
           </button>
           <button
-            className={`bg-gray-300 col-span-3 ${styles.button}`}
+            className={`bg-gray-300 col-span-3 ${
+              theme.dark ? "text-primary" : ""
+            } ${styles.button}`}
             onClick={inputNum}
             value={7}
           >
             7
           </button>
           <button
-            className={`bg-gray-300 col-span-3 ${styles.button}`}
+            className={`bg-gray-300 col-span-3 ${
+              theme.dark ? "text-primary" : ""
+            } ${styles.button}`}
             onClick={inputNum}
             value={8}
           >
             8
           </button>
           <button
-            className={`bg-gray-300 col-span-3 ${styles.button}`}
+            className={`bg-gray-300 col-span-3 ${
+              theme.dark ? "text-primary" : ""
+            } ${styles.button}`}
             onClick={inputNum}
             value={9}
           >
@@ -186,21 +202,27 @@ export default ({ closeCalculator }) => {
             X
           </button>
           <button
-            className={`bg-gray-300 col-span-3 ${styles.button}`}
+            className={`bg-gray-300 col-span-3 ${
+              theme.dark ? "text-primary" : ""
+            } ${styles.button}`}
             onClick={inputNum}
             value={4}
           >
             4
           </button>
           <button
-            className={`bg-gray-300 col-span-3 ${styles.button}`}
+            className={`bg-gray-300 col-span-3 ${
+              theme.dark ? "text-primary" : ""
+            } ${styles.button}`}
             onClick={inputNum}
             value={5}
           >
             5
           </button>
           <button
-            className={`bg-gray-300 col-span-3 ${styles.button}`}
+            className={`bg-gray-300 col-span-3 ${
+              theme.dark ? "text-primary" : ""
+            } ${styles.button}`}
             onClick={inputNum}
             value={6}
           >
@@ -214,21 +236,27 @@ export default ({ closeCalculator }) => {
             -
           </button>
           <button
-            className={`bg-gray-300 col-span-3 ${styles.button}`}
+            className={`bg-gray-300 col-span-3 ${
+              theme.dark ? "text-primary" : ""
+            } ${styles.button}`}
             onClick={inputNum}
             value={1}
           >
             1
           </button>
           <button
-            className={`bg-gray-300 col-span-3 ${styles.button}`}
+            className={`bg-gray-300 col-span-3 ${
+              theme.dark ? "text-primary" : ""
+            } ${styles.button}`}
             onClick={inputNum}
             value={2}
           >
             2
           </button>
           <button
-            className={`bg-gray-300 col-span-3 ${styles.button}`}
+            className={`bg-gray-300 col-span-3 ${
+              theme.dark ? "text-primary" : ""
+            } ${styles.button}`}
             onClick={inputNum}
             value={3}
           >
@@ -242,7 +270,9 @@ export default ({ closeCalculator }) => {
             +
           </button>
           <button
-            className={`bg-gray-300 col-span-3 ${styles.button}`}
+            className={`bg-gray-300 col-span-3 ${
+              theme.dark ? "text-primary" : ""
+            } ${styles.button}`}
             onClick={inputNum}
             value={0}
           >
@@ -250,7 +280,9 @@ export default ({ closeCalculator }) => {
           </button>
           {/* <button style={{ visibility: "hidden" }}>k</button>{" "} */}
           <button
-            className={`bg-gray-300 col-span-3 ${styles.button}`}
+            className={`bg-gray-300 col-span-3 ${
+              theme.dark ? "text-primary" : ""
+            } ${styles.button}`}
             onClick={inputNum}
             value={"."}
           >

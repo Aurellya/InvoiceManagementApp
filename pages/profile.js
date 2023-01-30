@@ -42,7 +42,9 @@ export default () => {
             {/* btn group: large screen view */}
             <div className="items-center gap-2 hidden md:flex">
               <Link
-                className="group button-custom bg-primary"
+                className={`group button-custom ${
+                  theme.dark ? "bg-dm_secondary" : "bg-primary"
+                }`}
                 href={""}
                 // href={`/editProfile/${router.query.id}`}
               >
@@ -64,7 +66,7 @@ export default () => {
           {/* content */}
           <div
             className={`table-div-custom my-4 md:my-0 p-6 block mb-4 md:mb-0 ${
-              theme.dark ? "text-black" : ""
+              theme.dark ? "text-neutral !bg-dm_secondary" : ""
             }`}
           >
             <div>
@@ -80,8 +82,16 @@ export default () => {
 
             <div className="flex flex-col lg:grid lg:grid-cols-12 lg:gap-10 pb-0 md:pb-0 pt-3">
               {/* left */}
-              <div className="text-primary lg:col-span-4 flex justify-center items-center mb-0 lg:mt-[-20px]">
-                <div className="border-y-8 border-y-primary rounded-full w-fit p-3">
+              <div
+                className={`${
+                  theme.dark ? "text-neutral" : "text-primary"
+                } lg:col-span-4 flex justify-center items-center mb-0 lg:mt-[-20px]`}
+              >
+                <div
+                  className={`${
+                    theme.dark ? "border-y-neutral" : "border-y-primary"
+                  } border-y-8 rounded-full w-fit p-3`}
+                >
                   {React.createElement(TiUserOutline, { size: "220" })}
                 </div>
               </div>

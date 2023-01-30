@@ -91,7 +91,9 @@ export default function PriceList() {
           <div className="flex md:items-center justify-between w-full md:mb-12">
             <div className="flex items-center gap-8">
               <Link
-                className="group button-custom bg-primary"
+                className={`${
+                  theme.dark ? "bg-dm_secondary" : "bg-primary"
+                } group button-custom`}
                 href="/priceList"
               >
                 <div>
@@ -109,7 +111,9 @@ export default function PriceList() {
             {/* btn group: large screen view */}
             <div className="items-center gap-2 hidden md:flex">
               <Link
-                className="group button-custom bg-primary"
+                className={`${
+                  theme.dark ? "bg-dm_secondary" : "bg-primary"
+                } group button-custom`}
                 href={`/editPriceList/${router.query.id}`}
               >
                 <div>{React.createElement(AiFillEdit, { size: "12" })}</div>
@@ -197,7 +201,7 @@ export default function PriceList() {
           {/* contents */}
           <div
             className={`table-div-custom my-4 md:my-0 p-6 block mb-4 md:mb-0 ${
-              theme.dark ? "text-black" : ""
+              theme.dark ? "text-neutral !bg-dm_secondary" : ""
             }`}
           >
             <div>
@@ -241,11 +245,23 @@ export default function PriceList() {
             {!loading && item && (
               <div className="flex flex-col lg:grid lg:grid-cols-12 lg:gap-10 pb-0 md:pb-2 pt-3">
                 {/* left */}
-                <div className="text-primary lg:col-span-6 flex justify-center items-center mb-10 lg:mb-0">
-                  <div className="border-y-8 border-y-primary rounded-full w-fit p-6 lg:mt-[-70px]">
+                <div
+                  className={`${
+                    theme.dark ? "text-neutral" : "text-primary"
+                  } lg:col-span-6 flex justify-center items-center mb-10 lg:mb-0`}
+                >
+                  <div
+                    className={`${
+                      theme.dark ? "border-y-neutral" : "border-y-primary"
+                    } border-y-8 rounded-full w-fit p-6 lg:mt-[-70px]`}
+                  >
                     {React.createElement(TbFileInvoice, { size: "200" })}
                   </div>
-                  <div className="border-y-8 border-y-primary rounded-full w-fit p-6 hidden md:block md:ml-[-20px] lg:mt-[30px]">
+                  <div
+                    className={`${
+                      theme.dark ? "border-y-neutral" : "border-y-primary"
+                    } border-y-8 rounded-full w-fit p-6 hidden md:block md:ml-[-20px] lg:mt-[30px]`}
+                  >
                     {React.createElement(TbFileInvoice, { size: "200" })}
                   </div>
                 </div>

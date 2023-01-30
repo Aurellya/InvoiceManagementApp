@@ -72,7 +72,9 @@ export default () => {
             <hr className="md:hidden" />
             <div className="flex justify-end">
               <Link
-                className="w-fit button-custom mt-0 bg-primary"
+                className={`w-fit button-custom mt-0 ${
+                  theme.dark ? "bg-dm_secondary" : "bg-primary"
+                }`}
                 href="/addPriceList"
               >
                 <div>{React.createElement(BsPlusLg, { size: "12" })}</div>
@@ -86,7 +88,7 @@ export default () => {
           {/* priceLists table */}
           <div
             className={`table-div-custom p-6 my-4 md:my-12 ${
-              theme.dark ? "text-black" : ""
+              theme.dark ? "text-neutral !bg-dm_secondary" : ""
             }`}
           >
             <div className="flex justify-between">
@@ -138,7 +140,11 @@ export default () => {
                 {/* large screen view */}
                 <div className="overflow-auto rounded-lg shadow hidden md:block">
                   <table className="w-full">
-                    <thead className="bg-gray-50 border-b-2 border-gray-200">
+                    <thead
+                      className={`${
+                        theme.dark ? "bg-primary" : "bg-gray-50 text-gray-700"
+                      } border-b-2 border-gray-200`}
+                    >
                       <tr>
                         <th className="w-36 p-3 text-sm font-semibold tracking-wide text-left">
                           {theme.language === "Bahasa"
@@ -168,7 +174,12 @@ export default () => {
 
                     <tbody className="divide-y divide-gray-100">
                       {paginatePriceLists.map((item) => (
-                        <tr className="bg-white" key={item._id}>
+                        <tr
+                          className={`${
+                            theme.dark ? "!bg-[#99AEBA]" : "bg-white"
+                          } text-gray-700`}
+                          key={item._id}
+                        >
                           <td className="p-3 text-sm text-primary font-bold whitespace-nowrap">
                             <Link
                               href={`/priceList/${item._id}`}
@@ -177,10 +188,10 @@ export default () => {
                               {item._id}
                             </Link>
                           </td>
-                          <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                          <td className="p-3 text-sm whitespace-nowrap">
                             {item.product_name}
                           </td>
-                          <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                          <td className="p-3 text-sm whitespace-nowrap">
                             {item.amount + " "}
                             {theme.language === "Bahasa"
                               ? item.unit
@@ -192,14 +203,14 @@ export default () => {
                                   ? "gro"
                                   : "box")}
                           </td>
-                          <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                          <td className="p-3 text-sm whitespace-nowrap">
                             {item.price.toLocaleString("en-US", {
                               style: "currency",
                               currency: "IDR",
                               maximumFractionDigits: 0,
                             })}
                           </td>
-                          <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                          <td className="p-3 text-sm whitespace-nowrap">
                             {item.remarks
                               ? item.remarks.length > 20
                                 ? item.remarks.slice(0, 20) + " ..."
@@ -229,10 +240,12 @@ export default () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:hidden">
                   {paginatePriceLists.map((item) => (
                     <div
-                      className="bg-white space-y-3 p-4 pb-6 rounded-lg shadow"
+                      className={`${
+                        theme.dark ? "!bg-[#99AEBA]" : "bg-white"
+                      } text-gray-700 space-y-3 p-4 pb-6 rounded-lg shadow`}
                       key={item._id}
                     >
-                      <div className="text-sm font-medium text-black break-words">
+                      <div className="text-sm font-medium break-words">
                         <b>
                           {theme.language === "Bahasa"
                             ? "ID Barang"
@@ -241,7 +254,7 @@ export default () => {
                         <br />
                         {item._id}
                       </div>
-                      <div className="text-sm font-medium text-black">
+                      <div className="text-sm font-medium">
                         <b>
                           {theme.language === "Bahasa"
                             ? "Nama Produk: "
@@ -250,7 +263,7 @@ export default () => {
                         {item.product_name}
                       </div>
                       <hr />
-                      <div className="text-sm font-medium text-black">
+                      <div className="text-sm font-medium">
                         <b>
                           {theme.language === "Bahasa"
                             ? "Jumlah (/Unit): "
@@ -267,11 +280,11 @@ export default () => {
                           ? "gro"
                           : "box"}
                       </div>
-                      <div className="text-sm font-medium text-black">
+                      <div className="text-sm font-medium">
                         <b>
                           {theme.language === "Bahasa" ? "Harga: " : "Price: "}
                         </b>
-                        <span className="text-sm font-medium text-black">
+                        <span className="text-sm font-medium">
                           {item.price.toLocaleString("en-US", {
                             style: "currency",
                             currency: "IDR",
@@ -279,7 +292,7 @@ export default () => {
                           })}
                         </span>
                       </div>
-                      <div className="text-sm font-medium text-black">
+                      <div className="text-sm font-medium">
                         <b>
                           {theme.language === "Bahasa"
                             ? "Keterangan: "

@@ -149,7 +149,9 @@ export default function editPriceList() {
           <div className="flex md:items-center justify-between flex-col md:flex-row gap-6 md:gap-0 w-fit md:w-full md:mb-12">
             <div className="flex items-center gap-8">
               <Link
-                className="group flex items-center text-sm font-bold gap-2 py-2 px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
+                className={`${
+                  theme.dark ? "bg-dm_secondary" : "bg-primary"
+                } group flex items-center text-sm font-bold gap-2 py-2 px-4 text-white hover:opacity-80 transition duration-700 rounded-md`}
                 href={`/priceList/${router.query.id}`}
               >
                 <div>
@@ -218,7 +220,7 @@ export default function editPriceList() {
                 </h3>
                 <ReactLoading
                   type="bars"
-                  color="#0E3658"
+                  color="#2b4450"
                   height={100}
                   width={50}
                 />
@@ -241,12 +243,11 @@ export default function editPriceList() {
             <form className="w-full" onSubmit={submitForm}>
               <div
                 className={`table-div-custom my-4 md:my-0 px-6 pt-6 pb-1 md:p-6 ${
-                  theme.dark ? "text-black" : ""
+                  theme.dark ? "text-neutral !bg-dm_secondary" : ""
                 }`}
               >
                 <div>
                   <h2 className="text-lg md:text-xl mb-3">
-                    {" "}
                     {theme.language === "Bahasa"
                       ? "Rincican Barang"
                       : "Item Details"}
@@ -259,11 +260,23 @@ export default function editPriceList() {
                 {/* edit item form */}
                 <div className="flex flex-col lg:grid lg:grid-cols-12 lg:gap-10 pb-2 pt-3 mb-3 md:mb-0">
                   {/* left */}
-                  <div className="text-primary lg:col-span-6 flex justify-center items-center mb-10 lg:mb-0">
-                    <div className="border-y-8 border-y-primary rounded-full w-fit p-6 lg:mt-[-100px]">
+                  <div
+                    className={`${
+                      theme.dark ? "text-neutral" : "text-primary"
+                    } lg:col-span-6 flex justify-center items-center mb-10 lg:mb-0`}
+                  >
+                    <div
+                      className={`${
+                        theme.dark ? "border-y-neutral" : "border-y-primary"
+                      } border-y-8 rounded-full w-fit p-6 lg:mt-[-100px]`}
+                    >
                       {React.createElement(TbFileInvoice, { size: "200" })}
                     </div>
-                    <div className="border-y-8 border-y-primary rounded-full w-fit p-6 hidden md:block md:ml-[-20px]">
+                    <div
+                      className={`${
+                        theme.dark ? "border-y-neutral" : "border-y-primary"
+                      } border-y-8 rounded-full w-fit p-6 hidden md:block md:ml-[-20px]`}
+                    >
                       {React.createElement(TbFileInvoice, { size: "200" })}
                     </div>
                   </div>
@@ -286,14 +299,18 @@ export default function editPriceList() {
                       <input
                         autoComplete="off"
                         type="text"
-                        className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                        className={`${
+                          theme.dark
+                            ? "!bg-dm_secondary text-neutral"
+                            : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
+                        } form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
                         name="product_name"
                         id="product_name"
-                        placeholder={
-                          theme.language === "Bahasa"
-                            ? "Masukkan Nama Produk"
-                            : "Enter Product Name"
-                        }
+                        // placeholder={
+                        //   theme.language === "Bahasa"
+                        //     ? "Masukkan Nama Produk"
+                        //     : "Enter Product Name"
+                        // }
                         onChange={handleChange}
                         required
                         defaultValue={
@@ -320,14 +337,18 @@ export default function editPriceList() {
                           <input
                             autoComplete="off"
                             type="number"
-                            className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                            className={`${
+                              theme.dark
+                                ? "!bg-dm_secondary text-neutral"
+                                : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
+                            } form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
                             name="amount"
                             id="amount"
-                            placeholder={
-                              theme.language === "Bahasa"
-                                ? "Masukkan Jumlah"
-                                : "Enter Amount"
-                            }
+                            // placeholder={
+                            //   theme.language === "Bahasa"
+                            //     ? "Masukkan Jumlah"
+                            //     : "Enter Amount"
+                            // }
                             onChange={handleChange}
                             required
                             defaultValue={data.amount ? data.amount : 0}
@@ -338,7 +359,9 @@ export default function editPriceList() {
                           <select
                             id="unit"
                             name="unit"
-                            className="pl-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border rounded rounded-l-sm border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                            className={`${
+                              theme.dark ? "!bg-[#99AEBA]" : "bg-white"
+                            } pl-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding rounded rounded-l-sm transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
                             required
                             onChange={handleChange}
                             defaultValue={data.unit ? data.unit : ""}
@@ -374,14 +397,18 @@ export default function editPriceList() {
                       <input
                         autoComplete="off"
                         type="price"
-                        className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                        className={`${
+                          theme.dark
+                            ? "!bg-dm_secondary text-neutral"
+                            : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
+                        } form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
                         name="price"
                         id="price"
-                        placeholder={
-                          theme.language === "Bahasa"
-                            ? "Masukkan Harga"
-                            : "Enter Price"
-                        }
+                        // placeholder={
+                        //   theme.language === "Bahasa"
+                        //     ? "Masukkan Harga"
+                        //     : "Enter Price"
+                        // }
                         onChange={handleChange}
                         onFocus={(e) => onFocus(e)}
                         onBlur={(e) => onBlur(e)}
@@ -409,14 +436,18 @@ export default function editPriceList() {
                       <textarea
                         autoComplete="off"
                         type="text"
-                        className="form-control block px-3 py-1.5 w-full h-32 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                        className={`${
+                          theme.dark
+                            ? "!bg-dm_secondary text-neutral"
+                            : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
+                        } form-control block px-3 py-1.5 w-full h-32 font-normal text-gray-700 bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
                         name="remarks"
                         id="remarks"
-                        placeholder={
-                          theme.language === "Bahasa"
-                            ? "Masukkan Keterangan"
-                            : "Enter Remarks"
-                        }
+                        // placeholder={
+                        //   theme.language === "Bahasa"
+                        //     ? "Masukkan Keterangan"
+                        //     : "Enter Remarks"
+                        // }
                         onChange={handleChange}
                         defaultValue={data.remarks ? data.remarks : "-"}
                       ></textarea>

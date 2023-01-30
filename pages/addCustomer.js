@@ -87,7 +87,9 @@ export default function addCustomer() {
           <div className="flex md:items-center justify-between flex-col md:flex-row gap-4 md:gap-0 w-full md:mb-12">
             <div className="flex items-center gap-8">
               <Link
-                className="group button-custom bg-primary"
+                className={`${
+                  theme.dark ? "bg-dm_secondary" : "bg-primary"
+                } group button-custom`}
                 href="/customers"
               >
                 <div>
@@ -151,7 +153,7 @@ export default function addCustomer() {
           <form className="w-full" onSubmit={submitForm}>
             <div
               className={`table-div-custom my-4 md:my-0 px-6 pt-6 pb-1 md:p-6 ${
-                theme.dark ? "text-black" : ""
+                theme.dark ? "text-neutral !bg-dm_secondary" : ""
               }`}
             >
               <div>
@@ -168,8 +170,16 @@ export default function addCustomer() {
               {/* add customer form */}
               <div className="flex flex-col lg:grid lg:grid-cols-12 lg:gap-10 pb-2 pt-3 mb-3 md:mb-0">
                 {/* left */}
-                <div className="text-primary lg:col-span-4 flex justify-center items-center lg:mt-[-80px] mb-10 lg:mb-0">
-                  <div className="border-y-8 border-y-primary rounded-full w-fit p-3">
+                <div
+                  className={`${
+                    theme.dark ? "text-neutral" : "text-primary"
+                  } lg:col-span-4 flex justify-center items-center lg:mt-[-80px] mb-10 lg:mb-0`}
+                >
+                  <div
+                    className={`${
+                      theme.dark ? "border-y-neutral" : "border-y-primary"
+                    } border-y-8 rounded-full w-fit p-3`}
+                  >
                     {React.createElement(TiUserAddOutline, { size: "220" })}
                   </div>
                 </div>
@@ -194,14 +204,18 @@ export default function addCustomer() {
                         <input
                           autoComplete="off"
                           type="text"
-                          className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                          className={`${
+                            theme.dark
+                              ? "!bg-dm_secondary text-neutral"
+                              : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
+                          } form-control block w-full px-3 py-1.5 font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
                           name="name"
                           id="name"
-                          placeholder={
-                            theme.language === "Bahasa"
-                              ? "Masukkan Nama Pelanggan"
-                              : "Enter Customer Name"
-                          }
+                          // placeholder={
+                          //   theme.language === "Bahasa"
+                          //     ? "Masukkan Nama Pelanggan"
+                          //     : "Enter Customer Name"
+                          // }
                           onChange={handleChange}
                           required
                         />
@@ -222,14 +236,18 @@ export default function addCustomer() {
                         <input
                           autoComplete="off"
                           type="text"
-                          className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                          className={`${
+                            theme.dark
+                              ? "!bg-dm_secondary text-neutral"
+                              : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
+                          } form-control block w-full px-3 py-1.5 font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
                           name="phone_no"
                           id="phone_no"
-                          placeholder={
-                            theme.language === "Bahasa"
-                              ? "Masukkan Nomot Tlp"
-                              : "Enter Phone No"
-                          }
+                          // placeholder={
+                          //   theme.language === "Bahasa"
+                          //     ? "Masukkan Nomot Tlp"
+                          //     : "Enter Phone No"
+                          // }
                           onChange={handleChange}
                           required
                         />
@@ -250,14 +268,18 @@ export default function addCustomer() {
                         <textarea
                           autoComplete="off"
                           type="text"
-                          className="form-control block px-3 py-1.5 w-full h-24 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                          className={`${
+                            theme.dark
+                              ? "!bg-dm_secondary text-neutral"
+                              : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
+                          } form-control block px-3 py-1.5 w-full h-24 font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
                           name="address"
                           id="address"
-                          placeholder={
-                            theme.language === "Bahasa"
-                              ? "Masukkan Alamat"
-                              : "Enter Address"
-                          }
+                          // placeholder={
+                          //   theme.language === "Bahasa"
+                          //     ? "Masukkan Alamat"
+                          //     : "Enter Address"
+                          // }
                           onChange={handleChange}
                           required
                         ></textarea>
@@ -277,14 +299,18 @@ export default function addCustomer() {
                         <input
                           autoComplete="off"
                           type="email"
-                          className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                          className={`${
+                            theme.dark
+                              ? "!bg-dm_secondary text-neutral"
+                              : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
+                          } form-control block w-full px-3 py-1.5 font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
                           name="email"
                           id="email"
-                          placeholder={
-                            theme.language === "Bahasa"
-                              ? "Masukkan Email"
-                              : "Enter Email"
-                          }
+                          // placeholder={
+                          //   theme.language === "Bahasa"
+                          //     ? "Masukkan Email"
+                          //     : "Enter Email"
+                          // }
                           onChange={handleChange}
                           required
                         />
@@ -305,14 +331,18 @@ export default function addCustomer() {
                         <textarea
                           autoComplete="off"
                           type="text"
-                          className="form-control block px-3 py-1.5 w-full h-32 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                          className={`${
+                            theme.dark
+                              ? "!bg-dm_secondary text-neutral"
+                              : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
+                          } form-control block px-3 py-1.5 w-full h-32 font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
                           name="remarks"
                           id="remarks"
-                          placeholder={
-                            theme.language === "Bahasa"
-                              ? "Masukkan Keterangan"
-                              : "Enter Remarks"
-                          }
+                          // placeholder={
+                          //   theme.language === "Bahasa"
+                          //     ? "Masukkan Keterangan"
+                          //     : "Enter Remarks"
+                          // }
                           onChange={handleChange}
                         ></textarea>
                       </div>

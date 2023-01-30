@@ -93,7 +93,9 @@ export default function Customer() {
           <div className="flex md:items-center justify-between flex-col md:flex-row gap-4 md:gap-0 w-full md:mb-12">
             <div className="flex items-center gap-8">
               <Link
-                className="group button-custom bg-primary"
+                className={`${
+                  theme.dark ? "bg-dm_secondary" : "bg-primary"
+                } group button-custom`}
                 href="/customers"
               >
                 <div>
@@ -111,7 +113,9 @@ export default function Customer() {
             {/* btn group: for large screen view */}
             <div className="items-center gap-2 hidden md:flex">
               <Link
-                className="group button-custom bg-primary"
+                className={`${
+                  theme.dark ? "bg-dm_secondary" : "bg-primary"
+                } group button-custom`}
                 href={`/editCustomer/${router.query.id}`}
               >
                 <div>{React.createElement(AiFillEdit, { size: "12" })}</div>
@@ -200,7 +204,7 @@ export default function Customer() {
           {/* content */}
           <div
             className={`table-div-custom my-4 md:my-0 p-6 block mb-4 md:mb-0 ${
-              theme.dark ? "text-black" : ""
+              theme.dark ? "text-neutral !bg-dm_secondary" : ""
             }`}
           >
             <div>
@@ -244,8 +248,16 @@ export default function Customer() {
             {!loading && customer && (
               <div className="flex flex-col lg:grid lg:grid-cols-12 lg:gap-10 pb-0 md:pb-2 pt-3">
                 {/* left */}
-                <div className="text-primary lg:col-span-4 flex justify-center items-center mb-10 lg:mb-0">
-                  <div className="border-y-8 border-y-primary rounded-full w-fit p-3">
+                <div
+                  className={`${
+                    theme.dark ? "text-neutral" : "text-primary"
+                  } lg:col-span-4 flex justify-center items-center mb-10 lg:mb-0`}
+                >
+                  <div
+                    className={`${
+                      theme.dark ? "border-y-neutral" : "border-y-primary"
+                    } border-y-8 rounded-full w-fit p-3`}
+                  >
                     {React.createElement(TiUserOutline, { size: "220" })}
                   </div>
                 </div>

@@ -39,7 +39,7 @@ export default () => {
           {/* content */}
           <div
             className={`table-div-custom my-4 md:my-0 p-6 block mb-4 md:mb-0 ${
-              theme.dark ? "text-white !bg-primary" : ""
+              theme.dark ? "text-white !bg-dm_secondary" : ""
             }`}
           >
             <div>

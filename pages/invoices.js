@@ -70,7 +70,9 @@ export default () => {
             <hr className="md:hidden" />
             <div className="flex justify-end">
               <Link
-                className="w-fit button-custom mt-0 bg-primary"
+                className={`w-fit button-custom mt-0 ${
+                  theme.dark ? "bg-dm_secondary" : "bg-primary"
+                }`}
                 href="/addInvoice"
               >
                 <div>{React.createElement(BsPlusLg, { size: "12" })}</div>
@@ -84,7 +86,7 @@ export default () => {
           {/* invoices table */}
           <div
             className={`table-div-custom p-6 my-4 md:my-12 ${
-              theme.dark ? "text-black" : ""
+              theme.dark ? "text-neutral !bg-dm_secondary" : ""
             }`}
           >
             <div className="flex justify-between">
@@ -137,7 +139,11 @@ export default () => {
                 {/* large screen view */}
                 <div className="overflow-auto shadow hidden md:block">
                   <table className="w-full">
-                    <thead className="bg-gray-50 border-b-2 border-gray-200">
+                    <thead
+                      className={`${
+                        theme.dark ? "bg-primary" : "bg-gray-50 text-gray-700"
+                      } border-b-2 border-gray-200`}
+                    >
                       <tr>
                         <th className="w-36 p-3 text-sm font-semibold tracking-wide text-left">
                           {theme.language === "Bahasa"
@@ -170,8 +176,15 @@ export default () => {
 
                     <tbody className="divide-y divide-gray-100">
                       {paginateInvoice.map((invoice) => (
-                        <tr className="bg-white" key={invoice._id}>
-                          <td className="p-3 text-sm text-primary font-bold whitespace-nowrap">
+                        <tr
+                          className={`${
+                            theme.dark ? "!bg-[#99AEBA]" : "bg-white"
+                          } text-gray-700`}
+                          key={invoice._id}
+                        >
+                          <td
+                            className={`p-3 text-sm font-bold whitespace-nowrap text-primary`}
+                          >
                             <Link
                               href={`/invoices/${invoice._id}`}
                               className="transition duration-700 hover:underline"
@@ -179,13 +192,13 @@ export default () => {
                               {invoice._id}
                             </Link>
                           </td>
-                          <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                          <td className="p-3 text-sm whitespace-nowrap">
                             {invoice.customer_name}
                           </td>
-                          <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                          <td className="p-3 text-sm whitespace-nowrap">
                             {invoice.date.substring(0, 10)}
                           </td>
-                          <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                          <td className="p-3 text-sm whitespace-nowrap">
                             <span
                               className={`p-1.5 text-xs font-medium uppercase tracking-wider ${
                                 invoice.status === "paid"
@@ -196,10 +209,10 @@ export default () => {
                               {invoice.status}
                             </span>
                           </td>
-                          <td className="py-3 text-sm text-gray-700 whitespace-nowrap text-center">
+                          <td className="py-3 text-sm whitespace-nowrap text-center">
                             {invoice.total_items}
                           </td>
-                          <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                          <td className="p-3 text-sm whitespace-nowrap">
                             {invoice.total.toLocaleString("en-US", {
                               style: "currency",
                               currency: "IDR",
@@ -229,10 +242,12 @@ export default () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:hidden">
                   {paginateInvoice.map((invoice) => (
                     <div
-                      className="bg-white space-y-3 p-4 pb-6 rounded-lg shadow"
+                      className={`${
+                        theme.dark ? "!bg-[#99AEBA]" : "bg-white"
+                      } text-gray-700 space-y-3 p-4 pb-6 rounded-lg shadow`}
                       key={invoice._id}
                     >
-                      <div className="text-sm font-medium text-black break-words">
+                      <div className="text-sm font-medium break-words">
                         <b>
                           {theme.language === "Bahasa"
                             ? "Nomor Nota:"
@@ -241,7 +256,7 @@ export default () => {
                         <br />
                         {invoice._id}
                       </div>
-                      <div className="text-sm font-medium text-black">
+                      <div className="text-sm font-medium">
                         <b>
                           {theme.language === "Bahasa"
                             ? "Pelanggan: "
@@ -250,13 +265,13 @@ export default () => {
                         {invoice.customer_name}
                       </div>
                       <hr />
-                      <div className="text-sm font-medium text-black">
+                      <div className="text-sm font-medium">
                         <b>
                           {theme.language === "Bahasa" ? "Tanggal: " : "Date: "}
                         </b>
                         {invoice.date.substring(0, 10)}
                       </div>
-                      <div className="text-sm font-medium text-black">
+                      <div className="text-sm font-medium">
                         <b>
                           {theme.language === "Bahasa"
                             ? "Pembayaran:"
@@ -277,7 +292,7 @@ export default () => {
                             : invoice.status}
                         </span>
                       </div>
-                      <div className="text-sm font-medium text-black">
+                      <div className="text-sm font-medium">
                         <b>
                           {theme.language === "Bahasa"
                             ? "Jumlah Barang: "
@@ -285,7 +300,7 @@ export default () => {
                         </b>
                         {invoice.total_items}
                       </div>
-                      <div className="text-sm font-medium text-black">
+                      <div className="text-sm font-medium">
                         <b>
                           {theme.language === "Bahasa"
                             ? "Total Pembayaran: "

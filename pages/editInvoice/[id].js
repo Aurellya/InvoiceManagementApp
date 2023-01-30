@@ -377,7 +377,9 @@ export default function editInvoice() {
           <div className="flex md:items-center justify-between flex-col md:flex-row gap-4 md:gap-0 w-full md:mb-12">
             <div className="flex items-center gap-8">
               <Link
-                className="group flex items-center text-sm font-bold gap-2 py-2 px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
+                className={`${
+                  theme.dark ? "bg-dm_secondary" : "bg-primary"
+                } group flex items-center text-sm font-bold gap-2 py-2 px-4 text-white hover:opacity-80 transition duration-700 rounded-md`}
                 href={`/invoices/${router.query.id}`}
               >
                 <div>
@@ -491,7 +493,11 @@ export default function editInvoice() {
 
           {/* contents */}
           {!loading && data && (
-            <div className="table-div-custom my-4 md:my-0 p-6 block mb-4 md:mb-0">
+            <div
+              className={`table-div-custom my-4 md:my-0 p-6 block mb-4 md:mb-0 ${
+                theme.dark ? "text-neutral !bg-dm_secondary" : ""
+              }`}
+            >
               {/* edit invoice form */}
               <form className="flex w-full flex-col" onSubmit={submitForm}>
                 {/* top */}
@@ -507,7 +513,11 @@ export default function editInvoice() {
                   <hr />
                   <br />
 
-                  <div className="md:py-2 px-0 md:px-4 flex md:justify-between flex-col md:grid md:grid-cols-12 md:gap-20 text-sm font-bold md:font-medium md:text-base text-gray-700">
+                  <div
+                    className={`md:py-2 px-0 md:px-4 flex md:justify-between flex-col md:grid md:grid-cols-12 md:gap-20 text-sm font-bold md:font-medium md:text-base ${
+                      theme.dark ? "text-neutral" : "text-gray-700"
+                    }`}
+                  >
                     <div className="md:col-span-3">
                       {/* customer name */}
                       <div className="form-group mb-6">
@@ -522,14 +532,18 @@ export default function editInvoice() {
                         <input
                           autoComplete="off"
                           type="text"
-                          className="form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                          className={`${
+                            theme.dark
+                              ? "!bg-dm_secondary text-neutral"
+                              : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
+                          } form-control block w-full px-3 py-1.5 font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
                           name="cname"
                           id="cname"
-                          placeholder={
-                            theme.language === "Bahasa"
-                              ? "Masukkan Nama Pelanggan"
-                              : "Enter Customer Name"
-                          }
+                          // placeholder={
+                          //   theme.language === "Bahasa"
+                          //     ? "Masukkan Nama Pelanggan"
+                          //     : "Enter Customer Name"
+                          // }
                           onChange={handleChange}
                           required
                           defaultValue={data.cname}
@@ -546,7 +560,11 @@ export default function editInvoice() {
                         </label>
                         <input
                           type="text"
-                          className="form-control block w-full px-3 py-1.5 font-normal text-gray-400 bg-gray-200 bg-clip-padding border border-solid border-gray-300 rounded m-0"
+                          className={`${
+                            theme.dark
+                              ? "!bg-primary text-neutral"
+                              : "text-gray-400 bg-gray-200"
+                          } form-control block w-full px-3 py-1.5 font-normal text-gray-400 bg-gray-200 bg-clip-padding border border-solid border-gray-300 rounded m-0`}
                           name="date"
                           id="date"
                           defaultValue={
@@ -572,14 +590,18 @@ export default function editInvoice() {
                           <textarea
                             autoComplete="off"
                             type="text"
-                            className="form-control block px-3 py-1.5 w-full h-32 font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                            className={`${
+                              theme.dark
+                                ? "!bg-dm_secondary text-neutral"
+                                : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
+                            } form-control block px-3 py-1.5 w-full h-32 font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
                             name="notes"
                             id="notes"
-                            placeholder={
-                              theme.language === "Bahasa"
-                                ? "Masukkan Catatan"
-                                : "Enter Notes"
-                            }
+                            // placeholder={
+                            //   theme.language === "Bahasa"
+                            //     ? "Masukkan Catatan"
+                            //     : "Enter Notes"
+                            // }
                             onChange={handleChange}
                             defaultValue={data.notes}
                           ></textarea>
@@ -612,7 +634,11 @@ export default function editInvoice() {
                                   onChange={handleChange}
                                 />
                                 <label
-                                  className="form-check-label inline-block text-gray-800"
+                                  className={`form-check-label inline-block ${
+                                    theme.dark
+                                      ? "text-neutral"
+                                      : "text-gray-800"
+                                  }`}
                                   htmlFor="flexRadioDefault1"
                                 >
                                   {theme.language === "Bahasa"
@@ -622,7 +648,7 @@ export default function editInvoice() {
                               </div>
                               <div className="form-check">
                                 <input
-                                  className="form-check-input appearance-none rounded-full h-4 w-4 border-2 border-gray-300 bg-white checkedbg-primary focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                  className="form-check-input appearance-none rounded-full h-4 w-4 border-2 border-gray-300 bg-white checked:bg-primary focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                   type="radio"
                                   name="status"
                                   id="flexRadioDefault2"
@@ -633,7 +659,11 @@ export default function editInvoice() {
                                   onChange={handleChange}
                                 />
                                 <label
-                                  className="form-check-label inline-block text-gray-800"
+                                  className={`form-check-label inline-block ${
+                                    theme.dark
+                                      ? "text-neutral"
+                                      : "text-gray-800"
+                                  }`}
                                   htmlFor="flexRadioDefault2"
                                 >
                                   {theme.language === "Bahasa"
@@ -674,7 +704,11 @@ export default function editInvoice() {
                     {/* table */}
                     <div className="overflow-auto rounded-lg shadow mt-4">
                       <table className="w-full">
-                        <thead className="bg-gray-50 border-b-2 border-gray-200 hidden md:table-header-group">
+                        <thead
+                          className={`${
+                            theme.dark ? "bg-primary" : "bg-gray-50"
+                          } border-b-2 border-gray-200 hidden md:table-header-group`}
+                        >
                           <tr>
                             <th className="w-12 p-3 text-sm font-semibold tracking-wide text-left"></th>
                             <th className="w-36 p-3 text-sm font-semibold tracking-wide text-left">
@@ -704,7 +738,9 @@ export default function editInvoice() {
                         >
                           {[...Array(noOfRows).keys()].map((i) => (
                             <tr
-                              className="bg-white flex flex-col md:table-row"
+                              className={`${
+                                theme.dark ? "!bg-[#99AEBA]" : "bg-white"
+                              } flex flex-col md:table-row`}
                               key={i}
                               id={`tr-${i}`}
                             >
@@ -719,7 +755,6 @@ export default function editInvoice() {
                               <td className="p-3 pt-0 md:pt-3 text-sm text-primary font-bold whitespace-nowrap">
                                 <div>
                                   <h3 className="md:hidden">
-                                    {" "}
                                     {theme.language === "Bahasa"
                                       ? "Jumlah"
                                       : "Quantity"}
@@ -731,19 +766,27 @@ export default function editInvoice() {
                                       onWheel={(e) => e.target.blur()}
                                       name="amount"
                                       id={`amount-${i}`}
-                                      className="form-control block w-full pl-3 pr-16 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                                      className={`${
+                                        theme.dark
+                                          ? "!bg-[#99AEBA]"
+                                          : "bg-white"
+                                      } form-control block w-full pl-3 pr-16 py-1.5 text-base text-gray-700 font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
                                       placeholder=""
                                       onChange={handleChangeContent}
                                       required
                                     />
-                                    <div className="absolute inset-y-0 right-0 flex items-center">
+                                    <div className="absolute inset-y-0 right-1 flex items-center">
                                       <label htmlFor="unit" className="sr-only">
                                         Unit
                                       </label>
                                       <select
                                         id={`unit-${i}`}
                                         name="unit"
-                                        className="pl-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border rounded rounded-l-sm border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                                        className={`${
+                                          theme.dark
+                                            ? "!bg-[#99AEBA]"
+                                            : "bg-white"
+                                        } pl-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding rounded rounded-l-sm transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
                                         onChange={handleChangeContent}
                                         required
                                         defaultValue={""}
@@ -777,7 +820,6 @@ export default function editInvoice() {
 
                               <td className="p-3 text-sm first-line:text-primary font-bold whitespace-nowrap">
                                 <h3 className="md:hidden">
-                                  {" "}
                                   {theme.language === "Bahasa"
                                     ? "Nama Barang"
                                     : "Item Name"}
@@ -787,7 +829,9 @@ export default function editInvoice() {
                                     name="item_name"
                                     autoComplete="off"
                                     type="text"
-                                    className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                                    className={`${
+                                      theme.dark ? "!bg-[#99AEBA]" : "bg-white"
+                                    } form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
                                     id={`itemNameInput-${i}`}
                                     placeholder=""
                                     onChange={handleChangeContent}
@@ -798,7 +842,6 @@ export default function editInvoice() {
 
                               <td className="p-3 text-sm text-primary font-bold whitespace-nowrap">
                                 <h3 className="md:hidden">
-                                  {" "}
                                   {theme.language === "Bahasa"
                                     ? "Harga (/Unit)"
                                     : "Price (/Unit)"}
@@ -809,7 +852,11 @@ export default function editInvoice() {
                                       name="price_per_item"
                                       autoComplete="off"
                                       type="text"
-                                      className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                                      className={`${
+                                        theme.dark
+                                          ? "!bg-[#99AEBA]"
+                                          : "bg-white"
+                                      } form-control block w-full px-3 py-1.5 text-base font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
                                       id={`pricePerItemInput-${i}`}
                                       placeholder=""
                                       onFocus={(e) => onFocus(e)}
@@ -817,7 +864,7 @@ export default function editInvoice() {
                                       onChange={handleChangeContent}
                                       required
                                     />
-                                    <div className="absolute inset-y-0 right-0 flex items-center">
+                                    <div className="absolute inset-y-0 right-1 flex items-center">
                                       <label
                                         htmlFor="price_unit"
                                         className="sr-only"
@@ -827,7 +874,11 @@ export default function editInvoice() {
                                       <select
                                         id={`price_unit-${i}`}
                                         name="price_unit"
-                                        className="pl-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border rounded rounded-l-sm border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                                        className={`${
+                                          theme.dark
+                                            ? "!bg-[#99AEBA]"
+                                            : "bg-white"
+                                        } pl-1 py-1.5 text-base font-normal text-gray-700 bg-clip-padding rounded rounded-l-sm transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
                                         onChange={handleChangeContent}
                                         required
                                         defaultValue={""}
@@ -835,23 +886,23 @@ export default function editInvoice() {
                                         <option disabled value=""></option>
                                         <option value="bh">
                                           {theme.language === "Bahasa"
-                                            ? "bh"
-                                            : "pcs"}
+                                            ? "/bh"
+                                            : "/pcs"}
                                         </option>
                                         <option value="ls">
                                           {theme.language === "Bahasa"
-                                            ? "ls"
-                                            : "doz"}
+                                            ? "/ls"
+                                            : "/doz"}
                                         </option>
                                         <option value="grs">
                                           {theme.language === "Bahasa"
-                                            ? "grs"
-                                            : "gro"}
+                                            ? "/grs"
+                                            : "/gro"}
                                         </option>
                                         <option value="dus">
                                           {theme.language === "Bahasa"
-                                            ? "dus"
-                                            : "box"}
+                                            ? "/dus"
+                                            : "/box"}
                                         </option>
                                       </select>
                                     </div>
@@ -866,7 +917,9 @@ export default function editInvoice() {
                                     name="total"
                                     autoComplete="off"
                                     type="text"
-                                    className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none"
+                                    className={`${
+                                      theme.dark ? "!bg-[#99AEBA]" : "bg-white"
+                                    } form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
                                     id={`totalInput-${i}`}
                                     placeholder=""
                                     onFocus={(e) => {
