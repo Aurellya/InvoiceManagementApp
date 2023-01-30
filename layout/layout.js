@@ -7,9 +7,6 @@ export default function Layout({ children }) {
       <div className="m-auto bg-slate-50 rounded-md w-3/5 grid lg:grid-cols-2 drop-shadow-md border">
         <div className={styles.imgStyle}>
           <div className={styles.illustrationImg}></div>
-          {/* <div className={styles.cartoonImg}></div>
-          <div className={styles.cloud_one}></div>
-          <div className={styles.cloud_two}></div> */}
         </div>
 
         <div
