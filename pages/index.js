@@ -73,14 +73,18 @@ function User({ session, handleSignOut }) {
   const [loading, setLoading] = useState(false);
 
   const getInvoices = async () => {
-    const res = await fetch("http://localhost:3000/api/invoices");
+    const res = await fetch(
+      `http://localhost:3000/api/myinvoices/${session.group_code}`
+    );
     const invoicesObj = await res.json();
     const invoices = await invoicesObj.data;
     setInvoices(invoices.slice(0, 6));
   };
 
   const getSummary = async () => {
-    const res = await fetch("http://localhost:3000/api/summary");
+    const res = await fetch(
+      `http://localhost:3000/api/summary/${session.group_code}`
+    );
     const summaryObj = await res.json();
     const summaryData = await summaryObj.data;
     setSummary(summaryData);
@@ -99,9 +103,15 @@ function User({ session, handleSignOut }) {
       setTotalUnpaidInvoices(summary.totalUnpaidInvoices);
       setTotalCustomers(summary.totalCustomers);
       setTotalItems(summary.totalItems);
-      setTotalRevenue(summary.totalRevenue[0].total);
       setMonthlyRevenue(summary.monthlyRevenue.slice(0, 6));
       setAvgMonthlyRevenue(summary.avgMonthlyRevenue);
+
+      // early month => no data
+      if (summary.totalRevenue.length == 0) {
+        setTotalRevenue(0);
+      } else {
+        setTotalRevenue(summary.totalRevenue[0].total);
+      }
     }
   }, [summary]);
 
@@ -183,7 +193,7 @@ function User({ session, handleSignOut }) {
                 <div className="flex justify-between flex-col gap-4 w-full mb-4">
                   <h1 className="text-lg md:text-xl">
                     {theme.language === "Bahasa" ? "Selamat Datang" : "Welcome"}
-                    <b> {session.user.name}</b>!
+                    <b> {session.username}</b>!
                   </h1>
                   <hr className="md:hidden" />
                 </div>

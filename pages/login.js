@@ -49,51 +49,72 @@ export default function Login() {
         <div className="title">
           <h1 className="text-gray-800 text-4xl font-bold py-4">Login</h1>
           <p className="w-3/4 mx-auto text-gray-400">
-            Welcome to ASC App! Start your journey with us.
+            Welcome to ASC App! Manage your data with Us.
           </p>
         </div>
 
         {/* form */}
-        <form className="flex flex-col gap-5" onSubmit={formik.handleSubmit}>
-          <div
-            className={`${styles.input_group} ${
-              formik.errors.email && formik.touched.email
-                ? "border-rose-600"
-                : ""
-            }`}
-          >
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              className={styles.input_text}
-              {...formik.getFieldProps("email")}
-            />
-            <span className="icon flex items-center px-4">
-              <HiAtSymbol size={25} />
-            </span>
+        <form
+          className="flex flex-col gap-5 text-left"
+          onSubmit={formik.handleSubmit}
+        >
+          <div>
+            <div
+              className={`${styles.input_group} ${
+                formik.errors.email && formik.touched.email
+                  ? "border-rose-600"
+                  : ""
+              }`}
+            >
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                className={styles.input_text}
+                {...formik.getFieldProps("email")}
+              />
+              <span className="icon flex items-center px-4">
+                <HiAtSymbol size={25} />
+              </span>
+            </div>
+            <div className="w-fit text-sm text-rose-600 mt-2">
+              {formik.errors.email && formik.touched.email && (
+                <div>
+                  <p>* {formik.errors.email}</p>
+                </div>
+              )}
+            </div>
           </div>
 
-          <div
-            className={`${styles.input_group} ${
-              formik.errors.password && formik.touched.password
-                ? "border-rose-600"
-                : ""
-            }`}
-          >
-            <input
-              type={`${show ? "text" : "password"}`}
-              name="password"
-              placeholder="Password"
-              className={styles.input_text}
-              {...formik.getFieldProps("password")}
-            />
-            <span
-              className="icon flex items-center px-4"
-              onClick={() => setShow(!show)}
+          <div>
+            <div
+              className={`${styles.input_group} ${
+                formik.errors.password && formik.touched.password
+                  ? "border-rose-600"
+                  : ""
+              }`}
             >
-              <HiFingerPrint size={25} />
-            </span>
+              <input
+                type={`${show ? "text" : "password"}`}
+                name="password"
+                placeholder="Password"
+                className={styles.input_text}
+                {...formik.getFieldProps("password")}
+              />
+              <span
+                className="icon flex items-center px-4"
+                onClick={() => setShow(!show)}
+              >
+                <HiFingerPrint size={25} />
+              </span>
+            </div>
+            <div className="w-fit text-sm text-rose-600 mt-2">
+              {formik.errors.password && formik.touched.password && (
+                <div>
+                  <p>* {formik.errors.password}</p>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* login buttons */}

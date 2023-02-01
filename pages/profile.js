@@ -106,8 +106,8 @@ export default () => {
                         : "Username: "}
                     </b>
                     <br />
-                    {session.user.name
-                      ? session.user.name
+                    {session.username
+                      ? session.username
                       : theme.language === "Bahasa"
                       ? "Tidak Ada Nama"
                       : "No Username"}
@@ -118,7 +118,7 @@ export default () => {
                   <h5>
                     <b>Email: </b>
                     <br />
-                    {session.user.email}
+                    {session.email}
                   </h5>
 
                   <br />
@@ -126,23 +126,19 @@ export default () => {
                   <h5>
                     <b>
                       {theme.language === "Bahasa"
-                        ? "Nomor Tlp: "
-                        : "Phone No: "}
+                        ? "Kode Perusahaan: "
+                        : "Company Code: "}
                     </b>
                     <br />
-                    +628 1289 1280
+                    {session.group_code}
                   </h5>
 
                   <br />
 
                   <h5>
-                    <b>
-                      {theme.language === "Bahasa"
-                        ? "Dibuat tanggal: "
-                        : "Created on: "}
-                    </b>
+                    <b>{theme.language === "Bahasa" ? "Peran: " : "Role: "}</b>
                     <br />
-                    12 January 2022
+                    {session.role}
                   </h5>
 
                   <br />

@@ -29,7 +29,9 @@ export default () => {
 
   const getInvoices = async () => {
     setLoading(true);
-    const res = await fetch("http://localhost:3000/api/invoices");
+    const res = await fetch(
+      `http://localhost:3000/api/myinvoices/${session.group_code}`
+    );
     const invoicesObj = await res.json();
     const invoices = invoicesObj.data;
     setInvoices(invoices);
@@ -124,7 +126,7 @@ export default () => {
               </div>
             )}
 
-            {!loading && !invoices && (
+            {!loading && (!invoices || invoices.length == 0) && (
               <div className="py-8">
                 <div className="mt-9 flex flex-col justify-center items-center">
                   <h3 className="text-xl mb-4 font-bold">
@@ -134,7 +136,7 @@ export default () => {
               </div>
             )}
 
-            {!loading && invoices && (
+            {!loading && invoices && invoices.length != 0 && (
               <>
                 {/* large screen view */}
                 <div className="overflow-auto shadow hidden md:block">

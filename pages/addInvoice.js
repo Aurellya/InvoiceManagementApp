@@ -264,7 +264,7 @@ export default function addInvoice() {
     });
 
     // Send data to the backend via POST
-    fetch("http://localhost:3000/api/invoices", {
+    fetch(`http://localhost:3000/api/myinvoices/${session.group_code}`, {
       method: "POST",
       mode: "cors",
       body: JSON.stringify(jsonData),
@@ -363,10 +363,10 @@ export default function addInvoice() {
               role="alert"
             >
               <svg
-                ariaHidden="true"
+                ariahidden="true"
                 focusable="false"
-                dataPrefix="fas"
-                dataIcon="times-circle"
+                dataprefix="fas"
+                dataicon="times-circle"
                 className="w-4 h-4 mr-2 fill-current"
                 role="img"
                 xmlns="http://www.w3.org/2000/svg"
@@ -380,11 +380,11 @@ export default function addInvoice() {
               {errorMsg}
 
               <button
-                class="absolute top-0 bottom-0 right-0 px-4 py-3"
+                className="absolute top-0 bottom-0 right-0 px-4 py-3"
                 onClick={() => setErrorMsg("")}
               >
                 <svg
-                  class="fill-current h-6 w-6 text-red-500"
+                  className="fill-current h-6 w-6 text-red-500"
                   role="button"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"

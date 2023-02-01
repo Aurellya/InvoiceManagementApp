@@ -83,7 +83,7 @@ export default function addPriceList() {
     };
 
     // Send data to the backend via POST
-    fetch("http://localhost:3000/api/priceLists", {
+    fetch(`http://localhost:3000/api/mypricelists/${session.group_code}`, {
       method: "POST",
       mode: "cors",
       body: JSON.stringify(jsonData),

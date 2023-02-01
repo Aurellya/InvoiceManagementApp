@@ -29,7 +29,9 @@ export default () => {
 
   const getCustomers = async () => {
     setLoading(true);
-    const res = await fetch("http://localhost:3000/api/customers");
+    const res = await fetch(
+      `http://localhost:3000/api/mycustomers/${session.group_code}`
+    );
     const customersObj = await res.json();
     const customers = customersObj.data;
     setCustomers(customers);
@@ -124,7 +126,7 @@ export default () => {
               </div>
             )}
 
-            {!loading && !customers && (
+            {!loading && (!customers || customers.length == 0) && (
               <div className="py-8">
                 <div className="mt-9 flex flex-col justify-center items-center">
                   <h3 className="text-xl mb-4 font-bold">
@@ -134,7 +136,7 @@ export default () => {
               </div>
             )}
 
-            {!loading && customers && (
+            {!loading && customers && customers.length != 0 && (
               <>
                 {/* large screen view */}
                 <div className="overflow-auto rounded-lg shadow hidden md:block">
@@ -218,7 +220,6 @@ export default () => {
                     </tbody>
                   </table>
                 </div>
-
                 {/* mobile view */}
                 <hr className="md:hidden" />
                 {customers && (
@@ -301,7 +302,6 @@ export default () => {
                     </div>
                   ))}
                 </div>
-
                 <Pagination
                   items={customers.length}
                   currentPage={currentPage}

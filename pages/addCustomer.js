@@ -45,6 +45,17 @@ export default function addCustomer() {
   const submitForm = (e) => {
     e.preventDefault();
 
+    // var jsonData = {
+    //   group_code: session.group_code,
+    //   cust: {
+    //     name: data.name,
+    //     phone_no: data.phone_no,
+    //     email: data.email,
+    //     address: data.address,
+    //     remarks: data.remarks,
+    //   },
+    // };
+
     var jsonData = {
       name: data.name,
       phone_no: data.phone_no,
@@ -54,7 +65,7 @@ export default function addCustomer() {
     };
 
     // Send data to the backend via POST
-    fetch("http://localhost:3000/api/customers", {
+    fetch(`http://localhost:3000/api/mycustomers/${session.group_code}`, {
       method: "POST",
       mode: "cors",
       body: JSON.stringify(jsonData),
@@ -115,10 +126,10 @@ export default function addCustomer() {
               role="alert"
             >
               <svg
-                ariaHidden="true"
+                aria-hidden="true"
                 focusable="false"
-                dataPrefix="fas"
-                dataIcon="times-circle"
+                dataprefix="fas"
+                dataicon="times-circle"
                 className="w-4 h-4 mr-2 fill-current"
                 role="img"
                 xmlns="http://www.w3.org/2000/svg"
@@ -132,11 +143,11 @@ export default function addCustomer() {
               {errorMsg}
 
               <button
-                class="absolute top-0 bottom-0 right-0 px-4 py-3"
+                className="absolute top-0 bottom-0 right-0 px-4 py-3"
                 onClick={() => setErrorMsg("")}
               >
                 <svg
-                  class="fill-current h-6 w-6 text-red-500"
+                  className="fill-current h-6 w-6 text-red-500"
                   role="button"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
