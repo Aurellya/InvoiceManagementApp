@@ -10,6 +10,7 @@ import { MdOutlinePeopleAlt, MdMoneyOff } from "react-icons/md";
 import { BsBoxSeam, BsPlusLg } from "react-icons/bs";
 import { FaFileInvoiceDollar } from "react-icons/fa";
 import { GoGraph } from "react-icons/go";
+import { VscSignOut } from "react-icons/vsc";
 
 import ReactLoading from "react-loading";
 
@@ -28,7 +29,11 @@ export default function Home() {
         <title>Dashboard</title>
       </Head>
 
-      {session ? User({ session, handleSignOut }) : Guest()}
+      {session
+        ? session.group_code != ""
+          ? User({ session, handleSignOut })
+          : UnapprovedUser({ session, handleSignOut })
+        : Guest()}
     </div>
   );
 }
@@ -72,13 +77,23 @@ function User({ session, handleSignOut }) {
 
   const [loading, setLoading] = useState(false);
 
+  const [username, setUsername] = useState();
+  const getUsername = async () => {
+    const res = await fetch(`http://localhost:3000/api/profile/${session._id}`);
+    const profileObj = await res.json();
+    const profileData = await profileObj.data;
+    setUsername(profileData.username);
+  };
+
   const getInvoices = async () => {
     const res = await fetch(
       `http://localhost:3000/api/myinvoices/${session.group_code}`
     );
     const invoicesObj = await res.json();
     const invoices = await invoicesObj.data;
-    setInvoices(invoices.slice(0, 6));
+    if (invoices) {
+      setInvoices(invoices.slice(0, 6));
+    }
   };
 
   const getSummary = async () => {
@@ -92,6 +107,7 @@ function User({ session, handleSignOut }) {
 
   useEffect(() => {
     setLoading(true);
+    getUsername();
     getSummary();
     getInvoices();
     setLoading(false);
@@ -163,26 +179,23 @@ function User({ session, handleSignOut }) {
             <hr className="md:hidden" />
           </div>
 
-          {loading ||
-            !summary ||
-            !invoices ||
-            (!monthlyRevenue && (
-              <div className="py-8">
-                <div className="mt-9 flex flex-col justify-center items-center">
-                  <h3 className="text-xl mb-4 font-bold">
-                    {theme.language === "Bahasa" ? "Memuat" : "Loading"}
-                  </h3>
-                  <ReactLoading
-                    type="bars"
-                    color="#2b4450"
-                    height={100}
-                    width={50}
-                  />
-                </div>
+          {(loading || !summary) && (
+            <div className="py-8">
+              <div className="mt-9 flex flex-col justify-center items-center">
+                <h3 className="text-xl mb-4 font-bold">
+                  {theme.language === "Bahasa" ? "Memuat" : "Loading"}
+                </h3>
+                <ReactLoading
+                  type="bars"
+                  color="#2b4450"
+                  height={100}
+                  width={50}
+                />
               </div>
-            ))}
+            </div>
+          )}
 
-          {!loading && invoices && summary && monthlyRevenue && (
+          {!loading && summary && (
             <>
               {/* summary dashboard */}
               <div
@@ -193,7 +206,7 @@ function User({ session, handleSignOut }) {
                 <div className="flex justify-between flex-col gap-4 w-full mb-4">
                   <h1 className="text-lg md:text-xl">
                     {theme.language === "Bahasa" ? "Selamat Datang" : "Welcome"}
-                    <b> {session.username}</b>!
+                    <b> {username}</b>!
                   </h1>
                   <hr className="md:hidden" />
                 </div>
@@ -431,225 +444,243 @@ function User({ session, handleSignOut }) {
 
                   <div>
                     {/* large screen view */}
-                    <div className="overflow-auto shadow hidden md:block">
-                      <table className="w-full">
-                        <thead
-                          className={`${
-                            theme.dark ? "!bg-primary" : "bg-gray-50"
-                          } border-b-2 border-gray-200`}
-                        >
-                          <tr>
-                            <th className="w-20 p-3 text-sm font-semibold tracking-wide text-left">
-                              {theme.language === "Bahasa"
-                                ? "Nomor Nota"
-                                : "Invoice No."}
-                            </th>
-                            <th className="p-3 text-sm font-semibold tracking-wide text-left">
-                              {theme.language === "Bahasa"
-                                ? "Nama Pelanggan"
-                                : "Customer Name"}
-                            </th>
-                            <th className="w-38 p-3 text-sm font-semibold tracking-wide text-left">
-                              {theme.language === "Bahasa" ? "Tanggal" : "Date"}
-                            </th>
-                            <th className="w-20 p-3 text-sm font-semibold tracking-wide text-left">
-                              {theme.language === "Bahasa"
-                                ? "Pembayaran"
-                                : "Status"}
-                            </th>
-                            <th className="w-20 p-3 text-sm font-semibold tracking-wide text-center">
-                              {theme.language === "Bahasa"
-                                ? "Jumlah Barang"
-                                : "Total Items"}
-                            </th>
-                            <th className="w-38 p-3 text-sm font-semibold tracking-wide text-left">
-                              Total
-                            </th>
-                          </tr>
-                        </thead>
-
-                        <tbody className="divide-y divide-gray-100">
-                          {invoices.map((invoice) => (
-                            <tr
-                              className={`${
-                                theme.dark ? "!bg-[#99AEBA]" : "bg-white"
-                              } text-gray-700`}
-                              key={invoice._id}
-                            >
-                              <td className="p-3 text-sm text-primary font-bold whitespace-nowrap">
-                                <Link
-                                  href={`/invoices/${invoice._id}`}
-                                  className={`transition duration-700 hover:underline hidden lg:block text-primary`}
-                                >
-                                  {invoice._id.length > 8
-                                    ? invoice._id.slice(0, 8) + " ..."
-                                    : invoice._id}
-                                </Link>
-
-                                <Link
-                                  href={`/invoices/${invoice._id}`}
-                                  className={`transition duration-700 hover:underline md:block lg:hidden ${
-                                    theme.dark ? "text-neutral" : "text-primary"
-                                  }`}
-                                >
-                                  {invoice._id.length > 4
-                                    ? invoice._id.slice(0, 4) + " ..."
-                                    : invoice._id}
-                                </Link>
-                              </td>
-                              <td className="p-3 text-sm whitespace-nowrap hidden lg:block">
-                                {invoice.customer_name.length > 24
-                                  ? invoice.customer_name.slice(0, 24) + " ..."
-                                  : invoice.customer_name}{" "}
-                              </td>
-                              <td className="p-3 text-sm whitespace-nowrap md:block lg:hidden">
-                                {invoice.customer_name.length > 11
-                                  ? invoice.customer_name.slice(0, 11) + " ..."
-                                  : invoice.customer_name}{" "}
-                              </td>
-                              <td className="p-3 text-sm whitespace-nowrap">
-                                {invoice.date.substring(0, 10)}
-                              </td>
-                              <td className="p-3 text-sm whitespace-nowrap">
-                                <span
-                                  className={`p-1.5 text-xs font-medium uppercase tracking-wider ${
-                                    invoice.status === "paid"
-                                      ? "text-green-800 bg-[#74EAB0]"
-                                      : "text-gray-800 bg-gray-200"
-                                  }  rounded-lg bg-opacity-50`}
-                                >
-                                  {theme.language === "Bahasa"
-                                    ? invoice.status === "paid"
-                                      ? "sudah"
-                                      : "belum"
-                                    : invoice.status}
-                                </span>
-                              </td>
-                              <td className="py-3 text-sm whitespace-nowrap text-center">
-                                {invoice.total_items}
-                              </td>
-                              <td className="p-3 text-sm whitespace-nowrap">
-                                {invoice.total.toLocaleString("en-US", {
-                                  style: "currency",
-                                  currency: "IDR",
-                                  maximumFractionDigits: 0,
-                                })}
-                              </td>
+                    {(!invoices || (invoices && invoices.length == 0)) && (
+                      <p>[No Data]</p>
+                    )}
+                    {invoices && invoices.length > 0 && (
+                      <div className="overflow-auto shadow hidden md:block">
+                        <table className="w-full">
+                          <thead
+                            className={`${
+                              theme.dark ? "!bg-primary" : "bg-gray-50"
+                            } border-b-2 border-gray-200`}
+                          >
+                            <tr>
+                              <th className="w-20 p-3 text-sm font-semibold tracking-wide text-left">
+                                {theme.language === "Bahasa"
+                                  ? "Nomor Nota"
+                                  : "Invoice No."}
+                              </th>
+                              <th className="p-3 text-sm font-semibold tracking-wide text-left">
+                                {theme.language === "Bahasa"
+                                  ? "Nama Pelanggan"
+                                  : "Customer Name"}
+                              </th>
+                              <th className="w-38 p-3 text-sm font-semibold tracking-wide text-left">
+                                {theme.language === "Bahasa"
+                                  ? "Tanggal"
+                                  : "Date"}
+                              </th>
+                              <th className="w-20 p-3 text-sm font-semibold tracking-wide text-left">
+                                {theme.language === "Bahasa"
+                                  ? "Pembayaran"
+                                  : "Status"}
+                              </th>
+                              <th className="w-20 p-3 text-sm font-semibold tracking-wide text-center">
+                                {theme.language === "Bahasa"
+                                  ? "Jumlah Barang"
+                                  : "Total Items"}
+                              </th>
+                              <th className="w-38 p-3 text-sm font-semibold tracking-wide text-left">
+                                Total
+                              </th>
                             </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
+                          </thead>
+
+                          <tbody className="divide-y divide-gray-100">
+                            {invoices.map((invoice) => (
+                              <tr
+                                className={`${
+                                  theme.dark ? "!bg-[#99AEBA]" : "bg-white"
+                                } text-gray-700`}
+                                key={invoice._id}
+                              >
+                                <td className="p-3 text-sm text-primary font-bold whitespace-nowrap">
+                                  <Link
+                                    href={`/invoices/${invoice._id}`}
+                                    className={`transition duration-700 hover:underline hidden lg:block text-primary`}
+                                  >
+                                    {invoice._id.length > 8
+                                      ? invoice._id.slice(0, 8) + " ..."
+                                      : invoice._id}
+                                  </Link>
+
+                                  <Link
+                                    href={`/invoices/${invoice._id}`}
+                                    className={`transition duration-700 hover:underline md:block lg:hidden ${
+                                      theme.dark
+                                        ? "text-neutral"
+                                        : "text-primary"
+                                    }`}
+                                  >
+                                    {invoice._id.length > 4
+                                      ? invoice._id.slice(0, 4) + " ..."
+                                      : invoice._id}
+                                  </Link>
+                                </td>
+                                <td className="p-3 text-sm whitespace-nowrap hidden lg:block">
+                                  {invoice.customer_name.length > 24
+                                    ? invoice.customer_name.slice(0, 24) +
+                                      " ..."
+                                    : invoice.customer_name}{" "}
+                                </td>
+                                <td className="p-3 text-sm whitespace-nowrap md:block lg:hidden">
+                                  {invoice.customer_name.length > 11
+                                    ? invoice.customer_name.slice(0, 11) +
+                                      " ..."
+                                    : invoice.customer_name}{" "}
+                                </td>
+                                <td className="p-3 text-sm whitespace-nowrap">
+                                  {invoice.date.substring(0, 10)}
+                                </td>
+                                <td className="p-3 text-sm whitespace-nowrap">
+                                  <span
+                                    className={`p-1.5 text-xs font-medium uppercase tracking-wider ${
+                                      invoice.status === "paid"
+                                        ? "text-green-800 bg-[#74EAB0]"
+                                        : "text-gray-800 bg-gray-200"
+                                    }  rounded-lg bg-opacity-50`}
+                                  >
+                                    {theme.language === "Bahasa"
+                                      ? invoice.status === "paid"
+                                        ? "sudah"
+                                        : "belum"
+                                      : invoice.status}
+                                  </span>
+                                </td>
+                                <td className="py-3 text-sm whitespace-nowrap text-center">
+                                  {invoice.total_items}
+                                </td>
+                                <td className="p-3 text-sm whitespace-nowrap">
+                                  {invoice.total.toLocaleString("en-US", {
+                                    style: "currency",
+                                    currency: "IDR",
+                                    maximumFractionDigits: 0,
+                                  })}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    )}
 
                     {/* mobile view */}
                     <hr className="md:hidden" />
                     <br className="md:hidden" />
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:hidden">
-                      {invoices.map((invoice) => (
-                        <div
-                          className={`space-y-3 p-4 pb-6 rounded-lg shadow ${
-                            theme.dark
-                              ? "bg-[#99AEBA] text-gray-700"
-                              : "bg-white text-black"
+                      {(!invoices || (invoices && invoices.length == 0)) && (
+                        <p>[No Data]</p>
+                      )}
+                      {invoices &&
+                        invoices.length > 0 &&
+                        invoices.map((invoice) => (
+                          <div
+                            className={`space-y-3 p-4 pb-6 rounded-lg shadow ${
+                              theme.dark
+                                ? "bg-[#99AEBA] text-gray-700"
+                                : "bg-white text-black"
+                            }`}
+                            key={invoice._id}
+                          >
+                            <div className="text-sm font-medium break-words">
+                              <b>
+                                {theme.language === "Bahasa"
+                                  ? "Nomor Nota:"
+                                  : "Invoice No:"}
+                              </b>
+                              <br />
+                              {invoice._id}
+                            </div>
+                            <div className="text-sm font-medium">
+                              <b>
+                                {theme.language === "Bahasa"
+                                  ? "Pelanggan: "
+                                  : "Customer: "}
+                              </b>
+                              {invoice.customer_name}
+                            </div>
+                            <hr />
+                            <div className="text-sm font-medium">
+                              <b>
+                                {theme.language === "Bahasa"
+                                  ? "Tanggal: "
+                                  : "Date: "}
+                              </b>
+                              {invoice.date.substring(0, 10)}
+                            </div>
+                            <div className="text-sm font-medium">
+                              <b>
+                                {theme.language === "Bahasa"
+                                  ? "Pembayaran:"
+                                  : "Status:"}
+                              </b>{" "}
+                              &nbsp;
+                              <span
+                                className={`p-1.5 text-xs font-medium uppercase tracking-wider ${
+                                  invoice.status === "paid"
+                                    ? "text-green-800 bg-[#74EAB0]"
+                                    : "text-gray-800 bg-gray-200"
+                                } rounded-lg bg-opacity-50`}
+                              >
+                                {theme.language === "Bahasa"
+                                  ? invoice.status === "paid"
+                                    ? "sudah"
+                                    : "belum"
+                                  : invoice.status}
+                              </span>
+                            </div>
+                            <div className="text-sm font-medium">
+                              <b>
+                                {theme.language === "Bahasa"
+                                  ? "Jumlah Barang: "
+                                  : "Total Items: "}
+                              </b>
+                              {invoice.total_items}
+                            </div>
+                            <div className="text-sm font-medium">
+                              <b>
+                                {theme.language === "Bahasa"
+                                  ? "Total Pembayaran: "
+                                  : "Total Cost: "}
+                              </b>
+                              {invoice.total.toLocaleString("en-US", {
+                                style: "currency",
+                                currency: "IDR",
+                                maximumFractionDigits: 0,
+                              })}
+                            </div>
+
+                            <div className="text-center pt-5">
+                              <Link
+                                className="py-2 px-5 text-xs font-medium uppercase tracking-wider rounded-md bg-complementary text-white"
+                                href={`/invoices/${invoice._id}`}
+                              >
+                                {theme.language === "Bahasa"
+                                  ? "Lihat Rincian"
+                                  : "View Details"}
+                              </Link>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+
+                    {invoices && invoices.length > 0 && (
+                      <div className="mt-6 text-center">
+                        <Link
+                          className={`w-fit hover:underline hover:opacity-80 ${
+                            theme.dark ? "text-white" : "text-primary"
                           }`}
-                          key={invoice._id}
+                          href="/invoices"
                         >
-                          <div className="text-sm font-medium break-words">
-                            <b>
-                              {theme.language === "Bahasa"
-                                ? "Nomor Nota:"
-                                : "Invoice No:"}
-                            </b>
-                            <br />
-                            {invoice._id}
-                          </div>
-                          <div className="text-sm font-medium">
-                            <b>
-                              {theme.language === "Bahasa"
-                                ? "Pelanggan: "
-                                : "Customer: "}
-                            </b>
-                            {invoice.customer_name}
-                          </div>
-                          <hr />
-                          <div className="text-sm font-medium">
-                            <b>
-                              {theme.language === "Bahasa"
-                                ? "Tanggal: "
-                                : "Date: "}
-                            </b>
-                            {invoice.date.substring(0, 10)}
-                          </div>
-                          <div className="text-sm font-medium">
-                            <b>
-                              {theme.language === "Bahasa"
-                                ? "Pembayaran:"
-                                : "Status:"}
-                            </b>{" "}
-                            &nbsp;
-                            <span
-                              className={`p-1.5 text-xs font-medium uppercase tracking-wider ${
-                                invoice.status === "paid"
-                                  ? "text-green-800 bg-[#74EAB0]"
-                                  : "text-gray-800 bg-gray-200"
-                              } rounded-lg bg-opacity-50`}
-                            >
-                              {theme.language === "Bahasa"
-                                ? invoice.status === "paid"
-                                  ? "sudah"
-                                  : "belum"
-                                : invoice.status}
-                            </span>
-                          </div>
-                          <div className="text-sm font-medium">
-                            <b>
-                              {theme.language === "Bahasa"
-                                ? "Jumlah Barang: "
-                                : "Total Items: "}
-                            </b>
-                            {invoice.total_items}
-                          </div>
-                          <div className="text-sm font-medium">
-                            <b>
-                              {theme.language === "Bahasa"
-                                ? "Total Pembayaran: "
-                                : "Total Cost: "}
-                            </b>
-                            {invoice.total.toLocaleString("en-US", {
-                              style: "currency",
-                              currency: "IDR",
-                              maximumFractionDigits: 0,
-                            })}
-                          </div>
-
-                          <div className="text-center pt-5">
-                            <Link
-                              className="py-2 px-5 text-xs font-medium uppercase tracking-wider rounded-md bg-complementary text-white"
-                              href={`/invoices/${invoice._id}`}
-                            >
-                              {theme.language === "Bahasa"
-                                ? "Lihat Rincian"
-                                : "View Details"}
-                            </Link>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="mt-6 text-center">
-                      <Link
-                        className={`w-fit hover:underline hover:opacity-80 ${
-                          theme.dark ? "text-white" : "text-primary"
-                        }`}
-                        href="/invoices"
-                      >
-                        <h2 className="whitespace-pre">
-                          {theme.language === "Bahasa"
-                            ? "Lihat Semua ..."
-                            : "View More ..."}
-                        </h2>
-                      </Link>
-                    </div>
+                          <h2 className="whitespace-pre">
+                            {theme.language === "Bahasa"
+                              ? "Lihat Semua ..."
+                              : "View More ..."}
+                          </h2>
+                        </Link>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -669,46 +700,394 @@ function User({ session, handleSignOut }) {
                   </div>
 
                   <div>
+                    {monthlyRevenue && monthlyRevenue.length == 0 && (
+                      <p>[No Data]</p>
+                    )}
                     <div className="flex flex-wrap mb-2">
-                      {monthlyRevenue.map((mr) => (
-                        <div
-                          key={mr._id}
-                          className="w-full md:w-1/2 xl:w-1/2 pt-3 px-1 lg:px-2"
-                        >
-                          <div className="flex border rounded shadow p-2 overflow-hidden py-3">
-                            <div
-                              className={`bg-primary w-[18px] rounded md:hidden`}
-                            ></div>
-                            <div className="flex-1 text-right">
-                              <h5 className="text-sm md:text-base">
-                                {theme.language === "Bahasa"
-                                  ? bulan[mr.month - 1]
-                                  : months[mr.month - 1]}
-                                &nbsp;{mr.year}
-                              </h5>
-                              <h3 className="text-xl md:text-2xl">
-                                {mr.average
-                                  ? mr.average.toLocaleString(undefined, {
-                                      maximumFractionDigits: 0,
-                                      currency: "IDR",
-                                      style: "currency",
-                                      currencyDisplay: "symbol",
-                                    })
-                                  : "IDR -"}
-                                <span className="text-green-400">
-                                  <i className="fas fa-caret-down"></i>
-                                </span>
-                              </h3>
+                      {monthlyRevenue &&
+                        monthlyRevenue.map((mr) => (
+                          <div
+                            key={mr._id}
+                            className="w-full md:w-1/2 xl:w-1/2 pt-3 px-1 lg:px-2"
+                          >
+                            <div className="flex border rounded shadow p-2 overflow-hidden py-3">
+                              <div
+                                className={`bg-primary w-[18px] rounded md:hidden`}
+                              ></div>
+                              <div className="flex-1 text-right">
+                                <h5 className="text-sm md:text-base">
+                                  {theme.language === "Bahasa"
+                                    ? bulan[mr.month - 1]
+                                    : months[mr.month - 1]}
+                                  &nbsp;{mr.year}
+                                </h5>
+                                <h3 className="text-xl md:text-2xl">
+                                  {mr.average
+                                    ? mr.average.toLocaleString(undefined, {
+                                        maximumFractionDigits: 0,
+                                        currency: "IDR",
+                                        style: "currency",
+                                        currencyDisplay: "symbol",
+                                      })
+                                    : "IDR -"}
+                                  <span className="text-green-400">
+                                    <i className="fas fa-caret-down"></i>
+                                  </span>
+                                </h3>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
                     </div>
                   </div>
                 </div>
               </div>
             </>
           )}
+        </main>
+      </section>
+    </>
+  );
+}
+
+// UnApproved Staff Homepage
+function UnapprovedUser({ session, handleSignOut }) {
+  // theme
+  const theme = useContext(ThemeContext);
+
+  // if user is waiting for approval: get company code that they are applying for
+  const [cc, setCC] = useState();
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const getCC = async () => {
+    setLoading(true);
+    const res = await fetch(
+      `http://localhost:3000/api/approvalGC/${session._id}`
+    );
+    const ccObj = await res.json();
+    const ccData = ccObj.data;
+    setCC(ccData);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    getCC();
+  }, []);
+
+  // when data changes
+  const [data, setData] = useState();
+  const handleChange = (e) => {
+    let name = e.target.name;
+    let value = e.target.value;
+    setData({
+      ...data,
+      [name]: value,
+    });
+  };
+
+  // function to display delete confirmation dialog
+  function showModalDeleteConfirmation() {
+    document.getElementById("modal").style.display = "block";
+  }
+
+  function showModalReqCC() {
+    document.getElementById("modal2").style.display = "block";
+  }
+
+  const cancelDeleteAccount = (e) => {
+    e.preventDefault();
+    document.getElementById("modal").style.display = "none";
+  };
+
+  const cancelCCReq = (e) => {
+    e.preventDefault();
+    document.getElementById("modal2").style.display = "none";
+  };
+
+  // function to delete an account
+  const deleteAccount = (e) => {
+    e.preventDefault();
+    document.getElementById("modal").style.display = "none";
+
+    // Send data to the backend via POST: delete account
+    fetch(`http://localhost:3000/api/profile/${session._id}`, {
+      method: "DELETE",
+    }).then((response) => {
+      if (response.status === 200) {
+        handleSignOut();
+      } else {
+        setErrorMsg("Failed to Delete an Account! Try Again!");
+      }
+    });
+  };
+
+  // function to make req
+  const reqCC = async (e) => {
+    e.preventDefault();
+    document.getElementById("modal2").style.display = "none";
+
+    if (!data.code) {
+      setErrorMsg("Code cannot be empty!");
+      return false;
+    }
+
+    let obj;
+    // if user enter company code
+    if (data.code) {
+      // check if company code is valid
+      const res = await fetch(
+        `http://localhost:3000/api/validateGroup/${data.code}`
+      );
+      obj = await res.json();
+    }
+
+    // if company code is valid ot if user do not enter company code
+    if (obj && obj.result) {
+      var jsonData = {
+        group_code: data.code,
+        applicantId: session._id,
+      };
+
+      // Send data to the backend via PUT
+      fetch(`http://localhost:3000/api/approval/${data.code}`, {
+        method: "POST",
+        mode: "cors",
+        body: JSON.stringify(jsonData),
+      }).then((response) => {
+        if (response.status === 200) {
+          // window.location.href = `/`;
+          document.getElementById("modal3").style.display = "block";
+        } else {
+          setErrorMsg("Failed to Make Request! Try Again!");
+        }
+      });
+    } else {
+      setErrorMsg("Invalid Company Code!");
+    }
+  };
+
+  return (
+    <>
+      <Head>
+        <title>{theme.language === "Bahasa" ? "Dasbor" : "Dashboard"}</title>
+      </Head>
+
+      <section className="w-full">
+        <main className="py-12 mx-10 md:mx-14">
+          {/* header section */}
+          <div className="flex md:items-center justify-between flex-col md:flex-row gap-4 md:gap-0 w-full">
+            <h3 className="text-3xl md:text-4xl font-bold">
+              {theme.language === "Bahasa" ? "Dasbor" : "Dashboard"}
+            </h3>
+            <hr className="md:hidden" />
+            <div>
+              <button
+                onClick={handleSignOut}
+                className="w-fit group flex items-center text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
+              >
+                <div>{React.createElement(VscSignOut, { size: "12" })}</div>
+                <h2 className="whitespace-pre">
+                  {theme.language === "Bahasa" ? "Keluar" : "Sign Out"}
+                </h2>
+              </button>
+            </div>
+          </div>
+
+          {/* modal del acc */}
+          <div className="hidden" id="modal">
+            <div className="bg-slate-800 bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0">
+              <div className="bg-white px-10 py-8 rounded-md text-center">
+                <h1 className="text-xl mb-6 font-bold">
+                  {theme.language === "Bahasa"
+                    ? "Apakah Kamu Yakin Mau Menghapus Akun?"
+                    : "Do you Want Delete Account?"}
+                </h1>
+                <button
+                  className="bg-[#F44645] px-4 py-2 rounded-md text-md text-white"
+                  onClick={cancelDeleteAccount}
+                >
+                  {theme.language === "Bahasa" ? "Tidak" : "No"}
+                </button>
+                <button
+                  className="bg-tertiary px-7 py-2 ml-4 rounded-md text-md text-white font-semibold"
+                  onClick={deleteAccount}
+                >
+                  {theme.language === "Bahasa" ? "Ya" : "Yes"}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* modal new req */}
+          <div className="hidden" id="modal2">
+            <div className="bg-slate-800 bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0">
+              <div className="bg-white px-10 py-8 rounded-md text-center">
+                <h1 className="text-xl mb-6 font-bold">
+                  {theme.language === "Bahasa"
+                    ? "Masukkan Kode Perusahaan:"
+                    : "Enter Company Code:"}
+                </h1>
+                <input
+                  autoComplete="off"
+                  type="text"
+                  className={`${
+                    theme.dark
+                      ? "!bg-dm_secondary text-neutral"
+                      : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
+                  } form-control text-center block w-full px-3 py-1.5 font-normal text-gray-700 bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
+                  name="code"
+                  id="code"
+                  onChange={handleChange}
+                  required
+                />
+
+                <div className="mt-10">
+                  <button
+                    className="bg-[#F44645] px-4 py-2 rounded-md text-md text-white"
+                    onClick={cancelCCReq}
+                  >
+                    {theme.language === "Bahasa" ? "Batal" : "Cancel"}
+                  </button>
+                  <button
+                    className="bg-tertiary px-7 py-2 ml-4 rounded-md text-md text-white font-semibold"
+                    onClick={reqCC}
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* modal success req */}
+          <div className="hidden" id="modal3">
+            <div className="bg-slate-800 bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0">
+              <div className="bg-white px-10 py-8 rounded-md text-center">
+                <h1 className="text-xl mb-6 font-bold">
+                  {theme.language === "Bahasa"
+                    ? "Oermintaan Telah Berhasil dibuat. Masuk Ulang!"
+                    : "Request is Sucessfully made. Sign In Again!"}
+                </h1>
+
+                <div className="mt-10">
+                  <button
+                    className="bg-tertiary px-7 py-2 ml-4 rounded-md text-md text-white font-semibold"
+                    onClick={handleSignOut}
+                  >
+                    Ok
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* error msg */}
+          {errorMsg != "" && (
+            <div
+              className="flex items-center bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative my-4 md:my:0"
+              role="alert"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                dataprefix="fas"
+                icon="times-circle"
+                className="w-4 h-4 mr-2 fill-current"
+                role="img"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+              >
+                <path
+                  fill="currentColor"
+                  d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z"
+                ></path>
+              </svg>
+              {errorMsg}
+
+              <button
+                className="absolute top-0 bottom-0 right-0 px-4 py-3"
+                onClick={() => setErrorMsg("")}
+              >
+                <svg
+                  className="fill-current h-6 w-6 text-red-500"
+                  role="button"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <title>
+                    {theme.language === "Bahasa" ? "Tutup" : "Close"}
+                  </title>
+                  <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
+                </svg>
+              </button>
+            </div>
+          )}
+
+          <div
+            className={`table-div-custom p-6 my-4 md:my-12 md:mb-10 lg:mb-12 rounded-md ${
+              theme.dark ? "text-white !bg-dm_secondary" : ""
+            }`}
+          >
+            {loading && (
+              <div className="py-8">
+                <div className="mt-9 flex flex-col justify-center items-center">
+                  <h3 className="text-xl mb-4 font-bold">
+                    {theme.language === "Bahasa" ? "Memuat" : "Loading"}
+                  </h3>
+                  <ReactLoading
+                    type="bars"
+                    color="#2b4450"
+                    height={100}
+                    width={50}
+                  />
+                </div>
+              </div>
+            )}
+
+            {!loading &&
+              (!cc || cc.length == 0 ? (
+                <div>
+                  <h1 className="text-xl">
+                    Your request or permission for company code has been
+                    expired!
+                  </h1>
+
+                  <div className="flex gap-4 mt-12">
+                    <button
+                      onClick={showModalReqCC}
+                      className="w-fit group flex items-center text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
+                    >
+                      New Request
+                    </button>
+                    <button
+                      onClick={showModalDeleteConfirmation}
+                      className="w-fit group flex items-center text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-[#F44645] text-white hover:opacity-80 transition duration-700 rounded-md"
+                    >
+                      Delete Account
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <h1 className="text-xl">
+                    Your request is currently being processed!
+                  </h1>
+                  <br />
+                  <div>
+                    <p className="text-xl mb-2">Request Info</p>
+                    <hr />
+                    <p className="mt-4">Company Code: {cc && cc.group_code}</p>
+                  </div>
+
+                  <div className="mt-20">
+                    <button className="w-fit group flex items-center text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-[#F44645] text-white hover:opacity-80 transition duration-700 rounded-md">
+                      Delete Account
+                    </button>
+                  </div>
+                </div>
+              ))}
+          </div>
         </main>
       </section>
     </>

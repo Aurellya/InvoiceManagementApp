@@ -35,21 +35,42 @@ export default function Register() {
 
   const [data, setData] = useState();
   const [ok, setOk] = useState();
+  const [loading, setLoading] = useState(false);
 
   async function onSubmit(values) {
+    setLoading(true);
+
     const options = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
     };
 
-    await fetch("http://localhost:3000/api/auth/signup", options)
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data);
-        // showModal();
-        // if (data.status) router.push("http://localhost:3000");
+    let obj;
+
+    // if user enter company code
+    if (values.companycode) {
+      // check if company code is valid
+      const res = await fetch(
+        `http://localhost:3000/api/validateGroup/${values.companycode}`
+      );
+      obj = await res.json();
+    }
+
+    // if company code is valid ot if user do not enter company code
+    if ((obj && obj.result) || !values.companycode) {
+      await fetch("http://localhost:3000/api/auth/signup", options)
+        .then((res) => res.json())
+        .then((data) => {
+          setData(data);
+        });
+    } else {
+      setData({
+        status: false,
+        error: "Invalid Company Code!",
+        error_id: "Kode Perusahaan Tidak Valid!",
       });
+    }
   }
 
   useEffect(() => {
@@ -80,6 +101,8 @@ export default function Register() {
         );
       }
     }
+
+    setLoading(false);
   }, [data]);
 
   // function to display modal dialog
@@ -112,7 +135,7 @@ export default function Register() {
               ></h1>
               <button
                 className={`${
-                  ok ? "bg-tertiary" : "bg-rose-600"
+                  ok ? "bg-tertiary" : "bg-[#F44645]"
                 } px-7 py-2 ml-4 rounded-md text-md text-white font-semibold`}
                 onClick={closeModal}
                 id="btn_txt"
@@ -137,7 +160,7 @@ export default function Register() {
             <div
               className={`${styles.input_group} ${
                 formik.errors.username && formik.touched.username
-                  ? "border-rose-600"
+                  ? "border-[#F44645]"
                   : ""
               }`}
             >
@@ -152,7 +175,7 @@ export default function Register() {
                 <HiOutlineUser size={25} />
               </span>
             </div>
-            <div className="w-fit text-sm text-rose-600 mt-2">
+            <div className="w-fit text-sm text-[#F44645] mt-2">
               {formik.errors.username && formik.touched.username && (
                 <div>
                   <p>* {formik.errors.username}</p>
@@ -165,7 +188,7 @@ export default function Register() {
             <div
               className={`${styles.input_group} ${
                 formik.errors.email && formik.touched.email
-                  ? "border-rose-600"
+                  ? "border-[#F44645]"
                   : ""
               }`}
             >
@@ -180,7 +203,7 @@ export default function Register() {
                 <HiAtSymbol size={25} />
               </span>
             </div>
-            <div className="w-fit text-sm text-rose-600 mt-2">
+            <div className="w-fit text-sm text-[#F44645] mt-2">
               {formik.errors.email && formik.touched.email && (
                 <div>
                   <p>* {formik.errors.email}</p>
@@ -193,7 +216,7 @@ export default function Register() {
             <div
               className={`${styles.input_group} ${
                 formik.errors.password && formik.touched.password
-                  ? "border-rose-600"
+                  ? "border-[#F44645]"
                   : ""
               }`}
             >
@@ -211,7 +234,7 @@ export default function Register() {
                 <HiFingerPrint size={25} />
               </span>
             </div>
-            <div className="w-fit text-sm text-rose-600 mt-2">
+            <div className="w-fit text-sm text-[#F44645] mt-2">
               {formik.errors.password && formik.touched.password && (
                 <div>
                   <p>* {formik.errors.password}</p>
@@ -224,7 +247,7 @@ export default function Register() {
             <div
               className={`${styles.input_group} ${
                 formik.errors.cpassword && formik.touched.cpassword
-                  ? "border-rose-600"
+                  ? "border-[#F44645]"
                   : ""
               }`}
             >
@@ -242,7 +265,7 @@ export default function Register() {
                 <HiFingerPrint size={25} />
               </span>
             </div>
-            <div className="w-fit text-sm text-rose-600 mt-2">
+            <div className="w-fit text-sm text-[#F44645] mt-2">
               {formik.errors.cpassword && formik.touched.cpassword && (
                 <div>
                   <p>* {formik.errors.cpassword}</p>
@@ -255,13 +278,14 @@ export default function Register() {
             <div
               className={`${styles.input_group} ${
                 formik.errors.companycode && formik.touched.companycode
-                  ? "border-rose-600"
+                  ? "border-[#F44645]"
                   : ""
               }`}
             >
               <input
                 type="text"
                 name="Companycode"
+                id="cc"
                 placeholder="Company Code"
                 className={styles.input_text}
                 {...formik.getFieldProps("companycode")}
@@ -271,9 +295,9 @@ export default function Register() {
               </span>
             </div>
             <div className="w-fit text-sm text-gray-300 mt-2 ml-2">
-              <p>Note: Leave it blank, if you don't have it!</p>
+              <p>Note: Leave it blank, if you register as an admin!</p>
             </div>
-            <div className="w-fit text-sm text-rose-600 mt-2">
+            <div className="w-fit text-sm text-[#F44645] mt-2">
               {formik.errors.companycode && formik.touched.companycode && (
                 <div>
                   <p>* {formik.errors.companycode}</p>
@@ -285,7 +309,8 @@ export default function Register() {
           {/* login buttons */}
           <div className="input-button">
             <button type="submit" className={styles.button}>
-              Sign Up
+              {!loading && "Sign Up"}
+              {loading && <div>Loading . . .</div>}
             </button>
           </div>
         </form>

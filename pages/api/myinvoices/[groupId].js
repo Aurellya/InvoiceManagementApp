@@ -14,17 +14,27 @@ export default async function handler(req, res) {
         const group = await Groups.find({
           group_code: groupId,
         });
-        const invoicesId = await group[0].invoices;
+
+        let invoicesId;
+
+        if (group.length != 0) {
+          invoicesId = await group[0].invoices;
+        }
+
+        if (invoicesId == null) {
+          invoicesId = [];
+        }
+
         const data = await Invoices.find({ _id: { $in: invoicesId } }).sort([
           ["date", -1],
         ]);
+
         return res.status(200).json({ data: data });
       } catch (error) {
         return res
           .status(400)
           .json({ message: "Failed to retrieve the Invoice: " + error });
       }
-      break;
 
     case "POST":
       try {

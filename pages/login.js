@@ -46,10 +46,10 @@ export default function Login() {
       </Head>
 
       <section className="w-3/4 mx-auto flex flex-col gap-10">
-        <div className="title">
+        <div className="title mb-4">
           <h1 className="text-gray-800 text-4xl font-bold py-4">Login</h1>
           <p className="w-3/4 mx-auto text-gray-400">
-            Welcome to ASC App! Manage your data with Us.
+            Welcome to ASC App! Manage your invoice with Us.
           </p>
         </div>
 
@@ -62,7 +62,7 @@ export default function Login() {
             <div
               className={`${styles.input_group} ${
                 formik.errors.email && formik.touched.email
-                  ? "border-rose-600"
+                  ? "border-[#F44645]"
                   : ""
               }`}
             >
@@ -77,7 +77,7 @@ export default function Login() {
                 <HiAtSymbol size={25} />
               </span>
             </div>
-            <div className="w-fit text-sm text-rose-600 mt-2">
+            <div className="w-fit text-sm text-[#F44645] mt-2">
               {formik.errors.email && formik.touched.email && (
                 <div>
                   <p>* {formik.errors.email}</p>
@@ -90,7 +90,7 @@ export default function Login() {
             <div
               className={`${styles.input_group} ${
                 formik.errors.password && formik.touched.password
-                  ? "border-rose-600"
+                  ? "border-[#F44645]"
                   : ""
               }`}
             >
@@ -108,7 +108,7 @@ export default function Login() {
                 <HiFingerPrint size={25} />
               </span>
             </div>
-            <div className="w-fit text-sm text-rose-600 mt-2">
+            <div className="w-fit text-sm text-[#F44645] mt-2">
               {formik.errors.password && formik.touched.password && (
                 <div>
                   <p>* {formik.errors.password}</p>
@@ -123,7 +123,9 @@ export default function Login() {
               Login
             </button>
           </div>
-          <div className="input-button">
+
+          {/* Implemented soon  */}
+          {/* <div className="input-button">
             <button
               type="button"
               onClick={handleGoogleSignin}
@@ -132,10 +134,10 @@ export default function Login() {
               Sign In with Google{" "}
               <Image src={"/assets/google.svg"} width="20" height={20} alt="" />
             </button>
-          </div>
+          </div> */}
         </form>
 
-        <p className="text-center text-gray-400 ">
+        <p className="text-center text-gray-400 mt-10">
           don't have an account yet?{" "}
           <Link href={"/register"} className="text-primary hover:underline">
             Sign Up

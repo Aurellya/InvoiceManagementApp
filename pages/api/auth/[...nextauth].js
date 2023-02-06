@@ -4,8 +4,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import connectMongo from "../../../database/conn";
 import Users from "../../../model/Schema";
 import { compare } from "bcryptjs";
-import { BsChevronCompactLeft } from "react-icons/bs";
-import { TiArrowSync } from "react-icons/ti";
 
 export default NextAuth({
   providers: [

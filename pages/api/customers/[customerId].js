@@ -53,7 +53,7 @@ export default async function handler(req, res) {
           if (err) {
             console.log(err);
           } else {
-            res.status(200).json({ data: docs });
+            return res.status(200).json({ data: docs });
           }
         });
       } catch (error) {

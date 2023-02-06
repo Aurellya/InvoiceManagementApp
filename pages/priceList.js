@@ -9,6 +9,7 @@ import Pagination from "../components/Pagination";
 import { paginate } from "../utils/paginate";
 
 import { BsPlusLg } from "react-icons/bs";
+import { AiOutlineSearch } from "react-icons/ai";
 
 import ReactLoading from "react-loading";
 
@@ -52,7 +53,32 @@ export default () => {
     }
   };
 
-  const paginatePriceLists = paginate(priceLists, currentPage, pageSize);
+  const [paginatePriceLists, setPaginatePriceLists] = useState();
+
+  useEffect(() => {
+    if (priceLists) {
+      setPaginatePriceLists(paginate(priceLists, currentPage, pageSize));
+    }
+  }, [priceLists]);
+
+  const [keyword, setKeyword] = useState("");
+  useEffect(() => {
+    if (priceLists) {
+      let filteredPriceLists = priceLists.filter((p) =>
+        p.product_name.includes(keyword)
+      );
+      setPaginatePriceLists(
+        paginate(filteredPriceLists, currentPage, pageSize)
+      );
+    }
+  }, [keyword]);
+
+  const search = (e) => {
+    e.preventDefault();
+    if (document.getElementById("p_name")) {
+      setKeyword(document.getElementById("p_name").value);
+    }
+  };
 
   return (
     <>
@@ -87,9 +113,50 @@ export default () => {
             </div>
           </div>
 
+          {/* priceLists search bar */}
+          <div
+            className={`table-div-custom p-6 my-4 md:mt-12 ${
+              theme.dark ? "text-neutral !bg-dm_secondary" : ""
+            }`}
+          >
+            <h1 className="text-lg md:text-xl mb-4">
+              {theme.language === "Bahasa" ? "Bar Pencarian" : "Search Bar"}
+            </h1>
+
+            <div className="form-group">
+              <div className="flex gap-2">
+                <input
+                  autoComplete="off"
+                  type="text"
+                  className={`${
+                    theme.dark
+                      ? "!bg-dm_secondary text-neutral"
+                      : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
+                  } form-control block w-[400px] px-3 py-1.5 font-normal text-gray-700 bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
+                  name="p_name"
+                  id="p_name"
+                  placeholder={
+                    theme.language === "Bahasa"
+                      ? "Masukkan Nama Produk"
+                      : "Enter Product Name"
+                  }
+                  required
+                />
+                <button
+                  onClick={search}
+                  className={`w-fit button-custom mt-0 ${
+                    theme.dark ? "bg-dm_secondary" : "bg-primary"
+                  }`}
+                >
+                  {React.createElement(AiOutlineSearch, { size: "20" })}
+                </button>
+              </div>
+            </div>
+          </div>
+
           {/* priceLists table */}
           <div
-            className={`table-div-custom p-6 my-4 md:my-12 ${
+            className={`table-div-custom p-6 my-4 md:mb-12 ${
               theme.dark ? "text-neutral !bg-dm_secondary" : ""
             }`}
           >
@@ -97,13 +164,13 @@ export default () => {
               <h1 className="text-lg md:text-xl mb-4">
                 {theme.language === "Bahasa" ? "Rincian Item" : "Item Details"}
               </h1>
-              {priceLists && (
+              {paginatePriceLists && (
                 <h2 className="text-sm hidden md:block">
                   <span className="font-bold">Total: </span>
-                  {priceLists.length}{" "}
+                  {paginatePriceLists.length}{" "}
                   {theme.language === "Bahasa"
                     ? "Jenis Barang"
-                    : priceLists.length > 1
+                    : paginatePriceLists.length > 1
                     ? "Items"
                     : "Items"}
                 </h2>
@@ -114,7 +181,6 @@ export default () => {
               <div className="py-8">
                 <div className="mt-9 flex flex-col justify-center items-center">
                   <h3 className="text-xl mb-4 font-bold">
-                    {" "}
                     {theme.language === "Bahasa" ? "Memuat" : "Loading"}
                   </h3>
                   <ReactLoading
@@ -175,146 +241,150 @@ export default () => {
                     </thead>
 
                     <tbody className="divide-y divide-gray-100">
-                      {paginatePriceLists.map((item) => (
-                        <tr
-                          className={`${
-                            theme.dark ? "!bg-[#99AEBA]" : "bg-white"
-                          } text-gray-700`}
-                          key={item._id}
-                        >
-                          <td className="p-3 text-sm text-primary font-bold whitespace-nowrap">
-                            <Link
-                              href={`/priceList/${item._id}`}
-                              className="transition duration-700 hover:underline"
-                            >
-                              {item._id}
-                            </Link>
-                          </td>
-                          <td className="p-3 text-sm whitespace-nowrap">
-                            {item.product_name}
-                          </td>
-                          <td className="p-3 text-sm whitespace-nowrap">
-                            {item.amount + " "}
-                            {theme.language === "Bahasa"
-                              ? item.unit
-                              : item.unit == "bh"
-                              ? "pcs"
-                              : (item.unit = "ls"
-                                  ? "doz"
-                                  : item.unit == "grs"
-                                  ? "gro"
-                                  : "box")}
-                          </td>
-                          <td className="p-3 text-sm whitespace-nowrap">
-                            {item.price.toLocaleString("en-US", {
-                              style: "currency",
-                              currency: "IDR",
-                              maximumFractionDigits: 0,
-                            })}
-                          </td>
-                          <td className="p-3 text-sm whitespace-nowrap">
-                            {item.remarks
-                              ? item.remarks.length > 20
-                                ? item.remarks.slice(0, 20) + " ..."
-                                : item.remarks
-                              : "-"}
-                          </td>
-                        </tr>
-                      ))}
+                      {paginatePriceLists &&
+                        paginatePriceLists.map((item) => (
+                          <tr
+                            className={`${
+                              theme.dark ? "!bg-[#99AEBA]" : "bg-white"
+                            } text-gray-700`}
+                            key={item._id}
+                          >
+                            <td className="p-3 text-sm text-primary font-bold whitespace-nowrap">
+                              <Link
+                                href={`/priceList/${item._id}`}
+                                className="transition duration-700 hover:underline"
+                              >
+                                {item._id}
+                              </Link>
+                            </td>
+                            <td className="p-3 text-sm whitespace-nowrap">
+                              {item.product_name}
+                            </td>
+                            <td className="p-3 text-sm whitespace-nowrap">
+                              {item.amount + " "}
+                              {theme.language === "Bahasa"
+                                ? item.unit
+                                : item.unit == "bh"
+                                ? "pcs"
+                                : (item.unit = "ls"
+                                    ? "doz"
+                                    : item.unit == "grs"
+                                    ? "gro"
+                                    : "box")}
+                            </td>
+                            <td className="p-3 text-sm whitespace-nowrap">
+                              {item.price.toLocaleString("en-US", {
+                                style: "currency",
+                                currency: "IDR",
+                                maximumFractionDigits: 0,
+                              })}
+                            </td>
+                            <td className="p-3 text-sm whitespace-nowrap">
+                              {item.remarks
+                                ? item.remarks.length > 20
+                                  ? item.remarks.slice(0, 20) + " ..."
+                                  : item.remarks
+                                : "-"}
+                            </td>
+                          </tr>
+                        ))}
                     </tbody>
                   </table>
                 </div>
 
                 {/* mobile view */}
                 <hr className="md:hidden" />
-                {priceLists && (
+                {paginatePriceLists && (
                   <h2 className="text-sm md:hidden mt-5 text-right">
                     <span className="font-bold">Total: </span>
-                    {priceLists.length}{" "}
+                    {paginatePriceLists.length}{" "}
                     {theme.language === "Bahasa"
                       ? "Jenis Barang"
-                      : priceLists.length > 1
+                      : paginatePriceLists.length > 1
                       ? "Items"
                       : "Items"}
                   </h2>
                 )}
                 <br className="md:hidden" />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:hidden">
-                  {paginatePriceLists.map((item) => (
-                    <div
-                      className={`${
-                        theme.dark ? "!bg-[#99AEBA]" : "bg-white"
-                      } text-gray-700 space-y-3 p-4 pb-6 rounded-lg shadow`}
-                      key={item._id}
-                    >
-                      <div className="text-sm font-medium break-words">
-                        <b>
+                  {paginatePriceLists &&
+                    paginatePriceLists.map((item) => (
+                      <div
+                        className={`${
+                          theme.dark ? "!bg-[#99AEBA]" : "bg-white"
+                        } text-gray-700 space-y-3 p-4 pb-6 rounded-lg shadow`}
+                        key={item._id}
+                      >
+                        <div className="text-sm font-medium break-words">
+                          <b>
+                            {theme.language === "Bahasa"
+                              ? "ID Barang"
+                              : "Item ID."}
+                          </b>
+                          <br />
+                          {item._id}
+                        </div>
+                        <div className="text-sm font-medium">
+                          <b>
+                            {theme.language === "Bahasa"
+                              ? "Nama Produk: "
+                              : "Product Name: "}
+                          </b>
+                          {item.product_name}
+                        </div>
+                        <hr />
+                        <div className="text-sm font-medium">
+                          <b>
+                            {theme.language === "Bahasa"
+                              ? "Jumlah (/Unit): "
+                              : "Amount (/Unit): "}
+                          </b>
+                          {item.amount + " "}{" "}
                           {theme.language === "Bahasa"
-                            ? "ID Barang"
-                            : "Item ID."}
-                        </b>
-                        <br />
-                        {item._id}
-                      </div>
-                      <div className="text-sm font-medium">
-                        <b>
-                          {theme.language === "Bahasa"
-                            ? "Nama Produk: "
-                            : "Product Name: "}
-                        </b>
-                        {item.product_name}
-                      </div>
-                      <hr />
-                      <div className="text-sm font-medium">
-                        <b>
-                          {theme.language === "Bahasa"
-                            ? "Jumlah (/Unit): "
-                            : "Amount (/Unit): "}
-                        </b>
-                        {item.amount + " "}{" "}
-                        {theme.language === "Bahasa"
-                          ? item.unit
-                          : item.unit == "bh"
-                          ? "pcs"
-                          : item.unit == "ls"
-                          ? "doz"
-                          : item.unit == "grs"
-                          ? "gro"
-                          : "box"}
-                      </div>
-                      <div className="text-sm font-medium">
-                        <b>
-                          {theme.language === "Bahasa" ? "Harga: " : "Price: "}
-                        </b>
-                        <span className="text-sm font-medium">
-                          {item.price.toLocaleString("en-US", {
-                            style: "currency",
-                            currency: "IDR",
-                            maximumFractionDigits: 0,
-                          })}
-                        </span>
-                      </div>
-                      <div className="text-sm font-medium">
-                        <b>
-                          {theme.language === "Bahasa"
-                            ? "Keterangan: "
-                            : "Remarks: "}
-                        </b>
-                        {item.remarks ? item.remarks : "-"}
-                      </div>
+                            ? item.unit
+                            : item.unit == "bh"
+                            ? "pcs"
+                            : item.unit == "ls"
+                            ? "doz"
+                            : item.unit == "grs"
+                            ? "gro"
+                            : "box"}
+                        </div>
+                        <div className="text-sm font-medium">
+                          <b>
+                            {theme.language === "Bahasa"
+                              ? "Harga: "
+                              : "Price: "}
+                          </b>
+                          <span className="text-sm font-medium">
+                            {item.price.toLocaleString("en-US", {
+                              style: "currency",
+                              currency: "IDR",
+                              maximumFractionDigits: 0,
+                            })}
+                          </span>
+                        </div>
+                        <div className="text-sm font-medium">
+                          <b>
+                            {theme.language === "Bahasa"
+                              ? "Keterangan: "
+                              : "Remarks: "}
+                          </b>
+                          {item.remarks ? item.remarks : "-"}
+                        </div>
 
-                      <div className="text-center pt-5">
-                        <Link
-                          className="py-2 px-5 text-xs font-medium uppercase tracking-wider rounded-md bg-tertiary text-white"
-                          href={`/priceList/${item._id}`}
-                        >
-                          {theme.language === "Bahasa"
-                            ? "Lihat Rincian"
-                            : "View Details"}
-                        </Link>
+                        <div className="text-center pt-5">
+                          <Link
+                            className="py-2 px-5 text-xs font-medium uppercase tracking-wider rounded-md bg-tertiary text-white"
+                            href={`/priceList/${item._id}`}
+                          >
+                            {theme.language === "Bahasa"
+                              ? "Lihat Rincian"
+                              : "View Details"}
+                          </Link>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
                 </div>
 
                 <Pagination

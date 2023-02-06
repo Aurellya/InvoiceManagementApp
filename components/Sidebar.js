@@ -3,7 +3,7 @@ import { HiMenuAlt3 } from "react-icons/hi";
 import { MdOutlineDashboard } from "react-icons/md";
 import { RiSettings4Line, RiFileList3Line } from "react-icons/ri";
 import { TbReportAnalytics } from "react-icons/tb";
-import { AiOutlineUser } from "react-icons/ai";
+import { AiOutlineUser, AiOutlineQrcode } from "react-icons/ai";
 import { VscSignOut } from "react-icons/vsc";
 import { IoMdContacts } from "react-icons/io";
 import Link from "next/link";
@@ -15,8 +15,13 @@ export default function Sidebar({ handleSignOut }) {
     { name: "Invoices", link: "/invoices", icon: TbReportAnalytics },
     { name: "Customers", link: "/customers", icon: IoMdContacts },
     { name: "Price List", link: "/priceList", icon: RiFileList3Line },
-    { name: "Settings", link: "/settings", icon: RiSettings4Line },
+    {
+      name: "Company Code",
+      link: "/companyCode",
+      icon: AiOutlineQrcode,
+    },
     { name: "Profile", link: "/profile", icon: AiOutlineUser, margin: true },
+    { name: "Settings", link: "/settings", icon: RiSettings4Line },
   ];
 
   const menus_b = [
@@ -24,8 +29,13 @@ export default function Sidebar({ handleSignOut }) {
     { name: "Nota", link: "/invoices", icon: TbReportAnalytics },
     { name: "Pelanggan", link: "/customers", icon: IoMdContacts },
     { name: "Daftar Harga", link: "/priceList", icon: RiFileList3Line },
-    { name: "Pengaturan", link: "/settings", icon: RiSettings4Line },
+    {
+      name: "Kode Perusahaan",
+      link: "/companyCode",
+      icon: AiOutlineQrcode,
+    },
     { name: "Profil", link: "/profile", icon: AiOutlineUser, margin: true },
+    { name: "Pengaturan", link: "/settings", icon: RiSettings4Line },
   ];
 
   const [open, setOpen] = useState(false);
@@ -34,9 +44,7 @@ export default function Sidebar({ handleSignOut }) {
 
   return (
     <div
-      className={`${
-        theme.dark ? "shadow-lg" : ""
-      } bg-primary min-h-screen ${
+      className={`${theme.dark ? "shadow-lg" : ""} bg-primary min-h-screen ${
         open ? "w-72" : "w-16"
       } duration-500 text-gray-100 px-4`}
     >

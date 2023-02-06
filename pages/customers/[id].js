@@ -127,7 +127,6 @@ export default function Customer() {
               >
                 <div>{React.createElement(AiFillDelete, { size: "12" })}</div>
                 <h2 className="whitespace-pre">
-                  {" "}
                   {theme.language === "Bahasa" ? "Hapus" : "Delete"}
                 </h2>
               </button>

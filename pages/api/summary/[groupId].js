@@ -19,8 +19,18 @@ export default async function handler(req, res) {
           group_code: groupId,
         });
 
+        let invoicesId, customersId, itemsId;
+
+        if (group.length != 0) {
+          invoicesId = await group[0].invoices;
+          customersId = await group[0].customers;
+          itemsId = await group[0].priceLists;
+        }
+
         // invoices
-        const invoicesId = await group[0].invoices;
+        if (invoicesId == null) {
+          invoicesId = [];
+        }
 
         const totalPaidInvoices = await Invoices.find({
           _id: { $in: invoicesId },
@@ -32,13 +42,17 @@ export default async function handler(req, res) {
         });
 
         // customers
-        const customersId = await group[0].customers;
+        if (customersId == null) {
+          customersId = [];
+        }
         const totalCustomers = await Customers.find({
           _id: { $in: customersId },
         }).count();
 
         // items
-        const itemsId = await group[0].priceLists;
+        if (itemsId == null) {
+          itemsId = [];
+        }
         const totalItems = await PriceLists.find({
           _id: { $in: itemsId },
         }).count();

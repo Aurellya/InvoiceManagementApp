@@ -290,7 +290,6 @@ export default function editPriceList() {
                         className="form-label inline-block mb-2"
                       >
                         <b>
-                          {" "}
                           {theme.language === "Bahasa"
                             ? "Nama Produk:"
                             : "Product Name:"}

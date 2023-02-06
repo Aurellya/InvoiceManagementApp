@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { getSession, useSession, signOut } from "next-auth/react";
+import ReactLoading from "react-loading";
 
 import { ThemeContext } from "../context/ThemeContext";
 import Sidebar from "../components/Sidebar";
@@ -9,8 +10,7 @@ import Pagination from "../components/Pagination";
 import { paginate } from "../utils/paginate";
 
 import { BsPlusLg } from "react-icons/bs";
-
-import ReactLoading from "react-loading";
+import { AiOutlineSearch } from "react-icons/ai";
 
 export default () => {
   // session
@@ -52,7 +52,28 @@ export default () => {
     }
   };
 
-  const paginateCustomer = paginate(customers, currentPage, pageSize);
+  const [paginateCustomer, setPaginateCustomer] = useState();
+
+  useEffect(() => {
+    if (customers) {
+      setPaginateCustomer(paginate(customers, currentPage, pageSize));
+    }
+  }, [customers]);
+
+  const [keyword, setKeyword] = useState("");
+  useEffect(() => {
+    if (customers) {
+      let filteredCustomer = customers.filter((p) => p.name.includes(keyword));
+      setPaginateCustomer(paginate(filteredCustomer, currentPage, pageSize));
+    }
+  }, [keyword]);
+
+  const search = (e) => {
+    e.preventDefault();
+    if (document.getElementById("c_name")) {
+      setKeyword(document.getElementById("c_name").value);
+    }
+  };
 
   return (
     <>
@@ -85,6 +106,47 @@ export default () => {
             </div>
           </div>
 
+          {/* customer search bar */}
+          <div
+            className={`table-div-custom p-6 my-4 md:mt-12 ${
+              theme.dark ? "text-neutral !bg-dm_secondary" : ""
+            }`}
+          >
+            <h1 className="text-lg md:text-xl mb-4">
+              {theme.language === "Bahasa" ? "Bar Pencarian" : "Search Bar"}
+            </h1>
+
+            <div className="form-group">
+              <div className="flex gap-2">
+                <input
+                  autoComplete="off"
+                  type="text"
+                  className={`${
+                    theme.dark
+                      ? "!bg-dm_secondary text-neutral"
+                      : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
+                  } form-control block w-[400px] px-3 py-1.5 font-normal text-gray-700 bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
+                  name="c_name"
+                  id="c_name"
+                  placeholder={
+                    theme.language === "Bahasa"
+                      ? "Masukkan Nama Pelanggan"
+                      : "Enter Customer Name"
+                  }
+                  required
+                />
+                <button
+                  onClick={search}
+                  className={`w-fit button-custom mt-0 ${
+                    theme.dark ? "bg-dm_secondary" : "bg-primary"
+                  }`}
+                >
+                  {React.createElement(AiOutlineSearch, { size: "20" })}
+                </button>
+              </div>
+            </div>
+          </div>
+
           {/* customers table */}
           <div
             className={`table-div-custom p-6 my-4 md:my-12 ${
@@ -97,13 +159,13 @@ export default () => {
                   ? "Rincian Pelanggan"
                   : "Customer Details"}
               </h1>
-              {customers && (
+              {paginateCustomer && (
                 <h2 className="text-sm hidden md:block">
                   <span className="font-bold">Total: </span>
-                  {customers.length}{" "}
+                  {paginateCustomer.length}{" "}
                   {theme.language === "Bahasa"
                     ? "Pelanggan"
-                    : customers.length > 1
+                    : paginateCustomer.length > 1
                     ? "Customers"
                     : "Customer"}
                 </h2>
@@ -177,131 +239,135 @@ export default () => {
                     </thead>
 
                     <tbody className="divide-y divide-gray-100">
-                      {paginateCustomer.map((customer) => (
-                        <tr
-                          className={`${
-                            theme.dark ? "!bg-[#99AEBA]" : "bg-white"
-                          } text-gray-700`}
-                          key={customer._id}
-                        >
-                          <td className="p-3 text-sm text-primary font-bold whitespace-nowrap">
-                            <Link
-                              href={`/customers/${customer._id}`}
-                              className="transition duration-700 hover:underline"
-                            >
-                              {customer._id}
-                            </Link>
-                          </td>
-                          <td className="p-3 text-sm whitespace-nowrap">
-                            {customer.name}
-                          </td>
-                          <td className="p-3 text-sm whitespace-nowrap">
-                            {customer.phone_no}
-                          </td>
-                          <td className="p-3 text-sm whitespace-nowrap">
-                            {customer.email.length > 25
-                              ? customer.email.slice(0, 25) + " ..."
-                              : customer.email}
-                          </td>
-                          <td className="p-3 text-sm whitespace-nowrap">
-                            {customer.address.length > 30
-                              ? customer.address.slice(0, 30) + " ..."
-                              : customer.address}
-                          </td>
-                          <td className="p-3 text-sm whitespace-nowrap">
-                            {customer.remarks
-                              ? customer.remarks.length > 20
-                                ? customer.remarks.slice(0, 20) + " ..."
-                                : customer.remarks
-                              : "-"}
-                          </td>
-                        </tr>
-                      ))}
+                      {paginateCustomer &&
+                        paginateCustomer.map((customer) => (
+                          <tr
+                            className={`${
+                              theme.dark ? "!bg-[#99AEBA]" : "bg-white"
+                            } text-gray-700`}
+                            key={customer._id}
+                          >
+                            <td className="p-3 text-sm text-primary font-bold whitespace-nowrap">
+                              <Link
+                                href={`/customers/${customer._id}`}
+                                className="transition duration-700 hover:underline"
+                              >
+                                {customer._id}
+                              </Link>
+                            </td>
+                            <td className="p-3 text-sm whitespace-nowrap">
+                              {customer.name}
+                            </td>
+                            <td className="p-3 text-sm whitespace-nowrap">
+                              {customer.phone_no}
+                            </td>
+                            <td className="p-3 text-sm whitespace-nowrap">
+                              {customer.email.length > 25
+                                ? customer.email.slice(0, 25) + " ..."
+                                : customer.email}
+                            </td>
+                            <td className="p-3 text-sm whitespace-nowrap">
+                              {customer.address.length > 30
+                                ? customer.address.slice(0, 30) + " ..."
+                                : customer.address}
+                            </td>
+                            <td className="p-3 text-sm whitespace-nowrap">
+                              {customer.remarks
+                                ? customer.remarks.length > 20
+                                  ? customer.remarks.slice(0, 20) + " ..."
+                                  : customer.remarks
+                                : "-"}
+                            </td>
+                          </tr>
+                        ))}
                     </tbody>
                   </table>
                 </div>
+
                 {/* mobile view */}
                 <hr className="md:hidden" />
-                {customers && (
+                {paginateCustomer && (
                   <h2 className="text-sm md:hidden mt-5 text-right">
                     <span className="font-bold">Total: </span>
-                    {customers.length}{" "}
+                    {paginateCustomer.length}{" "}
                     {theme.language === "Bahasa"
                       ? "Pelanggan"
-                      : customers.length > 1
+                      : paginateCustomer.length > 1
                       ? "Customers"
                       : "Customer"}
                   </h2>
                 )}
                 <br className="md:hidden" />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:hidden">
-                  {paginateCustomer.map((customer) => (
-                    <div
-                      className={`${
-                        theme.dark ? "!bg-[#99AEBA]" : "bg-white"
-                      } text-gray-700 space-y-3 p-4 pb-6 rounded-lg shadow`}
-                      key={customer._id}
-                    >
-                      <div className="text-sm font-medium break-words">
-                        <b>
-                          {theme.language === "Bahasa"
-                            ? "Nomor Pelanggan: "
-                            : "Customer No: "}
-                        </b>
-                        <br />
-                        {customer._id}
-                      </div>
-                      <div className="text-sm font-medium">
-                        <b>
-                          {theme.language === "Bahasa" ? "Nama: " : "Name: "}
-                        </b>
-                        {customer.name}
-                      </div>
-                      <hr />
-                      <div className="text-sm font-medium">
-                        <b>
-                          {theme.language === "Bahasa"
-                            ? "Nomor Tlp: "
-                            : "Phone No: "}
-                        </b>
-                        {customer.phone_no}
-                      </div>
-                      <div className="text-sm font-medium">
-                        <b>Email: </b>
-                        <span className="text-sm font-medium">
-                          {customer.email}
-                        </span>
-                      </div>
-                      <div className="text-sm font-medium">
-                        <b>
-                          {theme.language === "Bahasa"
-                            ? "Alamat: "
-                            : "Address: "}
-                        </b>
-                        {customer.address}
-                      </div>
-                      <div className="text-sm font-medium">
-                        <b>
-                          {theme.language === "Bahasa"
-                            ? "Keterangan: "
-                            : "Remarks: "}
-                        </b>
-                        {customer.remarks ? customer.remarks : "-"}
-                      </div>
+                  {paginateCustomer &&
+                    paginateCustomer.map((customer) => (
+                      <div
+                        className={`${
+                          theme.dark ? "!bg-[#99AEBA]" : "bg-white"
+                        } text-gray-700 space-y-3 p-4 pb-6 rounded-lg shadow`}
+                        key={customer._id}
+                      >
+                        <div className="text-sm font-medium break-words">
+                          <b>
+                            {theme.language === "Bahasa"
+                              ? "Nomor Pelanggan: "
+                              : "Customer No: "}
+                          </b>
+                          <br />
+                          {customer._id}
+                        </div>
+                        <div className="text-sm font-medium">
+                          <b>
+                            {theme.language === "Bahasa" ? "Nama: " : "Name: "}
+                          </b>
+                          {customer.name}
+                        </div>
+                        <hr />
+                        <div className="text-sm font-medium">
+                          <b>
+                            {theme.language === "Bahasa"
+                              ? "Nomor Tlp: "
+                              : "Phone No: "}
+                          </b>
+                          {customer.phone_no}
+                        </div>
+                        <div className="text-sm font-medium">
+                          <b>Email: </b>
+                          <span className="text-sm font-medium">
+                            {customer.email}
+                          </span>
+                        </div>
+                        <div className="text-sm font-medium">
+                          <b>
+                            {theme.language === "Bahasa"
+                              ? "Alamat: "
+                              : "Address: "}
+                          </b>
+                          {customer.address}
+                        </div>
+                        <div className="text-sm font-medium">
+                          <b>
+                            {theme.language === "Bahasa"
+                              ? "Keterangan: "
+                              : "Remarks: "}
+                          </b>
+                          {customer.remarks ? customer.remarks : "-"}
+                        </div>
 
-                      <div className="text-center pt-5">
-                        <Link
-                          className="py-2 px-5 text-xs font-medium uppercase tracking-wider rounded-md bg-tertiary text-white"
-                          href={`/customers/${customer._id}`}
-                        >
-                          {theme.language === "Bahasa"
-                            ? "Lihat Rincian"
-                            : "View Details"}
-                        </Link>
+                        <div className="text-center pt-5">
+                          <Link
+                            className="py-2 px-5 text-xs font-medium uppercase tracking-wider rounded-md bg-tertiary text-white"
+                            href={`/customers/${customer._id}`}
+                          >
+                            {theme.language === "Bahasa"
+                              ? "Lihat Rincian"
+                              : "View Details"}
+                          </Link>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
                 </div>
+
                 <Pagination
                   items={customers.length}
                   currentPage={currentPage}
