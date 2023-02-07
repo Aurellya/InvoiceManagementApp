@@ -3,7 +3,9 @@ import Customers from "../../../model/CustomerSchema";
 import Groups from "../../../model/GroupSchema";
 
 export default async function handler(req, res) {
-  connectMongo().catch((error) => res.json({ error: "Connection Failed...!" }));
+  await connectMongo().catch((error) =>
+    res.json({ error: "Connection Failed...!" })
+  );
 
   const groupId = req.query.groupId;
 
@@ -11,10 +13,11 @@ export default async function handler(req, res) {
     // get customer data based on user's group code
     case "GET":
       try {
-        const group = await Groups.find({
+        const group = await Groups.findOne({
           group_code: groupId,
         });
-        const custsId = await group[0].customers;
+        const custsId = await group.customers;
+
         const data = await Customers.find({ _id: { $in: custsId } })
           .collation({ locale: "en" })
           .sort([["name", 1]]);
@@ -26,6 +29,7 @@ export default async function handler(req, res) {
       }
       break;
 
+    // add new customer info + add to group
     case "POST":
       try {
         const userInput = JSON.parse(req.body);
@@ -41,11 +45,12 @@ export default async function handler(req, res) {
         newCustomer.save();
 
         // update groups docs
-        const group = await Groups.find({
+        const group = await Groups.findOne({
           group_code: groupId,
         });
-        const groupInfo = await group[0];
-        if (groupInfo.customers != null) {
+        const groupInfo = await group;
+
+        if (groupInfo.customers) {
           groupInfo.customers.push(newCustomer);
         } else {
           groupInfo.customers = [newCustomer];
@@ -62,7 +67,6 @@ export default async function handler(req, res) {
       }
 
     default:
-      res.status(500).json({ message: "HTTP method not valid" });
-      break;
+      return res.status(500).json({ message: "HTTP method not valid" });
   }
 }

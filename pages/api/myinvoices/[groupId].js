@@ -3,7 +3,9 @@ import Invoices from "../../../model/InvoiceSchema";
 import Groups from "../../../model/GroupSchema";
 
 export default async function handler(req, res) {
-  connectMongo().catch((error) => res.json({ error: "Connection Failed...!" }));
+  await connectMongo().catch((error) =>
+    res.json({ error: "Connection Failed...!" })
+  );
 
   const groupId = req.query.groupId;
 
@@ -11,19 +13,10 @@ export default async function handler(req, res) {
     // get invoice data based on user's group code
     case "GET":
       try {
-        const group = await Groups.find({
+        const group = await Groups.findOne({
           group_code: groupId,
         });
-
-        let invoicesId;
-
-        if (group.length != 0) {
-          invoicesId = await group[0].invoices;
-        }
-
-        if (invoicesId == null) {
-          invoicesId = [];
-        }
+        const invoicesId = await group.invoices;
 
         const data = await Invoices.find({ _id: { $in: invoicesId } }).sort([
           ["date", -1],
@@ -36,6 +29,7 @@ export default async function handler(req, res) {
           .json({ message: "Failed to retrieve the Invoice: " + error });
       }
 
+    // add new invoice info + add to group
     case "POST":
       try {
         const userInput = JSON.parse(req.body);
@@ -53,11 +47,12 @@ export default async function handler(req, res) {
         newInvoice.save();
 
         // update groups docs
-        const group = await Groups.find({
+        const group = await Groups.findOne({
           group_code: groupId,
         });
-        const groupInfo = await group[0];
-        if (groupInfo.invoices != null) {
+        const groupInfo = await group;
+
+        if (groupInfo.invoices) {
           groupInfo.invoices.push(newInvoice);
         } else {
           groupInfo.invoices = [newInvoice];
@@ -75,6 +70,5 @@ export default async function handler(req, res) {
 
     default:
       return res.status(500).json({ message: "HTTP method not valid" });
-      break;
   }
 }

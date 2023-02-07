@@ -2,14 +2,13 @@ import React, { useState, useEffect, useContext } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { getSession, useSession, signOut } from "next-auth/react";
+import ReactLoading from "react-loading";
 
 import Sidebar from "../components/Sidebar";
 import { ThemeContext } from "../context/ThemeContext";
 
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { TiUserOutline } from "react-icons/ti";
-
-import ReactLoading from "react-loading";
 
 export default () => {
   const { data: session } = useSession();
@@ -40,7 +39,7 @@ export default () => {
 
   const getStaff = async () => {
     const res = await fetch(
-      `http://localhost:3000/api/members/${session.group_code}`
+      `http://localhost:3000/api/staffs/${session.group_code}`
     );
     const staffObj = await res.json();
     const staffData = await staffObj.data;
@@ -80,7 +79,7 @@ export default () => {
   };
 
   const deleteAcc = () => {
-    // Send data to the backend via POST: delete account
+    // Delete account
     fetch(`http://localhost:3000/api/profile/${session._id}`, {
       method: "DELETE",
     }).then((response) => {
@@ -121,7 +120,7 @@ export default () => {
   };
 
   // function to delete an account
-  const deleteAccount = async (e) => {
+  const deleteAccountModal = async (e) => {
     e.preventDefault();
     document.getElementById("modal").style.display = "none";
 
@@ -148,7 +147,7 @@ export default () => {
       </Head>
 
       <section className="flex">
-        <Sidebar handleSignOut={handleSignOut} />
+        <Sidebar handleSignOut={handleSignOut} role={session.role} />
 
         <main className="container py-12 mx-14">
           {/* header section */}
@@ -199,7 +198,7 @@ export default () => {
                 </button>
                 <button
                   className="bg-tertiary px-7 py-2 ml-4 rounded-md text-md text-white font-semibold"
-                  onClick={deleteAccount}
+                  onClick={deleteAccountModal}
                 >
                   {theme.language === "Bahasa" ? "Ya" : "Yes"}
                 </button>
@@ -282,6 +281,7 @@ export default () => {
               </button>
             </div>
           )}
+
           {/* content */}
           <div
             className={`table-div-custom my-4 md:my-0 p-6 block mb-4 md:mb-0 ${

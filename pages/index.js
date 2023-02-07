@@ -2,17 +2,17 @@ import React, { useState, useEffect, useContext } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { getSession, useSession, signOut } from "next-auth/react";
+import ReactLoading from "react-loading";
+
 import Sidebar from "../components/Sidebar";
 import { ThemeContext } from "../context/ThemeContext";
 
 import { GiTakeMyMoney } from "react-icons/gi";
 import { MdOutlinePeopleAlt, MdMoneyOff } from "react-icons/md";
-import { BsBoxSeam, BsPlusLg } from "react-icons/bs";
+import { BsBoxSeam } from "react-icons/bs";
 import { FaFileInvoiceDollar } from "react-icons/fa";
 import { GoGraph } from "react-icons/go";
 import { VscSignOut } from "react-icons/vsc";
-
-import ReactLoading from "react-loading";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -63,7 +63,7 @@ function User({ session, handleSignOut }) {
   // theme
   const theme = useContext(ThemeContext);
 
-  // fetch data
+  // initialize variables
   const [summary, setSummary] = useState();
   const [totalPaidInvoices, setTotalPaidInvoices] = useState();
   const [totalUnpaidInvoices, setTotalUnpaidInvoices] = useState();
@@ -73,10 +73,9 @@ function User({ session, handleSignOut }) {
   const [monthlyRevenue, setMonthlyRevenue] = useState();
   const [avgMonthlyRevenue, setAvgMonthlyRevenue] = useState();
 
-  const [invoices, setInvoices] = useState();
-
   const [loading, setLoading] = useState(false);
 
+  // fetch username
   const [username, setUsername] = useState();
   const getUsername = async () => {
     const res = await fetch(`http://localhost:3000/api/profile/${session._id}`);
@@ -85,17 +84,20 @@ function User({ session, handleSignOut }) {
     setUsername(profileData.username);
   };
 
+  // fetch last 6 invoices
+  const [invoices, setInvoices] = useState();
   const getInvoices = async () => {
     const res = await fetch(
       `http://localhost:3000/api/myinvoices/${session.group_code}`
     );
     const invoicesObj = await res.json();
-    const invoices = await invoicesObj.data;
-    if (invoices) {
-      setInvoices(invoices.slice(0, 6));
+    const invoicesData = await invoicesObj.data;
+    if (invoicesData) {
+      setInvoices(invoicesData.slice(0, 6));
     }
   };
 
+  // fetch summary
   const getSummary = async () => {
     const res = await fetch(
       `http://localhost:3000/api/summary/${session.group_code}`
@@ -168,7 +170,7 @@ function User({ session, handleSignOut }) {
       </Head>
 
       <section className="flex">
-        <Sidebar handleSignOut={handleSignOut} />
+        <Sidebar handleSignOut={handleSignOut} role={session.role} />
 
         <main className="container py-12 mx-10 md:mx-14">
           {/* header section */}
@@ -755,15 +757,15 @@ function UnapprovedUser({ session, handleSignOut }) {
   // theme
   const theme = useContext(ThemeContext);
 
-  // if user is waiting for approval: get company code that they are applying for
   const [cc, setCC] = useState();
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
+  // if user is waiting for approval: get company info that they are applying for
   const getCC = async () => {
     setLoading(true);
     const res = await fetch(
-      `http://localhost:3000/api/approvalGC/${session._id}`
+      `http://localhost:3000/api/applicant/${session._id}`
     );
     const ccObj = await res.json();
     const ccData = ccObj.data;
@@ -786,31 +788,33 @@ function UnapprovedUser({ session, handleSignOut }) {
     });
   };
 
-  // function to display delete confirmation dialog
+  // function to display 'delete confirmation' dialog
   function showModalDeleteConfirmation() {
-    document.getElementById("modal").style.display = "block";
+    document.getElementById("modalDeleteConfirmation").style.display = "block";
   }
 
+  // function to display 'make a request' dialog
   function showModalReqCC() {
-    document.getElementById("modal2").style.display = "block";
+    document.getElementById("modalNewReq").style.display = "block";
   }
 
+  // function to cancel 'delete account'
   const cancelDeleteAccount = (e) => {
     e.preventDefault();
-    document.getElementById("modal").style.display = "none";
+    document.getElementById("modalDeleteConfirmation").style.display = "none";
   };
 
+  // function to cancel 'make a request'
   const cancelCCReq = (e) => {
     e.preventDefault();
-    document.getElementById("modal2").style.display = "none";
+    document.getElementById("modalNewReq").style.display = "none";
   };
 
   // function to delete an account
   const deleteAccount = (e) => {
     e.preventDefault();
-    document.getElementById("modal").style.display = "none";
+    document.getElementById("modalDeleteConfirmation").style.display = "none";
 
-    // Send data to the backend via POST: delete account
     fetch(`http://localhost:3000/api/profile/${session._id}`, {
       method: "DELETE",
     }).then((response) => {
@@ -822,12 +826,12 @@ function UnapprovedUser({ session, handleSignOut }) {
     });
   };
 
-  // function to make req
+  // function to make request
   const reqCC = async (e) => {
     e.preventDefault();
-    document.getElementById("modal2").style.display = "none";
+    document.getElementById("modalNewReq").style.display = "none";
 
-    if (!data.code) {
+    if (!data || !data.code) {
       setErrorMsg("Code cannot be empty!");
       return false;
     }
@@ -842,22 +846,20 @@ function UnapprovedUser({ session, handleSignOut }) {
       obj = await res.json();
     }
 
-    // if company code is valid ot if user do not enter company code
+    // if company code is valid or if user do not enter company code
     if (obj && obj.result) {
       var jsonData = {
         group_code: data.code,
         applicantId: session._id,
       };
 
-      // Send data to the backend via PUT
       fetch(`http://localhost:3000/api/approval/${data.code}`, {
         method: "POST",
         mode: "cors",
         body: JSON.stringify(jsonData),
       }).then((response) => {
         if (response.status === 200) {
-          // window.location.href = `/`;
-          document.getElementById("modal3").style.display = "block";
+          document.getElementById("modalSucessReq").style.display = "block";
         } else {
           setErrorMsg("Failed to Make Request! Try Again!");
         }
@@ -894,8 +896,50 @@ function UnapprovedUser({ session, handleSignOut }) {
             </div>
           </div>
 
+          {/* error msg */}
+          {errorMsg != "" && (
+            <div
+              className="flex items-center bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative my-4 md:mt-8"
+              role="alert"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                dataprefix="fas"
+                icon="times-circle"
+                className="w-4 h-4 mr-2 fill-current"
+                role="img"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+              >
+                <path
+                  fill="currentColor"
+                  d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z"
+                ></path>
+              </svg>
+              {errorMsg}
+
+              <button
+                className="absolute top-0 bottom-0 right-0 px-4 py-3"
+                onClick={() => setErrorMsg("")}
+              >
+                <svg
+                  className="fill-current h-6 w-6 text-red-500"
+                  role="button"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <title>
+                    {theme.language === "Bahasa" ? "Tutup" : "Close"}
+                  </title>
+                  <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
+                </svg>
+              </button>
+            </div>
+          )}
+
           {/* modal del acc */}
-          <div className="hidden" id="modal">
+          <div className="hidden" id="modalDeleteConfirmation">
             <div className="bg-slate-800 bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0">
               <div className="bg-white px-10 py-8 rounded-md text-center">
                 <h1 className="text-xl mb-6 font-bold">
@@ -920,8 +964,8 @@ function UnapprovedUser({ session, handleSignOut }) {
           </div>
 
           {/* modal new req */}
-          <div className="hidden" id="modal2">
-            <div className="bg-slate-800 bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0">
+          <div className="hidden" id="modalNewReq">
+            <div className="bg-slate-800 bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0 z-99">
               <div className="bg-white px-10 py-8 rounded-md text-center">
                 <h1 className="text-xl mb-6 font-bold">
                   {theme.language === "Bahasa"
@@ -961,12 +1005,12 @@ function UnapprovedUser({ session, handleSignOut }) {
           </div>
 
           {/* modal success req */}
-          <div className="hidden" id="modal3">
+          <div className="hidden" id="modalSucessReq">
             <div className="bg-slate-800 bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0">
               <div className="bg-white px-10 py-8 rounded-md text-center">
                 <h1 className="text-xl mb-6 font-bold">
                   {theme.language === "Bahasa"
-                    ? "Oermintaan Telah Berhasil dibuat. Masuk Ulang!"
+                    ? "Permintaan Telah Berhasil dibuat. Masuk Ulang!"
                     : "Request is Sucessfully made. Sign In Again!"}
                 </h1>
 
@@ -982,50 +1026,10 @@ function UnapprovedUser({ session, handleSignOut }) {
             </div>
           </div>
 
-          {/* error msg */}
-          {errorMsg != "" && (
-            <div
-              className="flex items-center bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative my-4 md:my:0"
-              role="alert"
-            >
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                dataprefix="fas"
-                icon="times-circle"
-                className="w-4 h-4 mr-2 fill-current"
-                role="img"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
-              >
-                <path
-                  fill="currentColor"
-                  d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z"
-                ></path>
-              </svg>
-              {errorMsg}
-
-              <button
-                className="absolute top-0 bottom-0 right-0 px-4 py-3"
-                onClick={() => setErrorMsg("")}
-              >
-                <svg
-                  className="fill-current h-6 w-6 text-red-500"
-                  role="button"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                >
-                  <title>
-                    {theme.language === "Bahasa" ? "Tutup" : "Close"}
-                  </title>
-                  <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
-                </svg>
-              </button>
-            </div>
-          )}
-
           <div
-            className={`table-div-custom p-6 my-4 md:my-12 md:mb-10 lg:mb-12 rounded-md ${
+            className={`table-div-custom p-6 my-4  ${
+              errorMsg ? "md:my-8" : "md:my-12 md:mb-10"
+            } lg:mb-12 rounded-md ${
               theme.dark ? "text-white !bg-dm_secondary" : ""
             }`}
           >
@@ -1046,7 +1050,7 @@ function UnapprovedUser({ session, handleSignOut }) {
             )}
 
             {!loading &&
-              (!cc || cc.length == 0 ? (
+              (!cc ? (
                 <div>
                   <h1 className="text-xl">
                     Your request or permission for company code has been
@@ -1077,11 +1081,16 @@ function UnapprovedUser({ session, handleSignOut }) {
                   <div>
                     <p className="text-xl mb-2">Request Info</p>
                     <hr />
-                    <p className="mt-4">Company Code: {cc && cc.group_code}</p>
+                    <p className="mt-4">
+                      Company Code: {cc && cc.groupId && cc.groupId.group_code}
+                    </p>
                   </div>
 
                   <div className="mt-20">
-                    <button className="w-fit group flex items-center text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-[#F44645] text-white hover:opacity-80 transition duration-700 rounded-md">
+                    <button
+                      onClick={showModalDeleteConfirmation}
+                      className="w-fit group flex items-center text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-[#F44645] text-white hover:opacity-80 transition duration-700 rounded-md"
+                    >
                       Delete Account
                     </button>
                   </div>

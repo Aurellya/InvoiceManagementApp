@@ -20,10 +20,13 @@ function generateCode() {
 }
 
 export default async function handler(req, res) {
-  connectMongo().catch((error) => res.json({ error: "Connection Failed...!" }));
+  await connectMongo().catch((error) =>
+    res.json({ error: "Connection Failed...!" })
+  );
 
-  // only post method is accepted
+  // process registration
   if (req.method === "POST") {
+    // if user submit incomplete data
     if (!req.body) {
       return res.status(404).json({
         error: "Don't have form data...!",
@@ -42,68 +45,60 @@ export default async function handler(req, res) {
       });
     }
 
-    let role = "";
-    let cc = "";
+    let role = null,
+      cc = null;
 
-    // A. if register as admin / no company code
+    // A. if no company code => register as admin => create new groups
     if (companycode == "") {
       // generate random code
       let result = generateCode();
 
-      // todo: check if code is already exists in db
+      // check if code is already exists in db
       const checkExistingCode = await Groups.findOne({ group_code: result });
-
       while (checkExistingCode) {
         result = generateCode();
       }
 
-      cc = result;
+      // admin as a role and a new generated code
       role = "admin";
 
-      // create new group docs
+      // A1. create new group docs
       const newGroup = new Groups({
-        group_code: cc,
-        members: null,
+        group_code: result,
         invoices: null,
         customers: null,
         priceLists: null,
       });
       newGroup.save();
+
+      cc = newGroup;
     }
 
-    // 1. add to users docs
+    // A2-B1. add to users docs
     const newUser = new Users({
       username,
       email,
       password: await hash(password, 12),
-      group_code: cc,
+      groupId: cc,
       role,
     });
     newUser.save();
 
-    // B. if register as staff / user enter company code
+    // B. if got company code => register as staff => create new approvals (need to wait for admin approvals)
     if (companycode != "") {
-      // add to approval docs
-      const newApproval = new Approvals({
-        applicantId: newUser,
+      // find the particular group docs from the group code
+      const group = await Groups.findOne({
         group_code: companycode,
       });
-      newApproval.save();
-    }
 
-    // A. if register as admin / no company code
-    // 2. add users to groups docs
-    if (companycode == "") {
-      const group = await Groups.find({
-        group_code: cc,
-      });
-      const groupInfo = await group[0];
-      if (groupInfo.members != null) {
-        groupInfo.members.push(newUser);
-      } else {
-        groupInfo.members = [newUser];
+      if (group) {
+        // B2. add to approval docs
+        const newApproval = new Approvals({
+          applicantId: newUser,
+          groupId: group,
+        });
+        newApproval.save();
       }
-      groupInfo.save();
     }
 
     return res.status(201).json({ status: true });

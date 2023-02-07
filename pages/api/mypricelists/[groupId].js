@@ -3,7 +3,9 @@ import PriceLists from "../../../model/PriceListSchema";
 import Groups from "../../../model/GroupSchema";
 
 export default async function handler(req, res) {
-  connectMongo().catch((error) => res.json({ error: "Connection Failed...!" }));
+  await connectMongo().catch((error) =>
+    res.json({ error: "Connection Failed...!" })
+  );
 
   const groupId = req.query.groupId;
 
@@ -11,21 +13,22 @@ export default async function handler(req, res) {
     // get pricelist data based on user's group code
     case "GET":
       try {
-        const group = await Groups.find({
+        const group = await Groups.findOne({
           group_code: groupId,
         });
-        const itemsId = await group[0].priceLists;
+        const itemsId = await group.priceLists;
+
         const data = await PriceLists.find({ _id: { $in: itemsId } })
           .collation({ locale: "en" })
           .sort([["product_name", 1]]);
-        res.status(200).json({ data: data });
+        return res.status(200).json({ data: data });
       } catch (error) {
         return res
           .status(400)
           .json({ message: "Failed to retrieve the PriceList: " + error });
       }
-      break;
 
+    // add new item info + add to group
     case "POST":
       try {
         const userInput = JSON.parse(req.body);
@@ -41,11 +44,12 @@ export default async function handler(req, res) {
         new_priceList.save();
 
         // update groups docs
-        const group = await Groups.find({
+        const group = await Groups.findOne({
           group_code: groupId,
         });
-        const groupInfo = await group[0];
-        if (groupInfo.priceLists != null) {
+        const groupInfo = await group;
+
+        if (groupInfo.priceLists) {
           groupInfo.priceLists.push(new_priceList);
         } else {
           groupInfo.priceLists = [new_priceList];
@@ -62,7 +66,6 @@ export default async function handler(req, res) {
       }
 
     default:
-      res.status(500).json({ message: "HTTP method not valid" });
-      break;
+      return res.status(500).json({ message: "HTTP method not valid" });
   }
 }

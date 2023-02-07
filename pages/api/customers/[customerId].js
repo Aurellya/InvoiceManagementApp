@@ -2,7 +2,9 @@ import connectMongo from "../../../database/conn";
 import Customers from "../../../model/CustomerSchema";
 
 export default async function handler(req, res) {
-  connectMongo().catch((error) => res.json({ error: "Connection Failed...!" }));
+  await connectMongo().catch((error) =>
+    res.json({ error: "Connection Failed...!" })
+  );
 
   const customerId = req.query.customerId;
 
@@ -10,13 +12,12 @@ export default async function handler(req, res) {
     case "GET":
       try {
         const customer = await Customers.findById(customerId);
-        res.status(200).json({ data: customer });
+        return res.status(200).json({ data: customer });
       } catch (error) {
         return res
           .status(400)
           .json({ message: "Failed to retrieve the Customer: " + error });
       }
-      break;
 
     case "PUT":
       try {
@@ -29,42 +30,28 @@ export default async function handler(req, res) {
           remarks: userInput.remarks,
         };
 
-        Customers.findByIdAndUpdate(
+        const docs = await Customers.findByIdAndUpdate(
           customerId,
-          updated_customer,
-          function (err, docs) {
-            if (err) {
-              console.log(err);
-            } else {
-              res.status(200).json({ data: docs });
-            }
-          }
+          updated_customer
         );
+        return res.status(200).json({ data: docs });
       } catch (error) {
         return res
           .status(400)
           .json({ message: "Failed to update the Customer: " + error });
       }
-      break;
 
     case "DELETE":
       try {
-        Customers.findByIdAndDelete(customerId, function (err, docs) {
-          if (err) {
-            console.log(err);
-          } else {
-            return res.status(200).json({ data: docs });
-          }
-        });
+        const docs = await Customers.findByIdAndDelete(customerId);
+        return res.status(200).json({ data: docs });
       } catch (error) {
         return res
           .status(400)
           .json({ message: "Failed to delete the Customer: " + error });
       }
-      break;
 
     default:
-      res.status(500).json({ message: "HTTP method is not valid" });
-      break;
+      return res.status(500).json({ message: "HTTP method is not valid" });
   }
 }

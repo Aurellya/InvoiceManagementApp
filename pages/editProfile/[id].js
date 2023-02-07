@@ -1,16 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { getSession, useSession, signOut } from "next-auth/react";
+import ReactLoading from "react-loading";
 
 import { ThemeContext } from "../../context/ThemeContext";
 import Sidebar from "../../components/Sidebar";
 
 import { IoArrowBackOutline } from "react-icons/io5";
 import { FaUserEdit } from "react-icons/fa";
-
-import ReactLoading from "react-loading";
 
 export default function editProfile() {
   // auth
@@ -27,6 +25,7 @@ export default function editProfile() {
   const [profile, setProfile] = useState();
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [data, setData] = useState();
 
   const getProfile = async () => {
     setLoading(true);
@@ -36,8 +35,6 @@ export default function editProfile() {
     setProfile(profileData);
     setLoading(false);
   };
-
-  const [data, setData] = useState();
 
   useEffect(() => {
     getProfile();
@@ -99,7 +96,7 @@ export default function editProfile() {
       </Head>
 
       <section className="flex w-full">
-        <Sidebar handleSignOut={handleSignOut} />
+        <Sidebar handleSignOut={handleSignOut} role={session.role} />
 
         <main className="container py-12 mx-10 md:mx-14">
           {/* header section */}

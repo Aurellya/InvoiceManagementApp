@@ -1,16 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Head from "next/head";
-import Layout from "../layout/layout";
-import styles from "../styles/Form.module.css";
-import Image from "next/image";
-import { HiAtSymbol, HiFingerPrint } from "react-icons/hi";
 import Link from "next/link";
-import { signIn, signOut } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useFormik } from "formik";
-import login_validate from "../lib/validate";
 import { useRouter } from "next/router";
 
+import Layout from "../layout/layout";
+import { ThemeContext } from "../context/ThemeContext";
+import login_validate from "../lib/validate";
+import styles from "../styles/Form.module.css";
+
+import { HiAtSymbol, HiFingerPrint } from "react-icons/hi";
+
 export default function Login() {
+  // theme
+  const theme = useContext(ThemeContext);
+
+  // form
   const [show, setShow] = useState(false);
   const router = useRouter();
 
@@ -23,7 +29,12 @@ export default function Login() {
     onSubmit,
   });
 
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+
   async function onSubmit(values) {
+    setLoading(true);
+
     const status = await signIn("credentials", {
       redirect: false,
       email: values.email,
@@ -31,13 +42,18 @@ export default function Login() {
       callbackUrl: "/",
     });
 
-    if (status.ok) router.push(status.url);
+    if (status.ok && !status.error) {
+      router.push(status.url);
+    } else {
+      setErrorMsg(status.error);
+      setLoading(false);
+    }
   }
 
   // Google Handler function
-  async function handleGoogleSignin() {
-    signIn("google", { callbackUrl: "http://localhost:3000" });
-  }
+  // async function handleGoogleSignin() {
+  //   signIn("google", { callbackUrl: "http://localhost:3000" });
+  // }
 
   return (
     <Layout>
@@ -46,18 +62,62 @@ export default function Login() {
       </Head>
 
       <section className="w-3/4 mx-auto flex flex-col gap-10">
-        <div className="title mb-4">
+        {/* header */}
+        <div className="title">
           <h1 className="text-gray-800 text-4xl font-bold py-4">Login</h1>
           <p className="w-3/4 mx-auto text-gray-400">
             Welcome to ASC App! Manage your invoice with Us.
           </p>
         </div>
 
+        {/* error msg */}
+        {errorMsg != "" && (
+          <div
+            className="flex items-center bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-[-20px]"
+            role="alert"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              dataprefix="fas"
+              dataicon="times-circle"
+              className="w-4 h-4 mr-2 fill-current"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512 512"
+            >
+              <path
+                fill="currentColor"
+                d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z"
+              ></path>
+            </svg>
+            <div className="px-2 text-left">{errorMsg}</div>
+
+            <button
+              className="absolute top-0 bottom-0 right-0 px-4 py-3"
+              onClick={() => setErrorMsg("")}
+            >
+              <svg
+                className="fill-current h-6 w-6 text-red-500"
+                role="button"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+              >
+                <title>{theme.language === "Bahasa" ? "Tutup" : "Close"}</title>
+                <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
+              </svg>
+            </button>
+          </div>
+        )}
+
         {/* form */}
         <form
-          className="flex flex-col gap-5 text-left"
+          className={`flex flex-col gap-5 text-left ${
+            errorMsg ? "mt-[-10px]" : "mt-4"
+          }`}
           onSubmit={formik.handleSubmit}
         >
+          {/* email */}
           <div>
             <div
               className={`${styles.input_group} ${
@@ -86,6 +146,7 @@ export default function Login() {
             </div>
           </div>
 
+          {/* password */}
           <div>
             <div
               className={`${styles.input_group} ${
@@ -120,7 +181,8 @@ export default function Login() {
           {/* login buttons */}
           <div className="input-button">
             <button type="submit" className={styles.button}>
-              Login
+              {!loading && "Login"}
+              {loading && <div>Loading . . .</div>}
             </button>
           </div>
 
@@ -137,6 +199,7 @@ export default function Login() {
           </div> */}
         </form>
 
+        {/* register button */}
         <p className="text-center text-gray-400 mt-10">
           don't have an account yet?{" "}
           <Link href={"/register"} className="text-primary hover:underline">

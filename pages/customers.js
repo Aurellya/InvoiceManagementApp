@@ -82,7 +82,7 @@ export default () => {
       </Head>
 
       <section className="flex">
-        <Sidebar handleSignOut={handleSignOut} />
+        <Sidebar handleSignOut={handleSignOut} role={session.role} />
 
         <main className="container py-12 mx-10 md:mx-14">
           {/* header section */}

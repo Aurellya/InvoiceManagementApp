@@ -5,30 +5,31 @@ import PriceLists from "../../../model/PriceListSchema";
 import Groups from "../../../model/GroupSchema";
 
 export default async function handler(req, res) {
-  connectMongo().catch((error) => {
+  await connectMongo().catch((error) => {
     return res.json({ error: "Connection Failed...!" });
   });
 
-  const groupId = req.query.groupId;
+  const groupCode = req.query.groupCode;
 
   switch (req.method) {
+    // get the summary of the data that belong to the group code
     case "GET":
       try {
-        // get all invoices belong to the group code
-        const group = await Groups.find({
-          group_code: groupId,
+        // find the group details
+        const group = await Groups.findOne({
+          group_code: groupCode,
         });
 
         let invoicesId, customersId, itemsId;
 
-        if (group.length != 0) {
-          invoicesId = await group[0].invoices;
-          customersId = await group[0].customers;
-          itemsId = await group[0].priceLists;
+        if (group) {
+          invoicesId = await group.invoices;
+          customersId = await group.customers;
+          itemsId = await group.priceLists;
         }
 
         // invoices
-        if (invoicesId == null) {
+        if (!invoicesId) {
           invoicesId = [];
         }
 
@@ -42,22 +43,24 @@ export default async function handler(req, res) {
         });
 
         // customers
-        if (customersId == null) {
+        if (!customersId) {
           customersId = [];
         }
+
         const totalCustomers = await Customers.find({
           _id: { $in: customersId },
         }).count();
 
         // items
-        if (itemsId == null) {
+        if (!itemsId) {
           itemsId = [];
         }
+
         const totalItems = await PriceLists.find({
           _id: { $in: itemsId },
         }).count();
 
-        // income current month
+        // total income this month
         const now = new Date();
         const year = now.getFullYear();
         const month = now.getMonth(); // month starts at 0
@@ -71,6 +74,7 @@ export default async function handler(req, res) {
               date: { $gte: start, $lt: end },
             },
           },
+          // grouping pipeline
           {
             $group: {
               _id: null,
@@ -81,7 +85,7 @@ export default async function handler(req, res) {
           },
         ]);
 
-        // average income monthly
+        // calculate average income each month
         const monthlyRevenue = await Invoices.aggregate([
           { $match: { _id: { $in: invoicesId } } },
           // grouping pipeline
@@ -99,13 +103,13 @@ export default async function handler(req, res) {
           { $sort: { _id: -1 } },
         ]);
 
+        // calculate average income monthly
         var totalMonthlyRev = 0;
         var totalMonth = 0;
         await monthlyRevenue.map((m) => {
           totalMonthlyRev += m.average;
           totalMonth += 1;
         });
-
         var avgMonthlyRevenue = Math.round(totalMonthlyRev / totalMonth);
 
         return res.status(200).json({
@@ -124,10 +128,8 @@ export default async function handler(req, res) {
           .status(400)
           .json({ message: "Failed to retrieve the Summary: " + error });
       }
-    // break;
 
     default:
       return res.status(500).json({ message: "HTTP method is not valid" });
-    // break;
   }
 }

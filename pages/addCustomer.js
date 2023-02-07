@@ -91,7 +91,7 @@ export default function addCustomer() {
       </Head>
 
       <section className="flex w-full">
-        <Sidebar handleSignOut={handleSignOut} />
+        <Sidebar handleSignOut={handleSignOut} role={session.role} />
 
         <main className="container py-12 mx-10 md:mx-14">
           {/* header section */}
@@ -122,7 +122,7 @@ export default function addCustomer() {
           {/* error msg */}
           {errorMsg != "" && (
             <div
-              className="flex items-center bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative my-4 md:my:0"
+              className="flex items-center bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative my-4 md:my-0"
               role="alert"
             >
               <svg

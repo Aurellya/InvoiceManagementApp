@@ -1,23 +1,26 @@
 import React, { useState, useEffect, useContext } from "react";
 import Head from "next/head";
-import Layout from "../layout/layout";
 import Link from "next/link";
+import { useFormik } from "formik";
+import { useRouter } from "next/router";
+
+import { ThemeContext } from "../context/ThemeContext";
+import { registerValidate } from "../lib/validate";
+import Layout from "../layout/layout";
 import styles from "../styles/Form.module.css";
+
 import {
   HiAtSymbol,
   HiFingerPrint,
   HiOutlineUser,
   HiOutlineQrcode,
 } from "react-icons/hi";
-import { useFormik } from "formik";
-import { registerValidate } from "../lib/validate";
-import { useRouter } from "next/router";
-import { ThemeContext } from "../context/ThemeContext";
 
 export default function Register() {
   // theme
   const theme = useContext(ThemeContext);
 
+  // form
   const [show, setShow] = useState({ password: false, cpassword: false });
   const router = useRouter();
 
@@ -57,7 +60,7 @@ export default function Register() {
       obj = await res.json();
     }
 
-    // if company code is valid ot if user do not enter company code
+    // if company code is valid or if user do not enter company code
     if ((obj && obj.result) || !values.companycode) {
       await fetch("http://localhost:3000/api/auth/signup", options)
         .then((res) => res.json())
@@ -74,13 +77,14 @@ export default function Register() {
   }
 
   useEffect(() => {
+    // generate modal text based on the regitration result
     if (data) {
       if (data.status) {
         setOk(true);
         showModal(
           theme.language === "Bahasa"
-            ? "Akun anda telah berhasil Terdaftar! \nMengarahkan anda ke Halaman Login ..."
-            : "Your account is created Successfully! \nRedirecting you to Login Page ...",
+            ? "Akun Anda Telah Berhasil Terdaftar! \nMengarahkan anda ke Halaman Login"
+            : "Your Account is Created Successfully! \nRedirecting you to Login Page",
           "Ok"
         );
       } else if (data.error) {
@@ -95,8 +99,8 @@ export default function Register() {
         setOk(false);
         showModal(
           theme.language === "Bahasa"
-            ? "Gagal! Akun and tidak berhasil dibuat!"
-            : "Error! Your account can not be created!",
+            ? "Gagal! Akun Anda Tidak Berhasil Dibuat!"
+            : "Error! Your Account Can Not be Created!",
           theme.language === "Bahasa" ? "Coba Lagi" : "Try Again"
         );
       }
@@ -144,6 +148,7 @@ export default function Register() {
           </div>
         </div>
 
+        {/* header */}
         <div className="title">
           <h1 className="text-gray-800 text-4xl font-bold py-4">Register</h1>
           <p className="w-3/4 mx-auto text-gray-400">
@@ -156,6 +161,7 @@ export default function Register() {
           className="flex flex-col gap-5 text-left"
           onSubmit={formik.handleSubmit}
         >
+          {/* username */}
           <div>
             <div
               className={`${styles.input_group} ${
@@ -184,6 +190,7 @@ export default function Register() {
             </div>
           </div>
 
+          {/* email */}
           <div>
             <div
               className={`${styles.input_group} ${
@@ -212,6 +219,7 @@ export default function Register() {
             </div>
           </div>
 
+          {/* password */}
           <div>
             <div
               className={`${styles.input_group} ${
@@ -243,6 +251,7 @@ export default function Register() {
             </div>
           </div>
 
+          {/* cpassword */}
           <div>
             <div
               className={`${styles.input_group} ${
@@ -274,6 +283,7 @@ export default function Register() {
             </div>
           </div>
 
+          {/* company code */}
           <div>
             <div
               className={`${styles.input_group} ${
@@ -306,7 +316,7 @@ export default function Register() {
             </div>
           </div>
 
-          {/* login buttons */}
+          {/* register button */}
           <div className="input-button">
             <button type="submit" className={styles.button}>
               {!loading && "Sign Up"}
@@ -315,6 +325,7 @@ export default function Register() {
           </div>
         </form>
 
+        {/* login button */}
         <p className="text-center text-gray-400 ">
           Have an account?{" "}
           <Link href={"/login"} className="text-primary">

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import Head from "next/head";
-import Link from "next/link";
 import { getSession, useSession, signOut } from "next-auth/react";
 import ReactLoading from "react-loading";
 
@@ -8,9 +7,6 @@ import Sidebar from "../components/Sidebar";
 import { ThemeContext } from "../context/ThemeContext";
 import Pagination from "../components/Pagination";
 import { paginate } from "../utils/paginate";
-
-import { AiFillEdit, AiFillDelete } from "react-icons/ai";
-import { MdAddToHomeScreen } from "react-icons/md";
 
 export default () => {
   const { data: session } = useSession();
@@ -22,7 +18,9 @@ export default () => {
   // theme
   const theme = useContext(ThemeContext);
 
-  // fetch data
+  const [errorMsg, setErrorMsg] = useState("");
+
+  // fetch data or users that need approval
   const [approvalItem, setApprovalItem] = useState();
   const [loading1, setLoading1] = useState(false);
 
@@ -37,13 +35,14 @@ export default () => {
     setLoading1(false);
   };
 
+  // fetch staff that belong to the group
   const [staff, setStaff] = useState();
   const [loading2, setLoading2] = useState(false);
 
   const getStaff = async () => {
     setLoading2(true);
     const res = await fetch(
-      `http://localhost:3000/api/members/${session.group_code}`
+      `http://localhost:3000/api/staffs/${session.group_code}`
     );
     const staffObj = await res.json();
     const staffData = staffObj.data;
@@ -51,6 +50,7 @@ export default () => {
     setLoading2(false);
   };
 
+  // fetch user info
   const [user, setUser] = useState();
 
   const getUser = async () => {
@@ -66,7 +66,7 @@ export default () => {
     getStaff();
   }, []);
 
-  // pagination
+  // pagination approval
   const pageSize = 10;
 
   const [currentPage1, setCurrentPage1] = useState(1);
@@ -86,7 +86,7 @@ export default () => {
   };
   const paginateStaff = paginate(staff, currentPage2, pageSize);
 
-  // function to process the approval request
+  // function to process the approval/rejection request
   const processReq = (e, status, staffId, approvalId) => {
     e.preventDefault();
 
@@ -104,8 +104,7 @@ export default () => {
       if (response.status === 200) {
         window.location.href = "/companyCode";
       } else {
-        console.log("Failed to Process Request! Try Again!");
-        // setErrorMsg("Failed to Kick Staff! Try Again!");
+        setErrorMsg("Failed to Process Request! Try Again!");
       }
     });
   };
@@ -118,7 +117,7 @@ export default () => {
       staffId: staffId,
     };
 
-    fetch(`http://localhost:3000/api/members/${session.group_code}`, {
+    fetch(`http://localhost:3000/api/staffs/${session.group_code}`, {
       method: "PUT",
       mode: "cors",
       body: JSON.stringify(jsonData),
@@ -126,8 +125,7 @@ export default () => {
       if (response.status === 200) {
         window.location.href = "/companyCode";
       } else {
-        console.log("Failed to Kick Staff! Try Again!");
-        // setErrorMsg("Failed to Kick Staff! Try Again!");
+        setErrorMsg("Failed to Kick Staff! Try Again!");
       }
     });
   };
@@ -141,11 +139,15 @@ export default () => {
       </Head>
 
       <section className="flex">
-        <Sidebar handleSignOut={handleSignOut} />
+        <Sidebar handleSignOut={handleSignOut} role={session.role} />
 
         <main className="container py-12 mx-14">
           {/* header section */}
-          <div className="flex md:items-center justify-between w-full md:mb-12">
+          <div
+            className={`flex md:items-center justify-between w-full ${
+              errorMsg ? "md:mb-8" : "md:mb-12"
+            }`}
+          >
             <div>
               <h3 className="text-3xl md:text-4xl font-bold">
                 {theme.language === "Bahasa"
@@ -154,6 +156,48 @@ export default () => {
               </h3>
             </div>
           </div>
+
+          {/* error msg */}
+          {errorMsg != "" && (
+            <div
+              className="flex items-center bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative my-4 md:mt-0 md:mb-8"
+              role="alert"
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                dataprefix="fas"
+                dataicon="times-circle"
+                className="w-4 h-4 mr-2 fill-current"
+                role="img"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+              >
+                <path
+                  fill="currentColor"
+                  d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z"
+                ></path>
+              </svg>
+              {errorMsg}
+
+              <button
+                className="absolute top-0 bottom-0 right-0 px-4 py-3"
+                onClick={() => setErrorMsg("")}
+              >
+                <svg
+                  className="fill-current h-6 w-6 text-red-500"
+                  role="button"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <title>
+                    {theme.language === "Bahasa" ? "Tutup" : "Close"}
+                  </title>
+                  <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
+                </svg>
+              </button>
+            </div>
+          )}
 
           {/* content */}
           <div
@@ -246,7 +290,7 @@ export default () => {
                         </div>
                       )}
 
-                    {!loading1 && approvalItem && approvalItem.length != 0 && (
+                    {!loading1 && approvalItem && approvalItem.length > 0 && (
                       <div>
                         {/* large screen view */}
                         <div className="overflow-auto shadow hidden md:block">
@@ -379,7 +423,7 @@ export default () => {
                       </div>
                     )}
 
-                    {!loading2 && (!staff || staff.length <= 1) && (
+                    {!loading2 && (!staff || staff.length == 0) && (
                       <div className="py-8">
                         <div className="mt-9 flex flex-col justify-center items-center">
                           <h3 className="text-xl mb-4 font-bold">
@@ -391,7 +435,7 @@ export default () => {
                       </div>
                     )}
 
-                    {!loading2 && staff && staff.length > 1 && (
+                    {!loading2 && staff && staff.length > 0 && (
                       <div>
                         {/* large screen view */}
                         <div className="overflow-auto shadow hidden md:block">

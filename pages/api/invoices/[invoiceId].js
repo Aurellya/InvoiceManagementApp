@@ -2,7 +2,9 @@ import connectMongo from "../../../database/conn";
 import Invoices from "../../../model/InvoiceSchema";
 
 export default async function handler(req, res) {
-  connectMongo().catch((error) => res.json({ error: "Connection Failed...!" }));
+  await connectMongo().catch((error) =>
+    res.json({ error: "Connection Failed...!" })
+  );
 
   const invoiceId = req.query.invoiceId;
 
@@ -10,13 +12,12 @@ export default async function handler(req, res) {
     case "GET":
       try {
         const invoice = await Invoices.findById(invoiceId);
-        res.status(200).json({ data: invoice });
+        return res.status(200).json({ data: invoice });
       } catch (error) {
         return res
           .status(400)
           .json({ message: "Failed to retrieve the Invoice: " + error });
       }
-      break;
 
     case "PUT":
       try {
@@ -31,44 +32,28 @@ export default async function handler(req, res) {
           notes: userInput.notes,
         };
 
-        Invoices.findByIdAndUpdate(
+        const docs = await Invoices.findByIdAndUpdate(
           invoiceId,
-          updated_invoice,
-          function (err, docs) {
-            if (err) {
-              console.log(err);
-            } else {
-              res.status(200).json({ data: docs });
-            }
-          }
+          updated_invoice
         );
+        return res.status(200).json({ data: docs });
       } catch (error) {
         return res
           .status(400)
           .json({ message: "Failed to update the Invoices: " + error });
       }
-      break;
 
     case "DELETE":
       try {
-        Invoices.findByIdAndDelete(invoiceId, function (err, docs) {
-          if (err) {
-            console.log(err);
-          } else {
-            res.status(200).json({ data: docs });
-          }
-        });
+        const docs = await Invoices.findByIdAndDelete(invoiceId);
+        return res.status(200).json({ data: docs });
       } catch (error) {
         return res
           .status(400)
           .json({ message: "Failed to delete the Invoice: " + error });
       }
-      break;
 
     default:
-      res
-        .status(500)
-        .json({ message: "HTTP method not valid only GET Accepted" });
-      break;
+      return res.status(500).json({ message: "HTTP method not valid" });
   }
 }

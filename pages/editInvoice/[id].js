@@ -370,7 +370,7 @@ export default function editInvoice() {
       </Head>
 
       <section className="flex w-full">
-        <Sidebar handleSignOut={handleSignOut} />
+        <Sidebar handleSignOut={handleSignOut} role={session.role} />
 
         <main className="container py-12 mx-10 md:mx-14">
           {/* header section */}

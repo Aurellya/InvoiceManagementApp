@@ -2,7 +2,9 @@ import connectMongo from "../../../database/conn";
 import Groups from "../../../model/GroupSchema";
 
 export default async function handler(req, res) {
-  connectMongo().catch((error) => res.json({ error: "Connection Failed...!" }));
+  await connectMongo().catch((error) =>
+    res.json({ error: "Connection Failed...!" })
+  );
 
   const groupId = req.query.groupId;
 
@@ -15,12 +17,10 @@ export default async function handler(req, res) {
           group_code: groupId,
         });
 
-        return res
-          .status(200)
-          .json({
-            result: group.length > 0,
-            message: "Successfully validate data!",
-          });
+        return res.status(200).json({
+          result: group.length > 0,
+          message: "Successfully validate data!",
+        });
       } catch (error) {
         return res
           .status(400)
@@ -28,7 +28,6 @@ export default async function handler(req, res) {
       }
 
     default:
-      res.status(500).json({ message: "HTTP method not valid" });
-      break;
+      return res.status(500).json({ message: "HTTP method not valid" });
   }
 }

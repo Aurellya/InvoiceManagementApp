@@ -1,4 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import Link from "next/link";
+
+import { ThemeContext } from "../context/ThemeContext";
+
 import { HiMenuAlt3 } from "react-icons/hi";
 import { MdOutlineDashboard } from "react-icons/md";
 import { RiSettings4Line, RiFileList3Line } from "react-icons/ri";
@@ -6,41 +10,57 @@ import { TbReportAnalytics } from "react-icons/tb";
 import { AiOutlineUser, AiOutlineQrcode } from "react-icons/ai";
 import { VscSignOut } from "react-icons/vsc";
 import { IoMdContacts } from "react-icons/io";
-import Link from "next/link";
-import { ThemeContext } from "../context/ThemeContext";
 
-export default function Sidebar({ handleSignOut }) {
-  const menus = [
+export default function Sidebar({ handleSignOut, role = "admin" }) {
+  //theme
+  const theme = useContext(ThemeContext);
+
+  const [menus, setMenus] = useState([
     { name: "Dashboard", link: "/", icon: MdOutlineDashboard },
     { name: "Invoices", link: "/invoices", icon: TbReportAnalytics },
     { name: "Customers", link: "/customers", icon: IoMdContacts },
     { name: "Price List", link: "/priceList", icon: RiFileList3Line },
-    {
-      name: "Company Code",
-      link: "/companyCode",
-      icon: AiOutlineQrcode,
-    },
     { name: "Profile", link: "/profile", icon: AiOutlineUser, margin: true },
     { name: "Settings", link: "/settings", icon: RiSettings4Line },
-  ];
+  ]);
 
-  const menus_b = [
+  const [menus_b, setMenus_b] = useState([
     { name: "Dasbor", link: "/", icon: MdOutlineDashboard },
     { name: "Nota", link: "/invoices", icon: TbReportAnalytics },
     { name: "Pelanggan", link: "/customers", icon: IoMdContacts },
     { name: "Daftar Harga", link: "/priceList", icon: RiFileList3Line },
-    {
-      name: "Kode Perusahaan",
-      link: "/companyCode",
-      icon: AiOutlineQrcode,
-    },
     { name: "Profil", link: "/profile", icon: AiOutlineUser, margin: true },
     { name: "Pengaturan", link: "/settings", icon: RiSettings4Line },
-  ];
+  ]);
+
+  useEffect(() => {
+    let first = !menus.find((m) => m.name === "Company Code");
+    let first_b = !menus_b.find((m) => m.name === "Kode Perusahaan");
+
+    if (role == "admin") {
+      if (first) {
+        let copy = menus.slice(0);
+        copy.splice(4, 0, {
+          name: "Company Code",
+          link: "/companyCode",
+          icon: AiOutlineQrcode,
+        });
+        setMenus(copy);
+      }
+
+      if (first_b) {
+        let copy_b = menus_b.slice(0);
+        copy_b.splice(4, 0, {
+          name: "Kode Perusahaan",
+          link: "/companyCode",
+          icon: AiOutlineQrcode,
+        });
+        setMenus_b(copy_b);
+      }
+    }
+  }, []);
 
   const [open, setOpen] = useState(false);
-
-  const theme = useContext(ThemeContext);
 
   return (
     <div

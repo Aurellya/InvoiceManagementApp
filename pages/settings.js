@@ -5,8 +5,9 @@ import { getSession, useSession, signOut } from "next-auth/react";
 
 import Sidebar from "../components/Sidebar";
 import { ThemeContext } from "../context/ThemeContext";
+// import LayoutIn from "../layout/layoutIn";
 
-import { AiFillDelete, AiOutlineSetting } from "react-icons/ai";
+import { AiOutlineSetting } from "react-icons/ai";
 
 export default () => {
   const { data: session } = useSession();
@@ -24,7 +25,7 @@ export default () => {
       </Head>
 
       <section className="flex">
-        <Sidebar handleSignOut={handleSignOut} />
+        <Sidebar handleSignOut={handleSignOut} role={session.role} />
 
         <main className="container py-12 mx-14">
           {/* header section */}
