@@ -1,21 +1,16 @@
-import React, { useState, useContext, useEffect } from "react";
-import Head from "next/head";
+import React, { useState, useContext } from "react";
 import Link from "next/link";
-import { getSession, useSession, signOut } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
+
+import { ThemeContext } from "../context/ThemeContext";
+import LayoutIn from "../layout/layoutIn";
 
 import { TbFileInvoice } from "react-icons/tb";
 import { IoArrowBackOutline } from "react-icons/io5";
 
-import { ThemeContext } from "../context/ThemeContext";
-import Sidebar from "../components/Sidebar";
-
 export default function addPriceList() {
   // auth
   const { data: session } = useSession();
-
-  function handleSignOut() {
-    signOut();
-  }
 
   // theme
   const theme = useContext(ThemeContext);
@@ -26,6 +21,7 @@ export default function addPriceList() {
     amount: 0,
     unit: "",
     price: "",
+    vip_price: "",
     remarks: "",
   });
   const [errorMsg, setErrorMsg] = useState("");
@@ -60,7 +56,7 @@ export default function addPriceList() {
     let value = e.target.value;
 
     // change format
-    if (name === "amount" || name === "price") {
+    if (name === "amount" || name === "price" || name === "vip_price") {
       value = localStringToNumber(value);
     }
 
@@ -79,6 +75,7 @@ export default function addPriceList() {
       amount: data.amount,
       unit: data.unit,
       price: data.price,
+      vip_price: data.vip_price,
       remarks: data.remarks,
     };
 
@@ -100,17 +97,14 @@ export default function addPriceList() {
 
   return (
     <>
-      <Head>
-        <title>
-          {theme.language === "Bahasa"
+      <LayoutIn
+        title={
+          theme.language === "Bahasa"
             ? "Formulir Tambah Barang"
-            : "Add Item Form"}
-        </title>
-      </Head>
-
-      <section className="flex w-full">
-        <Sidebar handleSignOut={handleSignOut} role={session.role} />
-
+            : "Add Item Form"
+        }
+        role={session.role}
+      >
         <main className="container py-12 mx-10 md:mx-14">
           {/* header section */}
           <div className="flex md:items-center justify-between mb-10 w-full md:mb-12">
@@ -348,6 +342,34 @@ export default function addPriceList() {
                     />
                   </div>
 
+                  {/* VIP price */}
+                  <div className="form-group mb-6">
+                    <label
+                      htmlFor="vip_price"
+                      className="form-label inline-block mb-2"
+                    >
+                      <b>
+                        {theme.language === "Bahasa"
+                          ? "Harga VIP:"
+                          : "VIP Price:"}
+                      </b>
+                    </label>
+                    <input
+                      autoComplete="off"
+                      type="price"
+                      className={`${
+                        theme.dark
+                          ? "!bg-dm_secondary text-neutral"
+                          : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
+                      } form-control block w-full px-3 py-1.5 font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
+                      name="vip_price"
+                      id="vip_price"
+                      onChange={handleChange}
+                      onFocus={(e) => onFocus(e)}
+                      onBlur={(e) => onBlur(e)}
+                    />
+                  </div>
+
                   {/* remarks */}
                   <div className="form-group mb-6">
                     <label
@@ -393,7 +415,7 @@ export default function addPriceList() {
             </div>
           </form>
         </main>
-      </section>
+      </LayoutIn>
     </>
   );
 }

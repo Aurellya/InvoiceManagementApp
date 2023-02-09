@@ -1,27 +1,21 @@
 import React, { useState, useContext, useEffect } from "react";
-import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import ReactLoading from "react-loading";
 
-import { getSession, useSession, signOut } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import { ThemeContext } from "../../context/ThemeContext";
-import Sidebar from "../../components/Sidebar";
 import Calculator from ".././calculator";
+import LayoutIn from "../../layout/layoutIn";
 
 import { AiFillMinusCircle } from "react-icons/ai";
 import { BsFillCalculatorFill } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa";
 import { IoArrowBackOutline } from "react-icons/io5";
 
-import ReactLoading from "react-loading";
-
 export default function editInvoice() {
   // auth
   const { data: session } = useSession();
-
-  function handleSignOut() {
-    signOut();
-  }
 
   // theme
   const theme = useContext(ThemeContext);
@@ -360,317 +354,295 @@ export default function editInvoice() {
   const [showCalc, setShowCalc] = useState(false);
 
   return (
-    <>
-      <Head>
-        <title>
-          {theme.language === "Bahasa"
-            ? "Formulir Edit Nota"
-            : "Edit Invoice Form"}
-        </title>
-      </Head>
-
-      <section className="flex w-full">
-        <Sidebar handleSignOut={handleSignOut} role={session.role} />
-
-        <main className="container py-12 mx-10 md:mx-14">
-          {/* header section */}
-          <div className="flex md:items-center justify-between flex-col md:flex-row gap-4 md:gap-0 w-full md:mb-12">
-            <div className="flex items-center gap-8">
-              <Link
-                className={`${
-                  theme.dark ? "bg-dm_secondary" : "bg-primary"
-                } group flex items-center text-sm font-bold gap-2 py-2 px-4 text-white hover:opacity-80 transition duration-700 rounded-md`}
-                href={`/invoices/${router.query.id}`}
-              >
-                <div>
-                  {React.createElement(IoArrowBackOutline, { size: "12" })}
-                </div>
-                <h2 className="whitespace-pre">
-                  {theme.language === "Bahasa" ? "Kembali" : "Back"}
-                </h2>
-              </Link>
-              <h3 className="text-3xl md:text-4xl font-bold">
-                {theme.language === "Bahasa"
-                  ? "Formulir Edit Nota"
-                  : "Edit Invoice Form"}
-              </h3>
-            </div>
-
-            <hr className="md:hidden" />
-
-            <div className="flex justify-end">
-              <button
-                // onClick={showCalculator}
-                onClick={() => setShowCalc(!showCalc)}
-                className="w-fit group flex items-center text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-tertiary text-white hover:opacity-80 transition duration-700 rounded-md"
-              >
-                <div>
-                  {React.createElement(BsFillCalculatorFill, { size: "12" })}
-                </div>
-                <h2 className="whitespace-pre">
-                  {theme.language === "Bahasa" ? "Kalkulator" : "Calculator"}
-                </h2>
-              </button>
-            </div>
+    <LayoutIn title="Settings" role={session.role}>
+      <main className="container py-12 mx-10 md:mx-14">
+        {/* header section */}
+        <div className="flex md:items-center justify-between flex-col md:flex-row gap-4 md:gap-0 w-full md:mb-12">
+          <div className="flex items-center gap-8">
+            <Link
+              className={`${
+                theme.dark ? "bg-dm_secondary" : "bg-primary"
+              } group flex items-center text-sm font-bold gap-2 py-2 px-4 text-white hover:opacity-80 transition duration-700 rounded-md`}
+              href={`/invoices/${router.query.id}`}
+            >
+              <div>
+                {React.createElement(IoArrowBackOutline, { size: "12" })}
+              </div>
+              <h2 className="whitespace-pre">
+                {theme.language === "Bahasa" ? "Kembali" : "Back"}
+              </h2>
+            </Link>
+            <h3 className="text-3xl md:text-4xl font-bold">
+              {theme.language === "Bahasa"
+                ? "Formulir Edit Nota"
+                : "Edit Invoice Form"}
+            </h3>
           </div>
 
-          {/* calculator */}
-          {showCalc && (
-            <div className="" id="calculator">
-              <div className="z-20 bg-slate-800 bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0">
-                <Calculator closeCalculator={() => setShowCalc(!showCalc)} />
-              </div>
-            </div>
-          )}
+          <hr className="md:hidden" />
 
-          {/* error msg */}
-          {errorMsg != "" && (
-            <div
-              className="flex items-center bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative my-4 md:my:0"
-              role="alert"
+          <div className="flex justify-end">
+            <button
+              // onClick={showCalculator}
+              onClick={() => setShowCalc(!showCalc)}
+              className="w-fit group flex items-center text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-tertiary text-white hover:opacity-80 transition duration-700 rounded-md"
+            >
+              <div>
+                {React.createElement(BsFillCalculatorFill, { size: "12" })}
+              </div>
+              <h2 className="whitespace-pre">
+                {theme.language === "Bahasa" ? "Kalkulator" : "Calculator"}
+              </h2>
+            </button>
+          </div>
+        </div>
+
+        {/* calculator */}
+        {showCalc && (
+          <div className="" id="calculator">
+            <div className="z-20 bg-slate-800 bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0">
+              <Calculator closeCalculator={() => setShowCalc(!showCalc)} />
+            </div>
+          </div>
+        )}
+
+        {/* error msg */}
+        {errorMsg != "" && (
+          <div
+            className="flex items-center bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative my-4 md:my:0"
+            role="alert"
+          >
+            <svg
+              ariaHidden="true"
+              focusable="false"
+              dataPrefix="fas"
+              dataIcon="times-circle"
+              className="w-4 h-4 mr-2 fill-current"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512 512"
+            >
+              <path
+                fill="currentColor"
+                d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z"
+              ></path>
+            </svg>
+            {errorMsg}
+
+            <button
+              class="absolute top-0 bottom-0 right-0 px-4 py-3"
+              onClick={() => setErrorMsg("")}
             >
               <svg
-                ariaHidden="true"
-                focusable="false"
-                dataPrefix="fas"
-                dataIcon="times-circle"
-                className="w-4 h-4 mr-2 fill-current"
-                role="img"
+                class="fill-current h-6 w-6 text-red-500"
+                role="button"
                 xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
+                viewBox="0 0 20 20"
               >
-                <path
-                  fill="currentColor"
-                  d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z"
-                ></path>
+                <title>{theme.language === "Bahasa" ? "Tutup" : "Close"}</title>
+                <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
               </svg>
-              {errorMsg}
+            </button>
+          </div>
+        )}
 
-              <button
-                class="absolute top-0 bottom-0 right-0 px-4 py-3"
-                onClick={() => setErrorMsg("")}
-              >
-                <svg
-                  class="fill-current h-6 w-6 text-red-500"
-                  role="button"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
+        {loading && (
+          <div className="py-8">
+            <div className="mt-9 flex flex-col justify-center items-center">
+              <h3 className="text-xl mb-4 font-bold">
+                {theme.language === "Bahasa" ? "Memuat" : "Loading"}
+              </h3>
+              <ReactLoading
+                type="bars"
+                color="#2b4450"
+                height={100}
+                width={50}
+              />
+            </div>
+          </div>
+        )}
+
+        {!loading && !data && (
+          <div className="py-8">
+            <div className="mt-9 flex flex-col justify-center items-center">
+              <h3 className="text-xl mb-4 font-bold">
+                {theme.language === "Bahasa" ? "Tidak Ada Data" : "No Data"}
+              </h3>
+            </div>
+          </div>
+        )}
+
+        {/* contents */}
+        {!loading && data && (
+          <div
+            className={`table-div-custom my-4 md:my-0 p-6 block mb-4 md:mb-0 ${
+              theme.dark ? "text-neutral !bg-dm_secondary" : ""
+            }`}
+          >
+            {/* edit invoice form */}
+            <form className="flex w-full flex-col" onSubmit={submitForm}>
+              {/* top */}
+              <div>
+                <div className="">
+                  <h2 className="text-lg md:text-xl mb-3">
+                    {theme.language === "Bahasa"
+                      ? "Rincican Nota"
+                      : "Invoice Details"}
+                  </h2>
+                </div>
+
+                <hr />
+                <br />
+
+                <div
+                  className={`md:py-2 px-0 md:px-4 flex md:justify-between flex-col md:grid md:grid-cols-12 md:gap-20 text-sm font-bold md:font-medium md:text-base ${
+                    theme.dark ? "text-neutral" : "text-gray-700"
+                  }`}
                 >
-                  <title>
-                    {theme.language === "Bahasa" ? "Tutup" : "Close"}
-                  </title>
-                  <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
-                </svg>
-              </button>
-            </div>
-          )}
+                  <div className="md:col-span-3">
+                    {/* customer name */}
+                    <div className="form-group mb-6">
+                      <label
+                        htmlFor="cname"
+                        className="form-label inline-block mb-2"
+                      >
+                        {theme.language === "Bahasa"
+                          ? "Nama Pelanggan:"
+                          : "Customer Name:"}
+                      </label>
+                      <input
+                        autoComplete="off"
+                        type="text"
+                        className={`${
+                          theme.dark
+                            ? "!bg-dm_secondary text-neutral"
+                            : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
+                        } form-control block w-full px-3 py-1.5 font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
+                        name="cname"
+                        id="cname"
+                        // placeholder={
+                        //   theme.language === "Bahasa"
+                        //     ? "Masukkan Nama Pelanggan"
+                        //     : "Enter Customer Name"
+                        // }
+                        onChange={handleChange}
+                        required
+                        defaultValue={data.cname}
+                      />
+                    </div>
 
-          {loading && (
-            <div className="py-8">
-              <div className="mt-9 flex flex-col justify-center items-center">
-                <h3 className="text-xl mb-4 font-bold">
-                  {theme.language === "Bahasa" ? "Memuat" : "Loading"}
-                </h3>
-                <ReactLoading
-                  type="bars"
-                  color="#2b4450"
-                  height={100}
-                  width={50}
-                />
-              </div>
-            </div>
-          )}
-
-          {!loading && !data && (
-            <div className="py-8">
-              <div className="mt-9 flex flex-col justify-center items-center">
-                <h3 className="text-xl mb-4 font-bold">
-                  {theme.language === "Bahasa" ? "Tidak Ada Data" : "No Data"}
-                </h3>
-              </div>
-            </div>
-          )}
-
-          {/* contents */}
-          {!loading && data && (
-            <div
-              className={`table-div-custom my-4 md:my-0 p-6 block mb-4 md:mb-0 ${
-                theme.dark ? "text-neutral !bg-dm_secondary" : ""
-              }`}
-            >
-              {/* edit invoice form */}
-              <form className="flex w-full flex-col" onSubmit={submitForm}>
-                {/* top */}
-                <div>
-                  <div className="">
-                    <h2 className="text-lg md:text-xl mb-3">
-                      {theme.language === "Bahasa"
-                        ? "Rincican Nota"
-                        : "Invoice Details"}
-                    </h2>
+                    {/* date */}
+                    <div className="form-group mb-6">
+                      <label
+                        htmlFor="date"
+                        className="form-label inline-block mb-2"
+                      >
+                        {theme.language === "Bahasa" ? "Tanggal:" : "Date:"}
+                      </label>
+                      <input
+                        type="text"
+                        className={`${
+                          theme.dark
+                            ? "!bg-primary text-neutral"
+                            : "text-gray-400 bg-gray-200"
+                        } form-control block w-full px-3 py-1.5 font-normal text-gray-400 bg-gray-200 bg-clip-padding border border-solid border-gray-300 rounded m-0`}
+                        name="date"
+                        id="date"
+                        defaultValue={
+                          invoice ? invoice.date.substring(0, 10) : "-"
+                        }
+                        disabled
+                      />
+                    </div>
                   </div>
 
-                  <hr />
-                  <br />
-
-                  <div
-                    className={`md:py-2 px-0 md:px-4 flex md:justify-between flex-col md:grid md:grid-cols-12 md:gap-20 text-sm font-bold md:font-medium md:text-base ${
-                      theme.dark ? "text-neutral" : "text-gray-700"
-                    }`}
-                  >
-                    <div className="md:col-span-3">
-                      {/* customer name */}
+                  <div className="flex flex-col-reverse md:grid md:grid-cols-8 md:gap-20 w-full md:col-span-8">
+                    {/* notes */}
+                    <div className="col-span-4">
                       <div className="form-group mb-6">
                         <label
-                          htmlFor="cname"
+                          htmlFor="notes"
                           className="form-label inline-block mb-2"
                         >
-                          {theme.language === "Bahasa"
-                            ? "Nama Pelanggan:"
-                            : "Customer Name:"}
+                          {theme.language === "Bahasa" ? "Catatan:" : "Notes:"}
                         </label>
-                        <input
+                        <textarea
                           autoComplete="off"
                           type="text"
                           className={`${
                             theme.dark
                               ? "!bg-dm_secondary text-neutral"
                               : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
-                          } form-control block w-full px-3 py-1.5 font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
-                          name="cname"
-                          id="cname"
+                          } form-control block px-3 py-1.5 w-full h-32 font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
+                          name="notes"
+                          id="notes"
                           // placeholder={
                           //   theme.language === "Bahasa"
-                          //     ? "Masukkan Nama Pelanggan"
-                          //     : "Enter Customer Name"
+                          //     ? "Masukkan Catatan"
+                          //     : "Enter Notes"
                           // }
                           onChange={handleChange}
-                          required
-                          defaultValue={data.cname}
-                        />
-                      </div>
-
-                      {/* date */}
-                      <div className="form-group mb-6">
-                        <label
-                          htmlFor="date"
-                          className="form-label inline-block mb-2"
-                        >
-                          {theme.language === "Bahasa" ? "Tanggal:" : "Date:"}
-                        </label>
-                        <input
-                          type="text"
-                          className={`${
-                            theme.dark
-                              ? "!bg-primary text-neutral"
-                              : "text-gray-400 bg-gray-200"
-                          } form-control block w-full px-3 py-1.5 font-normal text-gray-400 bg-gray-200 bg-clip-padding border border-solid border-gray-300 rounded m-0`}
-                          name="date"
-                          id="date"
-                          defaultValue={
-                            invoice ? invoice.date.substring(0, 10) : "-"
-                          }
-                          disabled
-                        />
+                          defaultValue={data.notes}
+                        ></textarea>
                       </div>
                     </div>
 
-                    <div className="flex flex-col-reverse md:grid md:grid-cols-8 md:gap-20 w-full md:col-span-8">
-                      {/* notes */}
-                      <div className="col-span-4">
-                        <div className="form-group mb-6">
-                          <label
-                            htmlFor="notes"
-                            className="form-label inline-block mb-2"
-                          >
-                            {theme.language === "Bahasa"
-                              ? "Catatan:"
-                              : "Notes:"}
-                          </label>
-                          <textarea
-                            autoComplete="off"
-                            type="text"
-                            className={`${
-                              theme.dark
-                                ? "!bg-dm_secondary text-neutral"
-                                : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
-                            } form-control block px-3 py-1.5 w-full h-32 font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
-                            name="notes"
-                            id="notes"
-                            // placeholder={
-                            //   theme.language === "Bahasa"
-                            //     ? "Masukkan Catatan"
-                            //     : "Enter Notes"
-                            // }
-                            onChange={handleChange}
-                            defaultValue={data.notes}
-                          ></textarea>
-                        </div>
-                      </div>
-
-                      {/* status */}
-                      <div className="col-span-4">
-                        <div className="form-group mb-6">
-                          <label
-                            htmlFor="status"
-                            className="form-label inline-block mb-3"
-                          >
-                            {theme.language === "Bahasa"
-                              ? "Pembayaran:"
-                              : "Status:"}
-                          </label>
-                          <div className="flex px-4 font-medium">
-                            <div>
-                              <div className="form-check">
-                                <input
-                                  className="form-check-input appearance-none rounded-full h-4 w-4 border-2 border-gray-300 bg-white checked:bg-primary focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                                  type="radio"
-                                  name="status"
-                                  id="flexRadioDefault1"
-                                  value="not paid"
-                                  defaultChecked={
-                                    data.status === "paid" ? false : true
-                                  }
-                                  onChange={handleChange}
-                                />
-                                <label
-                                  className={`form-check-label inline-block ${
-                                    theme.dark
-                                      ? "text-neutral"
-                                      : "text-gray-800"
-                                  }`}
-                                  htmlFor="flexRadioDefault1"
-                                >
-                                  {theme.language === "Bahasa"
-                                    ? "Belum"
-                                    : "Not Paid"}
-                                </label>
-                              </div>
-                              <div className="form-check">
-                                <input
-                                  className="form-check-input appearance-none rounded-full h-4 w-4 border-2 border-gray-300 bg-white checked:bg-primary focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                                  type="radio"
-                                  name="status"
-                                  id="flexRadioDefault2"
-                                  value="paid"
-                                  defaultChecked={
-                                    data.status === "paid" ? true : false
-                                  }
-                                  onChange={handleChange}
-                                />
-                                <label
-                                  className={`form-check-label inline-block ${
-                                    theme.dark
-                                      ? "text-neutral"
-                                      : "text-gray-800"
-                                  }`}
-                                  htmlFor="flexRadioDefault2"
-                                >
-                                  {theme.language === "Bahasa"
-                                    ? "Sudah"
-                                    : "Paid"}
-                                </label>
-                              </div>
+                    {/* status */}
+                    <div className="col-span-4">
+                      <div className="form-group mb-6">
+                        <label
+                          htmlFor="status"
+                          className="form-label inline-block mb-3"
+                        >
+                          {theme.language === "Bahasa"
+                            ? "Pembayaran:"
+                            : "Status:"}
+                        </label>
+                        <div className="flex px-4 font-medium">
+                          <div>
+                            <div className="form-check">
+                              <input
+                                className="form-check-input appearance-none rounded-full h-4 w-4 border-2 border-gray-300 bg-white checked:bg-primary focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                type="radio"
+                                name="status"
+                                id="flexRadioDefault1"
+                                value="not paid"
+                                defaultChecked={
+                                  data.status === "paid" ? false : true
+                                }
+                                onChange={handleChange}
+                              />
+                              <label
+                                className={`form-check-label inline-block ${
+                                  theme.dark ? "text-neutral" : "text-gray-800"
+                                }`}
+                                htmlFor="flexRadioDefault1"
+                              >
+                                {theme.language === "Bahasa"
+                                  ? "Belum"
+                                  : "Not Paid"}
+                              </label>
+                            </div>
+                            <div className="form-check">
+                              <input
+                                className="form-check-input appearance-none rounded-full h-4 w-4 border-2 border-gray-300 bg-white checked:bg-primary focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                type="radio"
+                                name="status"
+                                id="flexRadioDefault2"
+                                value="paid"
+                                defaultChecked={
+                                  data.status === "paid" ? true : false
+                                }
+                                onChange={handleChange}
+                              />
+                              <label
+                                className={`form-check-label inline-block ${
+                                  theme.dark ? "text-neutral" : "text-gray-800"
+                                }`}
+                                htmlFor="flexRadioDefault2"
+                              >
+                                {theme.language === "Bahasa" ? "Sudah" : "Paid"}
+                              </label>
                             </div>
                           </div>
                         </div>
@@ -678,293 +650,289 @@ export default function editInvoice() {
                     </div>
                   </div>
                 </div>
+              </div>
 
-                {/* bottom */}
-                <div className="mt-6 ">
-                  <h2 className="text-lg md:text-xl mb-3">
-                    {theme.language === "Bahasa" ? "Barang" : "Items"}
+              {/* bottom */}
+              <div className="mt-6 ">
+                <h2 className="text-lg md:text-xl mb-3">
+                  {theme.language === "Bahasa" ? "Barang" : "Items"}
+                </h2>
+                <hr className="mb-4" />
+
+                <div className="px-0 md:px-4">
+                  <h2 className="text-right px-4">
+                    <b>
+                      Total:{" "}
+                      <span id="grandTotal">
+                        {localStringToNumber(0).toLocaleString(undefined, {
+                          maximumFractionDigits: 0,
+                          currency: "IDR",
+                          style: "currency",
+                          currencyDisplay: "symbol",
+                        })}
+                      </span>
+                    </b>
                   </h2>
-                  <hr className="mb-4" />
 
-                  <div className="px-0 md:px-4">
-                    <h2 className="text-right px-4">
-                      <b>
-                        Total:{" "}
-                        <span id="grandTotal">
-                          {localStringToNumber(0).toLocaleString(undefined, {
-                            maximumFractionDigits: 0,
-                            currency: "IDR",
-                            style: "currency",
-                            currencyDisplay: "symbol",
-                          })}
-                        </span>
-                      </b>
-                    </h2>
+                  {/* table */}
+                  <div className="overflow-auto rounded-lg shadow mt-4">
+                    <table className="w-full">
+                      <thead
+                        className={`${
+                          theme.dark ? "bg-primary" : "bg-gray-50"
+                        } border-b-2 border-gray-200 hidden md:table-header-group`}
+                      >
+                        <tr>
+                          <th className="w-12 p-3 text-sm font-semibold tracking-wide text-left"></th>
+                          <th className="w-36 p-3 text-sm font-semibold tracking-wide text-left">
+                            {theme.language === "Bahasa"
+                              ? "Jumlah"
+                              : "Quantity"}
+                          </th>
+                          <th className="min-w-[200px] p-3 text-sm font-semibold tracking-wide text-left">
+                            {theme.language === "Bahasa"
+                              ? "Nama Barang"
+                              : "Item Name"}
+                          </th>
+                          <th className="w-60 p-3 text-sm font-semibold tracking-wide text-left">
+                            {theme.language === "Bahasa"
+                              ? "Harga (/Unit)"
+                              : "Price (/Unit)"}
+                          </th>
+                          <th className="w-48 p-3 text-sm font-semibold tracking-wide text-left">
+                            Total
+                          </th>
+                        </tr>
+                      </thead>
 
-                    {/* table */}
-                    <div className="overflow-auto rounded-lg shadow mt-4">
-                      <table className="w-full">
-                        <thead
-                          className={`${
-                            theme.dark ? "bg-primary" : "bg-gray-50"
-                          } border-b-2 border-gray-200 hidden md:table-header-group`}
-                        >
-                          <tr>
-                            <th className="w-12 p-3 text-sm font-semibold tracking-wide text-left"></th>
-                            <th className="w-36 p-3 text-sm font-semibold tracking-wide text-left">
-                              {theme.language === "Bahasa"
-                                ? "Jumlah"
-                                : "Quantity"}
-                            </th>
-                            <th className="min-w-[200px] p-3 text-sm font-semibold tracking-wide text-left">
-                              {theme.language === "Bahasa"
-                                ? "Nama Barang"
-                                : "Item Name"}
-                            </th>
-                            <th className="w-60 p-3 text-sm font-semibold tracking-wide text-left">
-                              {theme.language === "Bahasa"
-                                ? "Harga (/Unit)"
-                                : "Price (/Unit)"}
-                            </th>
-                            <th className="w-48 p-3 text-sm font-semibold tracking-wide text-left">
-                              Total
-                            </th>
-                          </tr>
-                        </thead>
-
-                        <tbody
-                          className="divide-y divide-primary md:divide-gray-100"
-                          id="invoiceForm"
-                        >
-                          {[...Array(noOfRows).keys()].map((i) => (
-                            <tr
-                              className={`${
-                                theme.dark ? "!bg-[#99AEBA]" : "bg-white"
-                              } flex flex-col md:table-row`}
-                              key={i}
-                              id={`tr-${i}`}
-                            >
-                              <td className="p-3 pb-0 md:pb-3 text-sm text-[#F44645] font-bold whitespace-nowrap text-right md:text-center">
-                                <button
-                                  className="mx-auto pt-1 pl-2"
-                                  onClick={(e) => deleteRow(e, i)}
-                                >
-                                  <AiFillMinusCircle size={18} />
-                                </button>
-                              </td>
-                              <td className="p-3 pt-0 md:pt-3 text-sm text-primary font-bold whitespace-nowrap">
-                                <div>
-                                  <h3 className="md:hidden">
-                                    {theme.language === "Bahasa"
-                                      ? "Jumlah"
-                                      : "Quantity"}
-                                  </h3>
-                                  <div className="relative mt-2 md:mt-0 rounded-md shadow-sm">
-                                    <input
-                                      autoComplete="off"
-                                      type="number"
-                                      onWheel={(e) => e.target.blur()}
-                                      name="amount"
-                                      id={`amount-${i}`}
-                                      className={`${
-                                        theme.dark
-                                          ? "!bg-[#99AEBA]"
-                                          : "bg-white"
-                                      } form-control block w-full pl-3 pr-16 py-1.5 text-base text-gray-700 font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
-                                      placeholder=""
-                                      onChange={handleChangeContent}
-                                      required
-                                    />
-                                    <div className="absolute inset-y-0 right-1 flex items-center">
-                                      <label htmlFor="unit" className="sr-only">
-                                        Unit
-                                      </label>
-                                      <select
-                                        id={`unit-${i}`}
-                                        name="unit"
-                                        className={`${
-                                          theme.dark
-                                            ? "!bg-[#99AEBA]"
-                                            : "bg-white"
-                                        } pl-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding rounded rounded-l-sm transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
-                                        onChange={handleChangeContent}
-                                        required
-                                        defaultValue={""}
-                                      >
-                                        <option disabled value=""></option>
-                                        <option value="bh">
-                                          {theme.language === "Bahasa"
-                                            ? "bh"
-                                            : "pcs"}
-                                        </option>
-                                        <option value="ls">
-                                          {theme.language === "Bahasa"
-                                            ? "ls"
-                                            : "doz"}
-                                        </option>
-                                        <option value="grs">
-                                          {theme.language === "Bahasa"
-                                            ? "grs"
-                                            : "gro"}
-                                        </option>
-                                        <option value="dus">
-                                          {theme.language === "Bahasa"
-                                            ? "dus"
-                                            : "box"}
-                                        </option>
-                                      </select>
-                                    </div>
-                                  </div>
-                                </div>
-                              </td>
-
-                              <td className="p-3 text-sm first-line:text-primary font-bold whitespace-nowrap">
+                      <tbody
+                        className="divide-y divide-primary md:divide-gray-100"
+                        id="invoiceForm"
+                      >
+                        {[...Array(noOfRows).keys()].map((i) => (
+                          <tr
+                            className={`${
+                              theme.dark ? "!bg-[#99AEBA]" : "bg-white"
+                            } flex flex-col md:table-row`}
+                            key={i}
+                            id={`tr-${i}`}
+                          >
+                            <td className="p-3 pb-0 md:pb-3 text-sm text-[#F44645] font-bold whitespace-nowrap text-right md:text-center">
+                              <button
+                                className="mx-auto pt-1 pl-2"
+                                onClick={(e) => deleteRow(e, i)}
+                              >
+                                <AiFillMinusCircle size={18} />
+                              </button>
+                            </td>
+                            <td className="p-3 pt-0 md:pt-3 text-sm text-primary font-bold whitespace-nowrap">
+                              <div>
                                 <h3 className="md:hidden">
                                   {theme.language === "Bahasa"
-                                    ? "Nama Barang"
-                                    : "Item Name"}
+                                    ? "Jumlah"
+                                    : "Quantity"}
                                 </h3>
-                                <div className="mt-2 md:mt-0">
+                                <div className="relative mt-2 md:mt-0 rounded-md shadow-sm">
                                   <input
-                                    name="item_name"
                                     autoComplete="off"
-                                    type="text"
+                                    type="number"
+                                    onWheel={(e) => e.target.blur()}
+                                    name="amount"
+                                    id={`amount-${i}`}
                                     className={`${
                                       theme.dark ? "!bg-[#99AEBA]" : "bg-white"
-                                    } form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
-                                    id={`itemNameInput-${i}`}
+                                    } form-control block w-full pl-3 pr-16 py-1.5 text-base text-gray-700 font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
                                     placeholder=""
                                     onChange={handleChangeContent}
                                     required
                                   />
-                                </div>
-                              </td>
-
-                              <td className="p-3 text-sm text-primary font-bold whitespace-nowrap">
-                                <h3 className="md:hidden">
-                                  {theme.language === "Bahasa"
-                                    ? "Harga (/Unit)"
-                                    : "Price (/Unit)"}
-                                </h3>
-                                <div>
-                                  <div className="relative mt-2 md:mt-0 rounded-md shadow-sm">
-                                    <input
-                                      name="price_per_item"
-                                      autoComplete="off"
-                                      type="text"
+                                  <div className="absolute inset-y-0 right-1 flex items-center">
+                                    <label htmlFor="unit" className="sr-only">
+                                      Unit
+                                    </label>
+                                    <select
+                                      id={`unit-${i}`}
+                                      name="unit"
                                       className={`${
                                         theme.dark
                                           ? "!bg-[#99AEBA]"
                                           : "bg-white"
-                                      } form-control block w-full px-3 py-1.5 text-base font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
-                                      id={`pricePerItemInput-${i}`}
-                                      placeholder=""
-                                      onFocus={(e) => onFocus(e)}
-                                      onBlur={(e) => onBlur(e)}
+                                      } pl-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding rounded rounded-l-sm transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
                                       onChange={handleChangeContent}
                                       required
-                                    />
-                                    <div className="absolute inset-y-0 right-1 flex items-center">
-                                      <label
-                                        htmlFor="price_unit"
-                                        className="sr-only"
-                                      >
-                                        Unit Item
-                                      </label>
-                                      <select
-                                        id={`price_unit-${i}`}
-                                        name="price_unit"
-                                        className={`${
-                                          theme.dark
-                                            ? "!bg-[#99AEBA]"
-                                            : "bg-white"
-                                        } pl-1 py-1.5 text-base font-normal text-gray-700 bg-clip-padding rounded rounded-l-sm transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
-                                        onChange={handleChangeContent}
-                                        required
-                                        defaultValue={""}
-                                      >
-                                        <option disabled value=""></option>
-                                        <option value="bh">
-                                          {theme.language === "Bahasa"
-                                            ? "/bh"
-                                            : "/pcs"}
-                                        </option>
-                                        <option value="ls">
-                                          {theme.language === "Bahasa"
-                                            ? "/ls"
-                                            : "/doz"}
-                                        </option>
-                                        <option value="grs">
-                                          {theme.language === "Bahasa"
-                                            ? "/grs"
-                                            : "/gro"}
-                                        </option>
-                                        <option value="dus">
-                                          {theme.language === "Bahasa"
-                                            ? "/dus"
-                                            : "/box"}
-                                        </option>
-                                      </select>
-                                    </div>
+                                      defaultValue={""}
+                                    >
+                                      <option disabled value=""></option>
+                                      <option value="bh">
+                                        {theme.language === "Bahasa"
+                                          ? "bh"
+                                          : "pcs"}
+                                      </option>
+                                      <option value="ls">
+                                        {theme.language === "Bahasa"
+                                          ? "ls"
+                                          : "doz"}
+                                      </option>
+                                      <option value="grs">
+                                        {theme.language === "Bahasa"
+                                          ? "grs"
+                                          : "gro"}
+                                      </option>
+                                      <option value="dus">
+                                        {theme.language === "Bahasa"
+                                          ? "dus"
+                                          : "box"}
+                                      </option>
+                                    </select>
                                   </div>
                                 </div>
-                              </td>
+                              </div>
+                            </td>
 
-                              <td className="p-3 mb-2 md:mb-0 text-sm text-primary font-bold whitespace-nowrap">
-                                <h3 className="md:hidden">Total</h3>
-                                <div className="mt-2 md:mt-0">
+                            <td className="p-3 text-sm first-line:text-primary font-bold whitespace-nowrap">
+                              <h3 className="md:hidden">
+                                {theme.language === "Bahasa"
+                                  ? "Nama Barang"
+                                  : "Item Name"}
+                              </h3>
+                              <div className="mt-2 md:mt-0">
+                                <input
+                                  name="item_name"
+                                  autoComplete="off"
+                                  type="text"
+                                  className={`${
+                                    theme.dark ? "!bg-[#99AEBA]" : "bg-white"
+                                  } form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
+                                  id={`itemNameInput-${i}`}
+                                  placeholder=""
+                                  onChange={handleChangeContent}
+                                  required
+                                />
+                              </div>
+                            </td>
+
+                            <td className="p-3 text-sm text-primary font-bold whitespace-nowrap">
+                              <h3 className="md:hidden">
+                                {theme.language === "Bahasa"
+                                  ? "Harga (/Unit)"
+                                  : "Price (/Unit)"}
+                              </h3>
+                              <div>
+                                <div className="relative mt-2 md:mt-0 rounded-md shadow-sm">
                                   <input
-                                    name="total"
+                                    name="price_per_item"
                                     autoComplete="off"
                                     type="text"
                                     className={`${
                                       theme.dark ? "!bg-[#99AEBA]" : "bg-white"
-                                    } form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
-                                    id={`totalInput-${i}`}
+                                    } form-control block w-full px-3 py-1.5 text-base font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
+                                    id={`pricePerItemInput-${i}`}
                                     placeholder=""
-                                    onFocus={(e) => {
-                                      onFocus(e);
-                                      handleChangeContent(e);
-                                    }}
+                                    onFocus={(e) => onFocus(e)}
                                     onBlur={(e) => onBlur(e)}
                                     onChange={handleChangeContent}
                                     required
                                   />
+                                  <div className="absolute inset-y-0 right-1 flex items-center">
+                                    <label
+                                      htmlFor="price_unit"
+                                      className="sr-only"
+                                    >
+                                      Unit Item
+                                    </label>
+                                    <select
+                                      id={`price_unit-${i}`}
+                                      name="price_unit"
+                                      className={`${
+                                        theme.dark
+                                          ? "!bg-[#99AEBA]"
+                                          : "bg-white"
+                                      } pl-1 py-1.5 text-base font-normal text-gray-700 bg-clip-padding rounded rounded-l-sm transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
+                                      onChange={handleChangeContent}
+                                      required
+                                      defaultValue={""}
+                                    >
+                                      <option disabled value=""></option>
+                                      <option value="bh">
+                                        {theme.language === "Bahasa"
+                                          ? "/bh"
+                                          : "/pcs"}
+                                      </option>
+                                      <option value="ls">
+                                        {theme.language === "Bahasa"
+                                          ? "/ls"
+                                          : "/doz"}
+                                      </option>
+                                      <option value="grs">
+                                        {theme.language === "Bahasa"
+                                          ? "/grs"
+                                          : "/gro"}
+                                      </option>
+                                      <option value="dus">
+                                        {theme.language === "Bahasa"
+                                          ? "/dus"
+                                          : "/box"}
+                                      </option>
+                                    </select>
+                                  </div>
                                 </div>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
+                              </div>
+                            </td>
 
-                    {/* add button */}
-                    <div className="mt-4 mb-5 text-right mr-1">
-                      <button
-                        className="group gap-2 h-7 px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
-                        onClick={addRow}
-                      >
-                        <FaPlus size={14} />
-                      </button>
-                    </div>
+                            <td className="p-3 mb-2 md:mb-0 text-sm text-primary font-bold whitespace-nowrap">
+                              <h3 className="md:hidden">Total</h3>
+                              <div className="mt-2 md:mt-0">
+                                <input
+                                  name="total"
+                                  autoComplete="off"
+                                  type="text"
+                                  className={`${
+                                    theme.dark ? "!bg-[#99AEBA]" : "bg-white"
+                                  } form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
+                                  id={`totalInput-${i}`}
+                                  placeholder=""
+                                  onFocus={(e) => {
+                                    onFocus(e);
+                                    handleChangeContent(e);
+                                  }}
+                                  onBlur={(e) => onBlur(e)}
+                                  onChange={handleChangeContent}
+                                  required
+                                />
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
 
-                    {/* submit button */}
-                    <div className="text-center">
-                      <button
-                        type="submit"
-                        className="group text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
-                      >
-                        {theme.language === "Bahasa" ? "Simpan" : "Save"}
-                      </button>
-                    </div>
+                  {/* add button */}
+                  <div className="mt-4 mb-5 text-right mr-1">
+                    <button
+                      className="group gap-2 h-7 px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
+                      onClick={addRow}
+                    >
+                      <FaPlus size={14} />
+                    </button>
+                  </div>
+
+                  {/* submit button */}
+                  <div className="text-center">
+                    <button
+                      type="submit"
+                      className="group text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
+                    >
+                      {theme.language === "Bahasa" ? "Simpan" : "Save"}
+                    </button>
                   </div>
                 </div>
-              </form>
-            </div>
-          )}
-        </main>
-      </section>
-    </>
+              </div>
+            </form>
+          </div>
+        )}
+      </main>
+    </LayoutIn>
   );
 }
 

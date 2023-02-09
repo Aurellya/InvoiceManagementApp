@@ -1,11 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
-import Head from "next/head";
 import Link from "next/link";
-import { getSession, useSession, signOut } from "next-auth/react";
 import ReactLoading from "react-loading";
+import { getSession, useSession } from "next-auth/react";
 
 import { ThemeContext } from "../../context/ThemeContext";
-import Sidebar from "../../components/Sidebar";
+import LayoutIn from "../../layout/layoutIn";
 
 import { IoArrowBackOutline } from "react-icons/io5";
 import { FaUserEdit } from "react-icons/fa";
@@ -13,10 +12,6 @@ import { FaUserEdit } from "react-icons/fa";
 export default function editProfile() {
   // auth
   const { data: session } = useSession();
-
-  function handleSignOut() {
-    signOut();
-  }
 
   // theme
   const theme = useContext(ThemeContext);
@@ -87,17 +82,14 @@ export default function editProfile() {
 
   return (
     <>
-      <Head>
-        <title>
-          {theme.language === "Bahasa"
+      <LayoutIn
+        title={
+          theme.language === "Bahasa"
             ? "Formulir Edit Profil"
-            : "Edit Profile Form"}
-        </title>
-      </Head>
-
-      <section className="flex w-full">
-        <Sidebar handleSignOut={handleSignOut} role={session.role} />
-
+            : "Edit Profile Form"
+        }
+        role={session.role}
+      >
         <main className="container py-12 mx-10 md:mx-14">
           {/* header section */}
           <div className="flex md:items-center justify-between flex-col md:flex-row gap-4 md:gap-0 w-full md:mb-12">
@@ -257,7 +249,7 @@ export default function editProfile() {
                           onChange={handleChange}
                           required
                           defaultValue={
-                            profile.username ? profile.username : "-"
+                            profile.username ? profile.username : ""
                           }
                         />
                       </div>
@@ -308,7 +300,7 @@ export default function editProfile() {
             </form>
           )}
         </main>
-      </section>
+      </LayoutIn>
     </>
   );
 }

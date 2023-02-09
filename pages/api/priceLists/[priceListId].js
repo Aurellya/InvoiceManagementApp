@@ -27,6 +27,7 @@ export default async function handler(req, res) {
           amount: userInput.amount,
           unit: userInput.unit,
           price: userInput.price,
+          vip_price: userInput.vip_price,
           remarks: userInput.remarks,
         };
 

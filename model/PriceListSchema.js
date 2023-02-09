@@ -5,6 +5,7 @@ const priceListSchema = new Schema({
   amount: Number,
   unit: String,
   price: Number,
+  vip_price: Number,
   remarks: String,
 });
 

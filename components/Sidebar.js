@@ -11,52 +11,70 @@ import { AiOutlineUser, AiOutlineQrcode } from "react-icons/ai";
 import { VscSignOut } from "react-icons/vsc";
 import { IoMdContacts } from "react-icons/io";
 
-export default function Sidebar({ handleSignOut, role = "admin" }) {
+export default function Sidebar({ handleSignOut, role }) {
   //theme
   const theme = useContext(ThemeContext);
 
-  const [menus, setMenus] = useState([
-    { name: "Dashboard", link: "/", icon: MdOutlineDashboard },
-    { name: "Invoices", link: "/invoices", icon: TbReportAnalytics },
-    { name: "Customers", link: "/customers", icon: IoMdContacts },
-    { name: "Price List", link: "/priceList", icon: RiFileList3Line },
-    { name: "Profile", link: "/profile", icon: AiOutlineUser, margin: true },
-    { name: "Settings", link: "/settings", icon: RiSettings4Line },
-  ]);
-
-  const [menus_b, setMenus_b] = useState([
-    { name: "Dasbor", link: "/", icon: MdOutlineDashboard },
-    { name: "Nota", link: "/invoices", icon: TbReportAnalytics },
-    { name: "Pelanggan", link: "/customers", icon: IoMdContacts },
-    { name: "Daftar Harga", link: "/priceList", icon: RiFileList3Line },
-    { name: "Profil", link: "/profile", icon: AiOutlineUser, margin: true },
-    { name: "Pengaturan", link: "/settings", icon: RiSettings4Line },
-  ]);
+  const [menus, setMenus] = useState();
+  const [menus_b, setMenus_b] = useState();
 
   useEffect(() => {
-    let first = !menus.find((m) => m.name === "Company Code");
-    let first_b = !menus_b.find((m) => m.name === "Kode Perusahaan");
-
     if (role == "admin") {
-      if (first) {
-        let copy = menus.slice(0);
-        copy.splice(4, 0, {
+      setMenus([
+        { name: "Dashboard", link: "/", icon: MdOutlineDashboard },
+        { name: "Invoices", link: "/invoices", icon: TbReportAnalytics },
+        { name: "Customers", link: "/customers", icon: IoMdContacts },
+        { name: "Price List", link: "/priceList", icon: RiFileList3Line },
+        {
           name: "Company Code",
           link: "/companyCode",
           icon: AiOutlineQrcode,
-        });
-        setMenus(copy);
-      }
+        },
+        {
+          name: "Profile",
+          link: "/profile",
+          icon: AiOutlineUser,
+          margin: true,
+        },
+        { name: "Settings", link: "/settings", icon: RiSettings4Line },
+      ]);
 
-      if (first_b) {
-        let copy_b = menus_b.slice(0);
-        copy_b.splice(4, 0, {
+      setMenus_b([
+        { name: "Dasbor", link: "/", icon: MdOutlineDashboard },
+        { name: "Nota", link: "/invoices", icon: TbReportAnalytics },
+        { name: "Pelanggan", link: "/customers", icon: IoMdContacts },
+        { name: "Daftar Harga", link: "/priceList", icon: RiFileList3Line },
+        {
           name: "Kode Perusahaan",
           link: "/companyCode",
           icon: AiOutlineQrcode,
-        });
-        setMenus_b(copy_b);
-      }
+        },
+        { name: "Profil", link: "/profile", icon: AiOutlineUser, margin: true },
+        { name: "Pengaturan", link: "/settings", icon: RiSettings4Line },
+      ]);
+    } else if ((role = "staff")) {
+      setMenus([
+        { name: "Dashboard", link: "/", icon: MdOutlineDashboard },
+        { name: "Invoices", link: "/invoices", icon: TbReportAnalytics },
+        { name: "Customers", link: "/customers", icon: IoMdContacts },
+        { name: "Price List", link: "/priceList", icon: RiFileList3Line },
+        {
+          name: "Profile",
+          link: "/profile",
+          icon: AiOutlineUser,
+          margin: true,
+        },
+        { name: "Settings", link: "/settings", icon: RiSettings4Line },
+      ]);
+
+      setMenus_b([
+        { name: "Dasbor", link: "/", icon: MdOutlineDashboard },
+        { name: "Nota", link: "/invoices", icon: TbReportAnalytics },
+        { name: "Pelanggan", link: "/customers", icon: IoMdContacts },
+        { name: "Daftar Harga", link: "/priceList", icon: RiFileList3Line },
+        { name: "Profil", link: "/profile", icon: AiOutlineUser, margin: true },
+        { name: "Pengaturan", link: "/settings", icon: RiSettings4Line },
+      ]);
     }
   }, []);
 
