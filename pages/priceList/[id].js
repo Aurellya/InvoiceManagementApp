@@ -122,8 +122,16 @@ export default function PriceList() {
 
         {/* modal */}
         <div className="hidden" id="modal">
-          <div className="bg-slate-800 bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0">
-            <div className="bg-white px-10 py-8 rounded-md text-center">
+          <div
+            className={`${
+              theme.dark ? "bg-slate-200" : "bg-slate-800"
+            } bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0`}
+          >
+            <div
+              className={`${
+                theme.dark ? "bg-primary border border-neutral" : "bg-white"
+              } px-10 py-8 rounded-md text-center`}
+            >
               <h1 className="text-xl mb-6 font-bold">
                 {theme.language === "Bahasa"
                   ? "Apakah Kamu Yakin Mau Menghapus Nota?"
@@ -206,12 +214,21 @@ export default function PriceList() {
                 <h3 className="text-xl mb-4 font-bold">
                   {theme.language === "Bahasa" ? "Memuat" : "Loading"}
                 </h3>
-                <ReactLoading
-                  type="bars"
-                  color="#2b4450"
-                  height={100}
-                  width={50}
-                />
+                {theme.dark ? (
+                  <ReactLoading
+                    type="bars"
+                    color="#F4F5F9"
+                    height={100}
+                    width={50}
+                  />
+                ) : (
+                  <ReactLoading
+                    type="bars"
+                    color="#2b4450"
+                    height={100}
+                    width={50}
+                  />
+                )}
               </div>
             </div>
           )}

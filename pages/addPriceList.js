@@ -183,7 +183,7 @@ export default function addPriceList() {
               <div>
                 <h2 className="text-lg md:text-xl mb-3">
                   {theme.language === "Bahasa"
-                    ? "Rincican Barang"
+                    ? "Rincian Barang"
                     : "Item Details"}
                 </h2>
               </div>
@@ -302,9 +302,10 @@ export default function addPriceList() {
                             <select
                               id="unit"
                               name="unit"
-                              className={`${
-                                theme.dark ? "!bg-[#99AEBA]" : "bg-white"
-                              } pl-1 py-1.5 text-base font-normal text-gray-700 bg-clip-padding border border-solid border-gray-300 rounded-r transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
+                              className={`bg-white pl-1 py-1.5 text-base font-normal text-gray-700 bg-clip-padding border border-solid border-gray-300 rounded-r transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
+                              // ${
+                              //   theme.dark ? "!bg-[#99AEBA]" : "bg-white"
+                              // }
                               required
                               onChange={handleChange}
                               defaultValue={""}

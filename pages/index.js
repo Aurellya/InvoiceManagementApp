@@ -184,12 +184,21 @@ function User({ session }) {
                 <h3 className="text-xl mb-4 font-bold">
                   {theme.language === "Bahasa" ? "Memuat" : "Loading"}
                 </h3>
-                <ReactLoading
-                  type="bars"
-                  color="#2b4450"
-                  height={100}
-                  width={50}
-                />
+                {theme.dark ? (
+                  <ReactLoading
+                    type="bars"
+                    color="#F4F5F9"
+                    height={100}
+                    width={50}
+                  />
+                ) : (
+                  <ReactLoading
+                    type="bars"
+                    color="#2b4450"
+                    height={100}
+                    width={50}
+                  />
+                )}
               </div>
             </div>
           )}
@@ -458,7 +467,9 @@ function User({ session }) {
                 {session && session.role == "staff" && (
                   <div>
                     <p className="mt-4 mx-4">
-                      * ask admin for permission to access this data
+                      {theme.language === "Bahasa"
+                        ? "* minta ijin admin untuk mengakses data ini"
+                        : "* ask admin for permission to access this data"}
                     </p>
                   </div>
                 )}
@@ -744,7 +755,9 @@ function User({ session }) {
 
                     {session && session.role == "staff" && (
                       <p className="my-6">
-                        * ask admin for permission to access this data
+                        {theme.language === "Bahasa"
+                          ? "* minta ijin admin untuk mengakses data ini"
+                          : "* ask admin for permission to access this data"}
                       </p>
                     )}
 
@@ -981,7 +994,11 @@ function UnapprovedUser({ session, handleSignOut }) {
 
         {/* modal del acc */}
         <div className="hidden" id="modalDeleteConfirmation">
-          <div className="bg-slate-800 bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0">
+          <div
+            className={`${
+              theme.dark ? "bg-slate-200" : "bg-slate-800"
+            } bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0`}
+          >
             <div className="bg-white px-10 py-8 rounded-md text-center">
               <h1 className="text-xl mb-6 font-bold">
                 {theme.language === "Bahasa"
@@ -1006,7 +1023,11 @@ function UnapprovedUser({ session, handleSignOut }) {
 
         {/* modal new req */}
         <div className="hidden" id="modalNewReq">
-          <div className="bg-slate-800 bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0 z-99">
+          <div
+            className={`${
+              theme.dark ? "bg-slate-200" : "bg-slate-800"
+            } bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0 z-99`}
+          >
             <div className="bg-white px-10 py-8 rounded-md text-center">
               <h1 className="text-xl mb-6 font-bold">
                 {theme.language === "Bahasa"
@@ -1047,7 +1068,11 @@ function UnapprovedUser({ session, handleSignOut }) {
 
         {/* modal success req */}
         <div className="hidden" id="modalSucessReq">
-          <div className="bg-slate-800 bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0">
+          <div
+            className={`${
+              theme.dark ? "bg-slate-200" : "bg-slate-800"
+            } bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0`}
+          >
             <div className="bg-white px-10 py-8 rounded-md text-center">
               <h1 className="text-xl mb-6 font-bold">
                 {theme.language === "Bahasa"
@@ -1080,12 +1105,21 @@ function UnapprovedUser({ session, handleSignOut }) {
                 <h3 className="text-xl mb-4 font-bold">
                   {theme.language === "Bahasa" ? "Memuat" : "Loading"}
                 </h3>
-                <ReactLoading
-                  type="bars"
-                  color="#2b4450"
-                  height={100}
-                  width={50}
-                />
+                {theme.dark ? (
+                  <ReactLoading
+                    type="bars"
+                    color="#F4F5F9"
+                    height={100}
+                    width={50}
+                  />
+                ) : (
+                  <ReactLoading
+                    type="bars"
+                    color="#2b4450"
+                    height={100}
+                    width={50}
+                  />
+                )}
               </div>
             </div>
           )}

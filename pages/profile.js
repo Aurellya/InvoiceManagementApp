@@ -174,8 +174,16 @@ export default () => {
 
         {/* modal */}
         <div className="hidden" id="modal">
-          <div className="bg-slate-800 bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0">
-            <div className="bg-white px-10 py-8 rounded-md text-center">
+          <div
+            className={`${
+              theme.dark ? "bg-slate-200" : "bg-slate-800"
+            } bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0`}
+          >
+            <div
+              className={`${
+                theme.dark ? "bg-primary border border-neutral" : "bg-white"
+              } px-10 py-8 rounded-md text-center`}
+            >
               <h1 className="text-xl mb-6 font-bold">
                 {theme.language === "Bahasa"
                   ? "Apakah Kamu Yakin Mau Menghapus Akun?"
@@ -199,14 +207,29 @@ export default () => {
 
         {/* modal2 */}
         <div className="hidden" id="modal2">
-          <div className="bg-slate-800 bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0">
-            <div className="bg-white px-10 py-8 rounded-md text-center">
+          <div
+            className={`${
+              theme.dark ? "bg-slate-200" : "bg-slate-800"
+            } bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0`}
+          >
+            <div
+              className={`${
+                theme.dark ? "bg-primary border border-neutral" : "bg-white"
+              } px-10 py-8 rounded-md text-center`}
+            >
               <div className="flex flex-col items-center">
                 <label htmlFor="staff" className="text-xl mb-6 font-bold">
                   Choose New Admin for Your Company:
                 </label>
 
-                <select name="staff" id="staff" defaultValue={""}>
+                <select
+                  name="staff"
+                  id="staff"
+                  defaultValue={""}
+                  className={`${
+                    theme.dark ? "bg-white text-primary" : ""
+                  } rounded pl-3 pr-8 py-1.5 w-fit`}
+                >
                   <option value="" disabled>
                     -- Select One --
                   </option>
@@ -294,12 +317,21 @@ export default () => {
                 <h3 className="text-xl mb-4 font-bold">
                   {theme.language === "Bahasa" ? "Memuat" : "Loading"}
                 </h3>
-                <ReactLoading
-                  type="bars"
-                  color="#2b4450"
-                  height={100}
-                  width={50}
-                />
+                {theme.dark ? (
+                  <ReactLoading
+                    type="bars"
+                    color="#F4F5F9"
+                    height={100}
+                    width={50}
+                  />
+                ) : (
+                  <ReactLoading
+                    type="bars"
+                    color="#2b4450"
+                    height={100}
+                    width={50}
+                  />
+                )}
               </div>
             </div>
           )}
@@ -384,13 +416,15 @@ export default () => {
                     <br />
 
                     <Link
-                      className={`group button-custom ${
-                        theme.dark ? "bg-dm_secondary" : "bg-primary"
+                      className={`group button-custom bg-primary ${
+                        theme.dark ? "border border-white" : ""
                       }`}
                       href={`/changePassword/${session._id}`}
                     >
                       <h2 className="whitespace-pre mx-auto">
-                        Change Password
+                        {theme.language === "Bahasa"
+                          ? "Ganti Kata Sandi"
+                          : "Change Password"}
                       </h2>
                     </Link>
                   </div>

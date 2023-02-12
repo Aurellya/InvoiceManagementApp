@@ -383,7 +383,7 @@ export default function addInvoice() {
             <div>
               <h2 className="text-lg md:text-xl mb-3">
                 {theme.language === "Bahasa"
-                  ? "Rincican Nota"
+                  ? "Rincian Nota"
                   : "Invoice Details"}
               </h2>
             </div>
@@ -631,9 +631,11 @@ export default function addInvoice() {
                                   <select
                                     id={`unit-${i}`}
                                     name="unit"
-                                    className={`${
-                                      theme.dark ? "!bg-[#99AEBA]" : "bg-white"
-                                    } px-1 py-1.5 text-base font-normal text-gray-700 bg-clip-padding border border-solid border-gray-300 rounded-r transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
+                                    className={`bg-white px-1 py-1.5 text-base font-normal text-gray-700 bg-clip-padding border border-solid border-gray-300 rounded-r transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
+                                    // ${
+                                    //   theme.dark ? "!bg-[#99AEBA]" : "bg-white"
+                                    // }
+
                                     onChange={handleChangeContent}
                                     required
                                     defaultValue={""}
@@ -718,9 +720,10 @@ export default function addInvoice() {
                                   <select
                                     id={`price_unit-${i}`}
                                     name="price_unit"
-                                    className={`${
-                                      theme.dark ? "!bg-[#99AEBA]" : "bg-white"
-                                    } px-1 py-1.5 text-base font-normal text-gray-700 bg-clip-padding border border-solid border-gray-300 rounded-r transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
+                                    className={`bg-white px-1 py-1.5 text-base font-normal text-gray-700 bg-clip-padding border border-solid border-gray-300 rounded-r transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
+                                    // ${
+                                    //   theme.dark ? "!bg-[#99AEBA]" : "bg-white"
+                                    // }
                                     onChange={handleChangeContent}
                                     required
                                     defaultValue={""}

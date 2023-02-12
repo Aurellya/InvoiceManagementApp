@@ -5,7 +5,7 @@ import { ThemeContext } from "../context/ThemeContext";
 
 function MyApp({ Component, pageProps }) {
   const [dark, setDark] = useState(false);
-  const [language, setLanguage] = useState("English");
+  const [language, setLanguage] = useState("Bahasa");
   const [currency, setCurrency] = useState("Rupiah");
 
   return (

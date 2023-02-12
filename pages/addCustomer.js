@@ -148,7 +148,7 @@ export default function addCustomer() {
             <div>
               <h2 className="text-lg md:text-xl mb-3">
                 {theme.language === "Bahasa"
-                  ? "Rincican Pelanggan"
+                  ? "Rincian Pelanggan"
                   : "Customer Details"}
               </h2>
             </div>
@@ -167,7 +167,7 @@ export default function addCustomer() {
                 <div
                   className={`${
                     theme.dark ? "border-y-neutral" : "border-y-primary"
-                  } border-y-8 rounded-full w-fit p-3`}
+                  } border-y-8 rounded-full w-fit p-3 pl-6`}
                 >
                   {React.createElement(TiUserAddOutline, { size: "220" })}
                 </div>

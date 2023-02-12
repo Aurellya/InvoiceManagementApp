@@ -169,12 +169,21 @@ export default function changePassword() {
               <h3 className="text-xl mb-4 font-bold">
                 {theme.language === "Bahasa" ? "Memuat" : "Loading"}
               </h3>
-              <ReactLoading
-                type="bars"
-                color="#2b4450"
-                height={100}
-                width={50}
-              />
+              {theme.dark ? (
+                <ReactLoading
+                  type="bars"
+                  color="#F4F5F9"
+                  height={100}
+                  width={50}
+                />
+              ) : (
+                <ReactLoading
+                  type="bars"
+                  color="#2b4450"
+                  height={100}
+                  width={50}
+                />
+              )}
             </div>
           </div>
         )}
@@ -200,7 +209,7 @@ export default function changePassword() {
               <div>
                 <h2 className="text-lg md:text-xl mb-3">
                   {theme.language === "Bahasa"
-                    ? "Rincican Pengguna"
+                    ? "Rincian Pengguna"
                     : "User Details"}
                 </h2>
               </div>
@@ -290,7 +299,7 @@ export default function changePassword() {
                           type="text"
                           className={`${
                             theme.dark
-                              ? "!bg-dm_secondary text-neutral"
+                              ? "!bg-dm_secondary !text-neutral"
                               : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
                           } form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
                           name="password"
@@ -316,7 +325,7 @@ export default function changePassword() {
                           type="text"
                           className={`${
                             theme.dark
-                              ? "!bg-dm_secondary text-neutral"
+                              ? "!bg-dm_secondary !text-neutral"
                               : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
                           } form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
                           name="cpassword"

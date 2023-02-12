@@ -110,12 +110,21 @@ export default () => {
                 <h3 className="text-xl mb-4 font-bold">
                   {theme.language === "Bahasa" ? "Memuat" : "Loading"}
                 </h3>
-                <ReactLoading
-                  type="bars"
-                  color="#2b4450"
-                  height={100}
-                  width={50}
-                />
+                {theme.dark ? (
+                  <ReactLoading
+                    type="bars"
+                    color="#F4F5F9"
+                    height={100}
+                    width={50}
+                  />
+                ) : (
+                  <ReactLoading
+                    type="bars"
+                    color="#2b4450"
+                    height={100}
+                    width={50}
+                  />
+                )}
               </div>
             </div>
           )}

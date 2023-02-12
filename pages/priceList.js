@@ -126,7 +126,7 @@ export default () => {
                 type="text"
                 className={`${
                   theme.dark
-                    ? "!bg-dm_secondary text-neutral"
+                    ? "!bg-dm_secondary !text-neutral"
                     : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
                 } form-control block w-full md:w-[400px] px-3 py-1.5 font-normal text-gray-700 bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
                 name="p_name"
@@ -140,8 +140,8 @@ export default () => {
               />
               <button
                 onClick={search}
-                className={`w-fit button-custom mt-0 ${
-                  theme.dark ? "bg-dm_secondary" : "bg-primary"
+                className={`w-fit button-custom mt-0 bg-primary ${
+                  theme.dark ? "border border-white" : ""
                 }`}
               >
                 {React.createElement(AiOutlineSearch, { size: "20" })}
@@ -179,12 +179,21 @@ export default () => {
                 <h3 className="text-xl mb-4 font-bold">
                   {theme.language === "Bahasa" ? "Memuat" : "Loading"}
                 </h3>
-                <ReactLoading
-                  type="bars"
-                  color="#2b4450"
-                  height={100}
-                  width={50}
-                />
+                {theme.dark ? (
+                  <ReactLoading
+                    type="bars"
+                    color="#F4F5F9"
+                    height={100}
+                    width={50}
+                  />
+                ) : (
+                  <ReactLoading
+                    type="bars"
+                    color="#2b4450"
+                    height={100}
+                    width={50}
+                  />
+                )}
               </div>
             </div>
           )}
