@@ -138,7 +138,9 @@ export default () => {
       title={theme.language === "Bahasa" ? "Halaman Profil" : "Profile Page"}
       role={session.role}
     >
-      <main className="container py-12 mx-14">
+      <main
+        className={`pt-[76px] pb-12 md:py-12 px-8 md:px-14 w-full max-w-[1536px]`}
+      >
         {/* header section */}
         <div className="flex md:items-center justify-between w-full md:mb-12">
           <div>
@@ -313,26 +315,26 @@ export default () => {
           )}
 
           {!loading && profile && (
-            <div className="flex flex-col lg:grid lg:grid-cols-12 lg:gap-10 pb-0 md:pb-0 pt-3">
+            <div className="flex flex-col lg:grid lg:grid-cols-12 lg:gap-10 pb-0 md:pb-0 pt-3 w-full md:w-fit lg:w-full">
               {/* left */}
               <div
                 className={`${
                   theme.dark ? "text-neutral" : "text-primary"
-                } lg:col-span-4 flex justify-center items-center mb-0 lg:mt-[-20px]`}
+                } lg:col-span-4 flex justify-center items-center mb-0 lg:mt-[-16px]`}
               >
                 <div
                   className={`${
                     theme.dark ? "border-y-neutral" : "border-y-primary"
                   } border-y-8 rounded-full w-fit p-3`}
                 >
-                  {React.createElement(TiUserOutline, { size: "220" })}
+                  {React.createElement(TiUserOutline, { size: "150" })}
                 </div>
               </div>
 
               {/* right */}
-              <div className="flex flex-col lg:flex-row md:mt-[40px] lg:mt-0 lg:col-span-8">
-                <div className="flex gap-32">
-                  <div className="md:col-span-8 h-fit mt-8 md:mt-0 w-full">
+              <div className="flex flex-col lg:flex-row md:mt-[40px] lg:mt-0 lg:col-span-8 mx-2 lg:mx-0">
+                <div className="flex md:gap-32 flex-col md:flex-row">
+                  <div className="lg:col-span-8 h-fit mt-10 md:mt-0">
                     <h5>
                       <b>
                         {theme.language === "Bahasa"
@@ -368,7 +370,9 @@ export default () => {
                     </h5>
 
                     <br />
+                  </div>
 
+                  <div>
                     <h5>
                       <b>
                         {theme.language === "Bahasa" ? "Peran: " : "Role: "}
@@ -378,16 +382,16 @@ export default () => {
                     </h5>
 
                     <br />
-                  </div>
 
-                  <div>
                     <Link
                       className={`group button-custom ${
                         theme.dark ? "bg-dm_secondary" : "bg-primary"
                       }`}
                       href={`/changePassword/${session._id}`}
                     >
-                      <h2 className="whitespace-pre">Change Password</h2>
+                      <h2 className="whitespace-pre mx-auto">
+                        Change Password
+                      </h2>
                     </Link>
                   </div>
                 </div>

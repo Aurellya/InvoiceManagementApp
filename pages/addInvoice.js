@@ -274,17 +274,6 @@ export default function addInvoice() {
     // console.log(jsonData);
   };
 
-  // // function to display calculator dialog
-  // function showCalculator() {
-  //   document.getElementById("calculator").style.display = "block";
-  // }
-
-  // // function to close calculator dialog
-  // function closeCalculator(e) {
-  //   e.preventDefault();
-  //   document.getElementById("calculator").style.display = "none";
-  // }
-
   const [showCalc, setShowCalc] = useState(false);
 
   return (
@@ -294,7 +283,7 @@ export default function addInvoice() {
       }
       role={session.role}
     >
-      <main className="container py-12 mx-10 md:mx-14">
+      <main className="pt-[76px] pb-12 md:py-12 px-8 md:px-14 w-full max-w-[1536px]">
         {/* header section */}
         <div className="flex md:items-center justify-between flex-col md:flex-row gap-4 md:gap-0 w-full md:mb-12">
           <div className="flex items-center gap-8">
@@ -322,7 +311,6 @@ export default function addInvoice() {
 
           <div className="flex justify-end">
             <button
-              // onClick={showCalculator}
               onClick={() => setShowCalc(!showCalc)}
               className="w-fit group flex items-center text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-tertiary text-white hover:opacity-80 transition duration-700 rounded-md"
             >
@@ -430,11 +418,6 @@ export default function addInvoice() {
                     } form-control block w-full px-3 py-1.5 font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
                     name="cname"
                     id="cname"
-                    // placeholder={
-                    //   theme.language === "Bahasa"
-                    //     ? "Masukkan Nama Pelanggan"
-                    //     : "Enter Customer Name"
-                    // }
                     onChange={handleChange}
                     required
                   />
@@ -529,11 +512,6 @@ export default function addInvoice() {
                       } form-control block px-3 py-1.5 w-full h-32 font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
                       name="notes"
                       id="notes"
-                      // placeholder={
-                      //   theme.language === "Bahasa"
-                      //     ? "Masukkan Catatan"
-                      //     : "Enter Notes"
-                      // }
                       onChange={handleChange}
                     ></textarea>
                   </div>
@@ -578,7 +556,7 @@ export default function addInvoice() {
                       <thead
                         className={`${
                           theme.dark ? "bg-primary" : "bg-gray-50"
-                        } border-b-2 border-gray-200 hidden md:table-header-group`}
+                        } border-b-2 border-gray-200 hidden lg:table-header-group`}
                       >
                         <tr>
                           <th className="w-12 p-3 text-sm font-semibold tracking-wide text-left"></th>
@@ -587,35 +565,35 @@ export default function addInvoice() {
                               ? "Jumlah"
                               : "Quantity"}
                           </th>
-                          <th className="min-w-[200px] p-3 text-sm font-semibold tracking-wide text-left">
+                          <th className="min-w-[250px] p-3 text-sm font-semibold tracking-wide text-left">
                             {theme.language === "Bahasa"
                               ? "Nama Barang"
                               : "Item Name"}
                           </th>
-                          <th className="w-60 p-3 text-sm font-semibold tracking-wide text-left">
+                          <th className="min-w-[220px] w-52 p-3 text-sm font-semibold tracking-wide text-left">
                             {theme.language === "Bahasa"
                               ? "Harga (/Unit)"
                               : "Price (/Unit)"}
                           </th>
-                          <th className="w-48 p-3 text-sm font-semibold tracking-wide text-left">
+                          <th className="min-w-[180px] w-48 p-3 text-sm font-semibold tracking-wide text-left">
                             Total
                           </th>
                         </tr>
                       </thead>
 
                       <tbody
-                        className="divide-y divide-primary md:divide-gray-100"
+                        className="divide-y divide-primary lg:divide-gray-100"
                         id="invoiceForm"
                       >
                         {[...Array(noOfRows).keys()].map((i) => (
                           <tr
                             className={`${
                               theme.dark ? "!bg-[#99AEBA]" : "bg-white"
-                            } flex flex-col md:table-row`}
+                            } flex flex-col lg:table-row`}
                             key={i}
                             id={`tr-${i}`}
                           >
-                            <td className="p-3 pb-0 md:pb-3 text-sm text-[#F44645] font-bold whitespace-nowrap text-right md:text-center">
+                            <td className="p-3 pb-0 lg:pb-3 text-sm text-[#F44645] font-bold whitespace-nowrap text-right lg:text-center">
                               <button
                                 className="mx-auto pt-1 pl-2"
                                 onClick={(e) => deleteRow(e, i)}
@@ -625,15 +603,15 @@ export default function addInvoice() {
                             </td>
 
                             <td
-                              className={`p-3 pt-0 md:pt-3 text-sm text-primary font-bold whitespace-nowrap`}
+                              className={`p-3 pt-0 lg:pt-3 text-sm text-primary font-bold whitespace-nowrap`}
                             >
                               <div>
-                                <h3 className="md:hidden">
+                                <h3 className="lg:hidden">
                                   {theme.language === "Bahasa"
                                     ? "Jumlah"
                                     : "Quantity"}
                                 </h3>
-                                <div className="relative mt-2 md:mt-0 rounded-md shadow-sm">
+                                <div className="relative mt-2 lg:mt-0 flex">
                                   <input
                                     autoComplete="off"
                                     type="number"
@@ -642,61 +620,57 @@ export default function addInvoice() {
                                     id={`amount-${i}`}
                                     className={`${
                                       theme.dark ? "!bg-[#99AEBA]" : "bg-white"
-                                    } form-control block w-full pl-3 pr-16 py-1.5 text-base font-normal text-gray-700 bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
+                                    } form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-clip-padding border border-solid border-gray-300 rounded-l transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
                                     placeholder=""
                                     onChange={handleChangeContent}
                                     required
                                   />
-                                  <div className="absolute inset-y-0 right-1 flex items-center">
-                                    <label htmlFor="unit" className="sr-only">
-                                      Unit
-                                    </label>
-                                    <select
-                                      id={`unit-${i}`}
-                                      name="unit"
-                                      className={`${
-                                        theme.dark
-                                          ? "!bg-[#99AEBA]"
-                                          : "bg-white"
-                                      } pl-1 py-1.5 text-base font-normal text-gray-700 bg-clip-padding rounded rounded-l-sm transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
-                                      onChange={handleChangeContent}
-                                      required
-                                      defaultValue={""}
-                                    >
-                                      <option disabled value=""></option>
-                                      <option value="bh">
-                                        {theme.language === "Bahasa"
-                                          ? "bh"
-                                          : "pcs"}
-                                      </option>
-                                      <option value="ls">
-                                        {theme.language === "Bahasa"
-                                          ? "ls"
-                                          : "doz"}
-                                      </option>
-                                      <option value="grs">
-                                        {theme.language === "Bahasa"
-                                          ? "grs"
-                                          : "gro"}
-                                      </option>
-                                      <option value="dus">
-                                        {theme.language === "Bahasa"
-                                          ? "dus"
-                                          : "box"}
-                                      </option>
-                                    </select>
-                                  </div>
+                                  <label htmlFor="unit" className="sr-only">
+                                    Unit
+                                  </label>
+                                  <select
+                                    id={`unit-${i}`}
+                                    name="unit"
+                                    className={`${
+                                      theme.dark ? "!bg-[#99AEBA]" : "bg-white"
+                                    } px-1 py-1.5 text-base font-normal text-gray-700 bg-clip-padding border border-solid border-gray-300 rounded-r transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
+                                    onChange={handleChangeContent}
+                                    required
+                                    defaultValue={""}
+                                  >
+                                    <option disabled value=""></option>
+                                    <option value="bh">
+                                      {theme.language === "Bahasa"
+                                        ? "bh"
+                                        : "pcs"}
+                                    </option>
+                                    <option value="ls">
+                                      {theme.language === "Bahasa"
+                                        ? "ls"
+                                        : "doz"}
+                                    </option>
+                                    <option value="grs">
+                                      {theme.language === "Bahasa"
+                                        ? "grs"
+                                        : "gro"}
+                                    </option>
+                                    <option value="dus">
+                                      {theme.language === "Bahasa"
+                                        ? "dus"
+                                        : "box"}
+                                    </option>
+                                  </select>
                                 </div>
                               </div>
                             </td>
 
                             <td className="p-3 text-sm first-line:text-primary font-bold whitespace-nowrap">
-                              <h3 className="md:hidden">
+                              <h3 className="lg:hidden">
                                 {theme.language === "Bahasa"
                                   ? "Nama Barang"
                                   : "Item Name"}
                               </h3>
-                              <div className="mt-2 md:mt-0">
+                              <div className="mt-2 lg:mt-0">
                                 <input
                                   name="item_name"
                                   autoComplete="off"
@@ -713,76 +687,73 @@ export default function addInvoice() {
                             </td>
 
                             <td className="p-3 text-sm text-primary font-bold whitespace-nowrap">
-                              <h3 className="md:hidden">
+                              <h3 className="lg:hidden">
                                 {theme.language === "Bahasa"
                                   ? "Harga (/Unit)"
                                   : "Price (/Unit)"}
                               </h3>
                               <div>
-                                <div className="relative mt-2 md:mt-0 rounded-md shadow-sm">
+                                <div className="relative mt-2 lg:mt-0 flex">
                                   <input
                                     name="price_per_item"
                                     autoComplete="off"
                                     type="text"
+                                    id={`pricePerItemInput-${i}`}
                                     className={`${
                                       theme.dark ? "!bg-[#99AEBA]" : "bg-white"
-                                    } form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
-                                    id={`pricePerItemInput-${i}`}
+                                    } form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-clip-padding border border-solid border-gray-300 rounded-l transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
                                     placeholder=""
                                     onFocus={(e) => onFocus(e)}
                                     onBlur={(e) => onBlur(e)}
                                     onChange={handleChangeContent}
                                     required
                                   />
-                                  <div className="absolute inset-y-0 right-1 flex items-center">
-                                    <label
-                                      htmlFor="price_unit"
-                                      className="sr-only"
-                                    >
-                                      Unit Item
-                                    </label>
-                                    <select
-                                      id={`price_unit-${i}`}
-                                      name="price_unit"
-                                      className={`${
-                                        theme.dark
-                                          ? "!bg-[#99AEBA]"
-                                          : "bg-white"
-                                      } pl-1 py-1.5 text-base font-normal text-gray-700 bg-clip-padding rounded rounded-l-sm transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
-                                      onChange={handleChangeContent}
-                                      required
-                                      defaultValue={""}
-                                    >
-                                      <option disabled value=""></option>
-                                      <option value="bh">
-                                        {theme.language === "Bahasa"
-                                          ? "/bh"
-                                          : "/pcs"}
-                                      </option>
-                                      <option value="ls">
-                                        {theme.language === "Bahasa"
-                                          ? "/ls"
-                                          : "/doz"}
-                                      </option>
-                                      <option value="grs">
-                                        {theme.language === "Bahasa"
-                                          ? "/grs"
-                                          : "/gro"}
-                                      </option>
-                                      <option value="dus">
-                                        {theme.language === "Bahasa"
-                                          ? "/dus"
-                                          : "/box"}
-                                      </option>
-                                    </select>
-                                  </div>
+
+                                  <label
+                                    htmlFor="price_unit"
+                                    className="sr-only"
+                                  >
+                                    Unit Item
+                                  </label>
+                                  <select
+                                    id={`price_unit-${i}`}
+                                    name="price_unit"
+                                    className={`${
+                                      theme.dark ? "!bg-[#99AEBA]" : "bg-white"
+                                    } px-1 py-1.5 text-base font-normal text-gray-700 bg-clip-padding border border-solid border-gray-300 rounded-r transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
+                                    onChange={handleChangeContent}
+                                    required
+                                    defaultValue={""}
+                                  >
+                                    <option disabled value=""></option>
+                                    <option value="bh">
+                                      {theme.language === "Bahasa"
+                                        ? "/bh"
+                                        : "/pcs"}
+                                    </option>
+                                    <option value="ls">
+                                      {theme.language === "Bahasa"
+                                        ? "/ls"
+                                        : "/doz"}
+                                    </option>
+                                    <option value="grs">
+                                      {theme.language === "Bahasa"
+                                        ? "/grs"
+                                        : "/gro"}
+                                    </option>
+                                    <option value="dus">
+                                      {theme.language === "Bahasa"
+                                        ? "/dus"
+                                        : "/box"}
+                                    </option>
+                                  </select>
                                 </div>
                               </div>
                             </td>
 
                             <td className="p-3 mb-2 md:mb-0 text-sm text-primary font-bold whitespace-nowrap">
-                              <h3 className="md:hidden">Total</h3>
-                              <div className="mt-2 md:mt-0">
+                              <h3 className="lg:hidden">Total</h3>
+                              <div className="mt-2 lg:mt-0">
                                 <input
                                   name="total"
                                   autoComplete="off"

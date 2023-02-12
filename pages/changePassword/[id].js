@@ -94,7 +94,9 @@ export default function changePassword() {
       }
       role={session.role}
     >
-      <main className="container py-12 mx-10 md:mx-14">
+      <main
+        className={`pt-[76px] pb-12 md:py-12 px-8 md:px-14 w-full max-w-[1536px]`}
+      >
         {/* header section */}
         <div className="flex md:items-center justify-between flex-col md:flex-row gap-4 md:gap-0 w-full md:mb-12">
           <div className="flex items-center gap-8">
@@ -212,14 +214,14 @@ export default function changePassword() {
                 <div
                   className={`${
                     theme.dark ? "text-neutral" : "text-primary"
-                  } lg:col-span-4 flex justify-center items-center lg:mt-[-80px] mb-10 lg:mb-0`}
+                  } lg:col-span-4 flex justify-center items-center lg:mt-[-50px] mb-10 lg:mb-0`}
                 >
                   <div
                     className={`${
                       theme.dark ? "border-y-neutral" : "border-y-primary"
                     } border-y-8 rounded-full w-fit p-10 pl-[60px]`}
                   >
-                    {React.createElement(FaUserEdit, { size: "140" })}
+                    {React.createElement(FaUserEdit, { size: "120" })}
                   </div>
                 </div>
 
@@ -327,10 +329,10 @@ export default function changePassword() {
                   </div>
 
                   {/* submit button */}
-                  <div className="text-center mt-8">
+                  <div className="text-center mt-4">
                     <button
                       type="submit"
-                      className="group text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
+                      className="group text-sm font-bold gap-2 py-2 px-8 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
                     >
                       {theme.language === "Bahasa" ? "Simpan" : "Save"}
                     </button>

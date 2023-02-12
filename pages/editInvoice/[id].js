@@ -340,22 +340,16 @@ export default function editInvoice() {
     // console.log(jsonData);
   };
 
-  // // function to display calculator dialog
-  // function showCalculator() {
-  //   document.getElementById("calculator").style.display = "block";
-  // }
-
-  // // function to close calculator dialog
-  // function closeCalculator(e) {
-  //   e.preventDefault();
-  //   document.getElementById("calculator").style.display = "none";
-  // }
-
   const [showCalc, setShowCalc] = useState(false);
 
   return (
-    <LayoutIn title="Settings" role={session.role}>
-      <main className="container py-12 mx-10 md:mx-14">
+    <LayoutIn
+      title={
+        theme.language === "Bahasa" ? "Formulir Edit Nota" : "Edit Invoice Form"
+      }
+      role={session.role}
+    >
+      <main className="pt-[76px] pb-12 md:py-12 px-8 md:px-14 w-full max-w-[1536px]">
         {/* header section */}
         <div className="flex md:items-center justify-between flex-col md:flex-row gap-4 md:gap-0 w-full md:mb-12">
           <div className="flex items-center gap-8">
@@ -383,7 +377,6 @@ export default function editInvoice() {
 
           <div className="flex justify-end">
             <button
-              // onClick={showCalculator}
               onClick={() => setShowCalc(!showCalc)}
               className="w-fit group flex items-center text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-tertiary text-white hover:opacity-80 transition duration-700 rounded-md"
             >
@@ -480,10 +473,10 @@ export default function editInvoice() {
             }`}
           >
             {/* edit invoice form */}
-            <form className="flex w-full flex-col" onSubmit={submitForm}>
+            <form className="w-full flex flex-col" onSubmit={submitForm}>
               {/* top */}
-              <div>
-                <div className="">
+              <div className="">
+                <div>
                   <h2 className="text-lg md:text-xl mb-3">
                     {theme.language === "Bahasa"
                       ? "Rincican Nota"
@@ -495,11 +488,11 @@ export default function editInvoice() {
                 <br />
 
                 <div
-                  className={`md:py-2 px-0 md:px-4 flex md:justify-between flex-col md:grid md:grid-cols-12 md:gap-20 text-sm font-bold md:font-medium md:text-base ${
+                  className={`overflow-auto md:py-2 px-0 md:px-4 flex flex-col md:flex-row md:gap-10 lg:gap-20 text-sm font-bold md:font-medium md:text-base ${
                     theme.dark ? "text-neutral" : "text-gray-700"
                   }`}
                 >
-                  <div className="md:col-span-3">
+                  <div className="min-w-[200px] w-full md:w-1/3">
                     {/* customer name */}
                     <div className="form-group mb-6">
                       <label
@@ -520,11 +513,6 @@ export default function editInvoice() {
                         } form-control block w-full px-3 py-1.5 font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
                         name="cname"
                         id="cname"
-                        // placeholder={
-                        //   theme.language === "Bahasa"
-                        //     ? "Masukkan Nama Pelanggan"
-                        //     : "Enter Customer Name"
-                        // }
                         onChange={handleChange}
                         required
                         defaultValue={data.cname}
@@ -556,9 +544,9 @@ export default function editInvoice() {
                     </div>
                   </div>
 
-                  <div className="flex flex-col-reverse md:grid md:grid-cols-8 md:gap-20 w-full md:col-span-8">
+                  <div className="w-full md:w-2/3 flex flex-col-reverse md:flex-row md:gap-10 lg:gap-20">
                     {/* notes */}
-                    <div className="col-span-4">
+                    <div className="min-w-[200px] w-full md:w-1/2">
                       <div className="form-group mb-6">
                         <label
                           htmlFor="notes"
@@ -576,11 +564,6 @@ export default function editInvoice() {
                           } form-control block px-3 py-1.5 w-full h-32 font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
                           name="notes"
                           id="notes"
-                          // placeholder={
-                          //   theme.language === "Bahasa"
-                          //     ? "Masukkan Catatan"
-                          //     : "Enter Notes"
-                          // }
                           onChange={handleChange}
                           defaultValue={data.notes}
                         ></textarea>
@@ -588,7 +571,7 @@ export default function editInvoice() {
                     </div>
 
                     {/* status */}
-                    <div className="col-span-4">
+                    <div className="min-w-[130px] w-full md:w-1/2">
                       <div className="form-group mb-6">
                         <label
                           htmlFor="status"
@@ -598,7 +581,7 @@ export default function editInvoice() {
                             ? "Pembayaran:"
                             : "Status:"}
                         </label>
-                        <div className="flex px-4 font-medium">
+                        <div className="px-4 font-medium">
                           <div>
                             <div className="form-check">
                               <input
@@ -623,6 +606,7 @@ export default function editInvoice() {
                                   : "Not Paid"}
                               </label>
                             </div>
+
                             <div className="form-check">
                               <input
                                 className="form-check-input appearance-none rounded-full h-4 w-4 border-2 border-gray-300 bg-white checked:bg-primary focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
@@ -653,7 +637,7 @@ export default function editInvoice() {
               </div>
 
               {/* bottom */}
-              <div className="mt-6 ">
+              <div className="mt-6">
                 <h2 className="text-lg md:text-xl mb-3">
                   {theme.language === "Bahasa" ? "Barang" : "Items"}
                 </h2>
@@ -689,17 +673,17 @@ export default function editInvoice() {
                               ? "Jumlah"
                               : "Quantity"}
                           </th>
-                          <th className="min-w-[200px] p-3 text-sm font-semibold tracking-wide text-left">
+                          <th className="min-w-[250px] p-3 text-sm font-semibold tracking-wide text-left">
                             {theme.language === "Bahasa"
                               ? "Nama Barang"
                               : "Item Name"}
                           </th>
-                          <th className="w-60 p-3 text-sm font-semibold tracking-wide text-left">
+                          <th className="min-w-[220px] w-52 p-3 text-sm font-semibold tracking-wide text-left">
                             {theme.language === "Bahasa"
                               ? "Harga (/Unit)"
                               : "Price (/Unit)"}
                           </th>
-                          <th className="w-48 p-3 text-sm font-semibold tracking-wide text-left">
+                          <th className="min-w-[180px] w-48 p-3 text-sm font-semibold tracking-wide text-left">
                             Total
                           </th>
                         </tr>
@@ -732,7 +716,7 @@ export default function editInvoice() {
                                     ? "Jumlah"
                                     : "Quantity"}
                                 </h3>
-                                <div className="relative mt-2 md:mt-0 rounded-md shadow-sm">
+                                <div className="relative mt-2 lg:mt-0 flex">
                                   <input
                                     autoComplete="off"
                                     type="number"
@@ -741,50 +725,46 @@ export default function editInvoice() {
                                     id={`amount-${i}`}
                                     className={`${
                                       theme.dark ? "!bg-[#99AEBA]" : "bg-white"
-                                    } form-control block w-full pl-3 pr-16 py-1.5 text-base text-gray-700 font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
+                                    } form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-clip-padding border border-solid border-gray-300 rounded-l transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
                                     placeholder=""
                                     onChange={handleChangeContent}
                                     required
                                   />
-                                  <div className="absolute inset-y-0 right-1 flex items-center">
-                                    <label htmlFor="unit" className="sr-only">
-                                      Unit
-                                    </label>
-                                    <select
-                                      id={`unit-${i}`}
-                                      name="unit"
-                                      className={`${
-                                        theme.dark
-                                          ? "!bg-[#99AEBA]"
-                                          : "bg-white"
-                                      } pl-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding rounded rounded-l-sm transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
-                                      onChange={handleChangeContent}
-                                      required
-                                      defaultValue={""}
-                                    >
-                                      <option disabled value=""></option>
-                                      <option value="bh">
-                                        {theme.language === "Bahasa"
-                                          ? "bh"
-                                          : "pcs"}
-                                      </option>
-                                      <option value="ls">
-                                        {theme.language === "Bahasa"
-                                          ? "ls"
-                                          : "doz"}
-                                      </option>
-                                      <option value="grs">
-                                        {theme.language === "Bahasa"
-                                          ? "grs"
-                                          : "gro"}
-                                      </option>
-                                      <option value="dus">
-                                        {theme.language === "Bahasa"
-                                          ? "dus"
-                                          : "box"}
-                                      </option>
-                                    </select>
-                                  </div>
+                                  <label htmlFor="unit" className="sr-only">
+                                    Unit
+                                  </label>
+                                  <select
+                                    id={`unit-${i}`}
+                                    name="unit"
+                                    className={`${
+                                      theme.dark ? "!bg-[#99AEBA]" : "bg-white"
+                                    } px-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-r transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
+                                    onChange={handleChangeContent}
+                                    required
+                                    defaultValue={""}
+                                  >
+                                    <option disabled value=""></option>
+                                    <option value="bh">
+                                      {theme.language === "Bahasa"
+                                        ? "bh"
+                                        : "pcs"}
+                                    </option>
+                                    <option value="ls">
+                                      {theme.language === "Bahasa"
+                                        ? "ls"
+                                        : "doz"}
+                                    </option>
+                                    <option value="grs">
+                                      {theme.language === "Bahasa"
+                                        ? "grs"
+                                        : "gro"}
+                                    </option>
+                                    <option value="dus">
+                                      {theme.language === "Bahasa"
+                                        ? "dus"
+                                        : "box"}
+                                    </option>
+                                  </select>
                                 </div>
                               </div>
                             </td>
@@ -802,7 +782,7 @@ export default function editInvoice() {
                                   type="text"
                                   className={`${
                                     theme.dark ? "!bg-[#99AEBA]" : "bg-white"
-                                  } form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
+                                  } form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
                                   id={`itemNameInput-${i}`}
                                   placeholder=""
                                   onChange={handleChangeContent}
@@ -818,14 +798,14 @@ export default function editInvoice() {
                                   : "Price (/Unit)"}
                               </h3>
                               <div>
-                                <div className="relative mt-2 md:mt-0 rounded-md shadow-sm">
+                                <div className="relative mt-2 lg:mt-0 flex">
                                   <input
                                     name="price_per_item"
                                     autoComplete="off"
                                     type="text"
                                     className={`${
                                       theme.dark ? "!bg-[#99AEBA]" : "bg-white"
-                                    } form-control block w-full px-3 py-1.5 text-base font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
+                                    } form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-clip-padding border border-solid border-gray-300 rounded-l transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
                                     id={`pricePerItemInput-${i}`}
                                     placeholder=""
                                     onFocus={(e) => onFocus(e)}
@@ -833,48 +813,44 @@ export default function editInvoice() {
                                     onChange={handleChangeContent}
                                     required
                                   />
-                                  <div className="absolute inset-y-0 right-1 flex items-center">
-                                    <label
-                                      htmlFor="price_unit"
-                                      className="sr-only"
-                                    >
-                                      Unit Item
-                                    </label>
-                                    <select
-                                      id={`price_unit-${i}`}
-                                      name="price_unit"
-                                      className={`${
-                                        theme.dark
-                                          ? "!bg-[#99AEBA]"
-                                          : "bg-white"
-                                      } pl-1 py-1.5 text-base font-normal text-gray-700 bg-clip-padding rounded rounded-l-sm transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
-                                      onChange={handleChangeContent}
-                                      required
-                                      defaultValue={""}
-                                    >
-                                      <option disabled value=""></option>
-                                      <option value="bh">
-                                        {theme.language === "Bahasa"
-                                          ? "/bh"
-                                          : "/pcs"}
-                                      </option>
-                                      <option value="ls">
-                                        {theme.language === "Bahasa"
-                                          ? "/ls"
-                                          : "/doz"}
-                                      </option>
-                                      <option value="grs">
-                                        {theme.language === "Bahasa"
-                                          ? "/grs"
-                                          : "/gro"}
-                                      </option>
-                                      <option value="dus">
-                                        {theme.language === "Bahasa"
-                                          ? "/dus"
-                                          : "/box"}
-                                      </option>
-                                    </select>
-                                  </div>
+                                  <label
+                                    htmlFor="price_unit"
+                                    className="sr-only"
+                                  >
+                                    Unit Item
+                                  </label>
+                                  <select
+                                    id={`price_unit-${i}`}
+                                    name="price_unit"
+                                    className={`${
+                                      theme.dark ? "!bg-[#99AEBA]" : "bg-white"
+                                    } px-1 py-1.5 text-base font-normal text-gray-700 bg-clip-padding border border-solid border-gray-300 rounded-r transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
+                                    onChange={handleChangeContent}
+                                    required
+                                    defaultValue={""}
+                                  >
+                                    <option disabled value=""></option>
+                                    <option value="bh">
+                                      {theme.language === "Bahasa"
+                                        ? "/bh"
+                                        : "/pcs"}
+                                    </option>
+                                    <option value="ls">
+                                      {theme.language === "Bahasa"
+                                        ? "/ls"
+                                        : "/doz"}
+                                    </option>
+                                    <option value="grs">
+                                      {theme.language === "Bahasa"
+                                        ? "/grs"
+                                        : "/gro"}
+                                    </option>
+                                    <option value="dus">
+                                      {theme.language === "Bahasa"
+                                        ? "/dus"
+                                        : "/box"}
+                                    </option>
+                                  </select>
                                 </div>
                               </div>
                             </td>
@@ -888,7 +864,7 @@ export default function editInvoice() {
                                   type="text"
                                   className={`${
                                     theme.dark ? "!bg-[#99AEBA]" : "bg-white"
-                                  } form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
+                                  } form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
                                   id={`totalInput-${i}`}
                                   placeholder=""
                                   onFocus={(e) => {

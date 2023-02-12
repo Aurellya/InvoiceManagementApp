@@ -13,7 +13,9 @@ export default () => {
 
   return (
     <LayoutIn title="Settings" role={session.role}>
-      <main className="container py-12 mx-14">
+      <main
+        className={`pt-[76px] pb-12 md:py-12 px-8 md:px-14 w-full max-w-[1536px]`}
+      >
         {/* header section */}
         <div className="flex md:items-center w-full md:mb-12">
           <div>
@@ -38,7 +40,7 @@ export default () => {
           <hr />
           <br />
 
-          <div className="flex flex-col lg:grid lg:grid-cols-12 lg:gap-10 pb-0 md:pb-0 pt-3">
+          <div className="flex flex-col lg:grid lg:grid-cols-12 lg:gap-10 pb-0 md:pb-0 pt-3 w-full md:w-fit lg:w-full">
             {/* left */}
             <div
               className={`lg:col-span-4 flex justify-center items-center mb-0 ${
@@ -50,13 +52,12 @@ export default () => {
                   theme.dark ? "border-y-white " : "border-y-primary"
                 }`}
               >
-                {React.createElement(AiOutlineSetting, { size: "180" })}
+                {React.createElement(AiOutlineSetting, { size: "130" })}
               </div>
             </div>
 
             {/* right */}
-            {/* <div className="flex flex-col justify-center md:mt-[40px] lg:mt-[-40px] lg:col-span-8"> */}
-            <div className="lg:col-span-8">
+            <div className="lg:col-span-8 mt-[40px] lg:mt-0 mx-2 lg:mx-0">
               {/* 1 */}
               <div>
                 <h5>
@@ -215,7 +216,6 @@ export default () => {
                 </h5>
               </div>
             </div>
-            {/* </div> */}
           </div>
 
           <br />

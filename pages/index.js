@@ -169,7 +169,7 @@ function User({ session }) {
         title={theme.language === "Bahasa" ? "Dasbor" : "Dashboard"}
         role={session.role}
       >
-        <main className="container py-12 mx-10 md:mx-14">
+        <main className="container pt-[76px] pb-12 md:py-12 mx-8 md:mx-14">
           {/* header section */}
           <div className="flex md:items-center justify-between flex-col md:flex-row gap-4 md:gap-0 w-full">
             <h3 className="text-3xl md:text-4xl font-bold">
@@ -455,16 +455,17 @@ function User({ session }) {
                     </div>
                   </div>
                 </div>
-
-                <div>
-                  <p className="mt-4 mx-4">
-                    * ask admin for permission to access this data
-                  </p>
-                </div>
+                {session && session.role == "staff" && (
+                  <div>
+                    <p className="mt-4 mx-4">
+                      * ask admin for permission to access this data
+                    </p>
+                  </div>
+                )}
               </div>
 
               {/* additional info */}
-              <div className="flex flex-wrap lg:grid lg:grid-cols-12 md:gap-10 lg:gap-14 my-4 lg:mt-0 lg:mb-12">
+              <div className="flex flex-wrap lg:grid lg:grid-cols-12 md:gap-10 lg:gap-12 my-4 lg:mt-0">
                 {/* left */}
                 <div
                   className={`table-div-custom p-6 rounded-md col-span-7 w-full mb-4 md:mb-0 ${
@@ -754,20 +755,20 @@ function User({ session }) {
                         monthlyRevenue.map((mr) => (
                           <div
                             key={mr._id}
-                            className="w-full md:w-1/2 xl:w-1/2 pt-3 px-1 lg:px-2"
+                            className="w-full md:w-1/2 pt-3 px-1"
                           >
-                            <div className="flex border rounded shadow p-2 overflow-hidden py-3">
+                            <div className="flex border rounded shadow p-2 overflow-hidden py-3 overflow-x-auto">
                               <div
                                 className={`bg-primary w-[18px] rounded md:hidden`}
                               ></div>
                               <div className="flex-1 text-right">
-                                <h5 className="text-sm md:text-base">
+                                <h5 className="text-sm md:text-base break-words">
                                   {theme.language === "Bahasa"
                                     ? bulan[mr.month - 1]
                                     : months[mr.month - 1]}
                                   &nbsp;{mr.year}
                                 </h5>
-                                <h3 className="text-xl md:text-2xl">
+                                <h3 className="text-xl md:text-2xl break-words">
                                   {mr.average
                                     ? mr.average.toLocaleString(undefined, {
                                         maximumFractionDigits: 0,

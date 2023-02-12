@@ -40,17 +40,6 @@ export default function addCustomer() {
   const submitForm = (e) => {
     e.preventDefault();
 
-    // var jsonData = {
-    //   group_code: session.group_code,
-    //   cust: {
-    //     name: data.name,
-    //     phone_no: data.phone_no,
-    //     email: data.email,
-    //     address: data.address,
-    //     remarks: data.remarks,
-    //   },
-    // };
-
     var jsonData = {
       name: data.name,
       phone_no: data.phone_no,
@@ -84,9 +73,9 @@ export default function addCustomer() {
       }
       role={session.role}
     >
-      <main className="container py-12 mx-10 md:mx-14">
+      <main className="pt-[76px] pb-12 md:py-12 px-8 md:px-14 w-full max-w-[1536px]">
         {/* header section */}
-        <div className="flex md:items-center justify-between flex-col md:flex-row gap-4 md:gap-0 w-full md:mb-12">
+        <div className="flex md:items-center justify-between w-full mb-6 md:mb-12">
           <div className="flex items-center gap-8">
             <Link
               className={`${
@@ -185,7 +174,7 @@ export default function addCustomer() {
               </div>
 
               {/* right */}
-              <div className="lg:col-span-6">
+              <div className="lg:col-span-8 lg:pr-8">
                 <div className="lg:grid lg:grid-cols-12 gap-10 font-medium text-base">
                   {/* first col */}
                   <div className="lg:col-span-6">
@@ -211,11 +200,6 @@ export default function addCustomer() {
                         } form-control block w-full px-3 py-1.5 font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
                         name="name"
                         id="name"
-                        // placeholder={
-                        //   theme.language === "Bahasa"
-                        //     ? "Masukkan Nama Pelanggan"
-                        //     : "Enter Customer Name"
-                        // }
                         onChange={handleChange}
                         required
                       />
@@ -243,11 +227,6 @@ export default function addCustomer() {
                         } form-control block w-full px-3 py-1.5 font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
                         name="phone_no"
                         id="phone_no"
-                        // placeholder={
-                        //   theme.language === "Bahasa"
-                        //     ? "Masukkan Nomot Tlp"
-                        //     : "Enter Phone No"
-                        // }
                         onChange={handleChange}
                         required
                       />
@@ -273,11 +252,6 @@ export default function addCustomer() {
                         } form-control block px-3 py-1.5 w-full h-24 font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
                         name="address"
                         id="address"
-                        // placeholder={
-                        //   theme.language === "Bahasa"
-                        //     ? "Masukkan Alamat"
-                        //     : "Enter Address"
-                        // }
                         onChange={handleChange}
                         required
                       ></textarea>
@@ -304,11 +278,6 @@ export default function addCustomer() {
                         } form-control block w-full px-3 py-1.5 font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
                         name="email"
                         id="email"
-                        // placeholder={
-                        //   theme.language === "Bahasa"
-                        //     ? "Masukkan Email"
-                        //     : "Enter Email"
-                        // }
                         onChange={handleChange}
                         required
                       />
@@ -336,11 +305,6 @@ export default function addCustomer() {
                         } form-control block px-3 py-1.5 w-full h-32 font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
                         name="remarks"
                         id="remarks"
-                        // placeholder={
-                        //   theme.language === "Bahasa"
-                        //     ? "Masukkan Keterangan"
-                        //     : "Enter Remarks"
-                        // }
                         onChange={handleChange}
                       ></textarea>
                     </div>
@@ -351,7 +315,7 @@ export default function addCustomer() {
                 <div className="text-center mt-8">
                   <button
                     type="submit"
-                    className="group text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
+                    className="group text-sm font-bold gap-2 py-2 px-8 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
                   >
                     Submit
                   </button>

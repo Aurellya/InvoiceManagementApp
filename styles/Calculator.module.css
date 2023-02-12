@@ -4,6 +4,7 @@
   border-radius: 2px;
   margin: 0.3em;
   padding: 6px 20px;
+  @apply px-0 md:px-5;
 }
 
 .button:hover {
@@ -26,10 +27,10 @@
   color: white;
 }
 
-.resultado {
+.result_area {
   color: white;
   display: flex;
-  justify-content: flex-end; /* Ou 'right' = o resultado seria o mesmo */
+  justify-content: flex-end; 
   margin-right: 1em;
   font-size: 3.5em;
 }

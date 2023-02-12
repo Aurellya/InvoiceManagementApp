@@ -128,7 +128,7 @@ export default function Register() {
         <title>Register</title>
       </Head>
 
-      <section className="w-3/4 mx-auto flex flex-col gap-10">
+      <section className="w-10/12 md:w-3/4 mx-auto flex flex-col gap-6 md:gap-10">
         {/* modal */}
         <div className="hidden" id="modal">
           <div className="z-20 bg-slate-800 bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0">
@@ -150,7 +150,9 @@ export default function Register() {
 
         {/* header */}
         <div className="title">
-          <h1 className="text-gray-800 text-4xl font-bold py-4">Register</h1>
+          <h1 className="text-gray-800 text-4xl font-bold pb-4 md:py-4">
+            Register
+          </h1>
           <p className="w-3/4 mx-auto text-gray-400">
             Welcome to ASC App! Register and Automate Your Invoicing with Us.
           </p>

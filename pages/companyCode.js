@@ -130,7 +130,16 @@ export default () => {
       title={theme.language === "Bahasa" ? "Kode Perusahaan" : "Company Code"}
       role={session.role}
     >
-      <main className="container py-12 mx-14">
+      <main
+        className={`pt-[76px] pb-12 md:py-12 px-8 md:px-14 w-full ${
+          loading1 ||
+          loading2 ||
+          (!loading1 && (!approvalItem || approvalItem.length == 0)) ||
+          (!loading2 && (!staff || staff.length == 0))
+            ? "md:w-full"
+            : "md:w-auto"
+        } lg:w-full max-w-[1536px]`}
+      >
         {/* header section */}
         <div
           className={`flex md:items-center justify-between w-full ${
@@ -204,32 +213,26 @@ export default () => {
           {user && (
             <>
               {/* current group details */}
-              <div className="flex flex-col lg:grid lg:grid-cols-12 lg:gap-10 pb-0 md:pb-0 pt-3">
-                <div className="flex flex-col lg:flex-row md:mt-[40px] lg:mt-0 lg:col-span-8">
-                  <div className="md:col-span-8 h-fit mt-8 md:mt-0 w-full">
-                    <h5>
-                      <b>
-                        {theme.language === "Bahasa"
-                          ? "Kode Perusahaan: "
-                          : "Company Code: "}
-                      </b>
-                      <br />
-                      {user.group_code}
-                    </h5>
+              <div className="pt-3 px-2">
+                <h5>
+                  <b>
+                    {theme.language === "Bahasa"
+                      ? "Kode Perusahaan: "
+                      : "Company Code: "}
+                  </b>
+                  <br />
+                  {user.group_code}
+                </h5>
 
-                    <br />
+                <br />
 
-                    <h5>
-                      <b>
-                        {theme.language === "Bahasa" ? "Peran: " : "Role: "}
-                      </b>
-                      <br />
-                      {user.role}
-                    </h5>
+                <h5>
+                  <b>{theme.language === "Bahasa" ? "Peran: " : "Role: "}</b>
+                  <br />
+                  {user.role}
+                </h5>
 
-                    <br />
-                  </div>
-                </div>
+                <br />
               </div>
 
               {/* approval req table */}
@@ -366,6 +369,96 @@ export default () => {
                         </table>
                       </div>
 
+                      {/* mobile view */}
+                      {paginateItems && (
+                        <h2 className="text-sm md:hidden text-right">
+                          <span className="font-bold">Total: </span>
+                          {paginateItems.length}{" "}
+                          {theme.language === "Bahasa"
+                            ? "Item"
+                            : paginateItems.length > 1
+                            ? "Items"
+                            : "Item"}
+                        </h2>
+                      )}
+                      <br className="md:hidden" />
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:hidden">
+                        {paginateItems &&
+                          paginateItems.map((item) => (
+                            <div
+                              className={`${
+                                theme.dark ? "!bg-[#99AEBA]" : "bg-white"
+                              } text-gray-700 space-y-3 p-4 pb-6 rounded-lg shadow`}
+                              key={item._id.toString()}
+                            >
+                              <div className="text-sm font-medium break-words">
+                                <b>Id:</b>
+                                <br />
+                                {item._id}
+                              </div>
+
+                              <div className="text-sm font-medium">
+                                <b>
+                                  {theme.language === "Bahasa"
+                                    ? "Nama Pemohon:"
+                                    : "Applicant's Username:"}
+                                </b>
+                                <br />
+                                {item.applicantId.username}
+                              </div>
+
+                              <div className="text-sm font-medium">
+                                <b>
+                                  {theme.language === "Bahasa"
+                                    ? "Email Pemohon:"
+                                    : "Applicant's Email:"}
+                                </b>
+                                <br />
+                                {item.applicantId.email}
+                              </div>
+
+                              <hr />
+
+                              <div className="flex justify-between pt-3">
+                                <button
+                                  onClick={(e) =>
+                                    processReq(
+                                      e,
+                                      "approve",
+                                      item.applicantId._id,
+                                      item._id
+                                    )
+                                  }
+                                  className="group button-custom bg-tertiary"
+                                >
+                                  <h2 className="whitespace-pre">
+                                    {theme.language === "Bahasa"
+                                      ? "Terima"
+                                      : "Approve"}
+                                  </h2>
+                                </button>
+                                <button
+                                  onClick={(e) =>
+                                    processReq(
+                                      e,
+                                      "reject",
+                                      item.applicantId._id,
+                                      item._id
+                                    )
+                                  }
+                                  className="group button-custom bg-[#F44645]"
+                                >
+                                  <h2 className="whitespace-pre">
+                                    {theme.language === "Bahasa"
+                                      ? "Tolak"
+                                      : "Reject"}
+                                  </h2>
+                                </button>
+                              </div>
+                            </div>
+                          ))}
+                      </div>
+
                       <Pagination
                         items={approvalItem.length}
                         currentPage={currentPage1}
@@ -487,6 +580,68 @@ export default () => {
                             )}
                           </tbody>
                         </table>
+                      </div>
+
+                      {/* mobile view */}
+                      {paginateStaff && (
+                        <h2 className="text-sm md:hidden text-right">
+                          <span className="font-bold">Total: </span>
+                          {paginateStaff.length}{" "}
+                          {theme.language === "Bahasa"
+                            ? "Karyawan"
+                            : paginateStaff.length > 1
+                            ? "Staffs"
+                            : "Staff"}
+                        </h2>
+                      )}
+                      <br className="md:hidden" />
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:hidden">
+                        {paginateStaff &&
+                          paginateStaff.map((_staff) => (
+                            <div
+                              className={`${
+                                theme.dark ? "!bg-[#99AEBA]" : "bg-white"
+                              } text-gray-700 space-y-3 p-4 pb-6 rounded-lg shadow`}
+                              key={_staff._id.toString()}
+                            >
+                              <div className="text-sm font-medium break-words">
+                                <b>Staff Id:</b>
+                                <br />
+                                {_staff._id}
+                              </div>
+
+                              <div className="text-sm font-medium">
+                                <b>
+                                  {theme.language === "Bahasa"
+                                    ? "Nama Pengguna"
+                                    : "Username"}
+                                </b>
+                                <br />
+                                {_staff.username}
+                              </div>
+
+                              <div className="text-sm font-medium">
+                                <b>Email</b>
+                                <br />
+                                {_staff.email}
+                              </div>
+
+                              <hr />
+
+                              <div className="flex justify-end pt-3">
+                                <button
+                                  onClick={(e) => kickStaff(e, _staff._id)}
+                                  className="group button-custom bg-[#F44645]"
+                                >
+                                  <h2 className="whitespace-pre">
+                                    {theme.language === "Bahasa"
+                                      ? "Keluarkan"
+                                      : "Kick"}
+                                  </h2>
+                                </button>
+                              </div>
+                            </div>
+                          ))}
                       </div>
 
                       <Pagination

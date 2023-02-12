@@ -73,9 +73,9 @@ export default function Invoice() {
       title={theme.language === "Bahasa" ? "Rincian Nota" : "Invoice Details"}
       role={session.role}
     >
-      <main className="container py-12 mx-10 md:mx-14">
+      <main className="pt-[76px] pb-12 md:py-12 px-8 md:px-14 w-full max-w-[1536px]">
         {/* header section */}
-        <div className="flex md:items-center justify-between flex-col md:flex-row gap-4 md:gap-0 w-full md:mb-12">
+        <div className="flex md:items-center justify-between w-full mb-6 md:mb-12">
           <div className="flex items-center gap-8">
             <Link
               className={`${
@@ -238,7 +238,7 @@ export default function Invoice() {
 
           {/* invoice details*/}
           {!loading && invoice && (
-            <div className="flex gap-10 flex-col md:grid md:grid-cols-12">
+            <div className="overflow-auto flex gap-10 flex-col md:grid md:grid-cols-12">
               {/* left */}
               <div
                 className={`${

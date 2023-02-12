@@ -9,13 +9,11 @@
 }
 
 .button {
-  /* @apply w-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-md; */
   @apply w-full bg-primary rounded-md;
   @apply py-3 text-gray-50 text-lg transition duration-300;
 }
 
 .button:hover {
-  /* @apply bg-gradient-to-r from-[#F2ECFF] to-[#F2ECFF] border-[#2C2F33]; */
   @apply opacity-80;
 }
 

@@ -134,9 +134,9 @@ export default function editPriceList() {
       }
       role={session.role}
     >
-      <main className="container py-12 mx-10 md:mx-14">
+      <main className="pt-[76px] pb-12 md:py-12 px-8 md:px-14 w-full max-w-[1536px]">
         {/* header section */}
-        <div className="flex md:items-center justify-between flex-col md:flex-row gap-6 md:gap-0 w-fit md:w-full md:mb-12">
+        <div className="flex md:items-center justify-between w-full mb-6 md:mb-12">
           <div className="flex items-center gap-8">
             <Link
               className={`${
@@ -251,218 +251,218 @@ export default function editPriceList() {
                 <div
                   className={`${
                     theme.dark ? "text-neutral" : "text-primary"
-                  } lg:col-span-6 flex justify-center items-center mb-10 lg:mb-0`}
+                  } lg:col-span-4 flex justify-center items-center lg:mt-[-60px] mb-10 lg:mb-0`}
                 >
                   <div
                     className={`${
                       theme.dark ? "border-y-neutral" : "border-y-primary"
-                    } border-y-8 rounded-full w-fit p-6 lg:mt-[-100px]`}
+                    } border-y-8 rounded-full w-fit p-3`}
                   >
-                    {React.createElement(TbFileInvoice, { size: "200" })}
-                  </div>
-                  <div
-                    className={`${
-                      theme.dark ? "border-y-neutral" : "border-y-primary"
-                    } border-y-8 rounded-full w-fit p-6 hidden md:block md:ml-[-20px]`}
-                  >
-                    {React.createElement(TbFileInvoice, { size: "200" })}
+                    {React.createElement(TbFileInvoice, { size: "220" })}
                   </div>
                 </div>
 
                 {/* right */}
-                <div className="lg:col-span-4">
-                  {/* product name */}
-                  <div className="form-group mb-6">
-                    <label
-                      htmlFor="product_name"
-                      className="form-label inline-block mb-2"
-                    >
-                      <b>
-                        {theme.language === "Bahasa"
-                          ? "Nama Produk:"
-                          : "Product Name:"}
-                      </b>
-                    </label>
-                    <input
-                      autoComplete="off"
-                      type="text"
-                      className={`${
-                        theme.dark
-                          ? "!bg-dm_secondary text-neutral"
-                          : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
-                      } form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
-                      name="product_name"
-                      id="product_name"
-                      onChange={handleChange}
-                      required
-                      defaultValue={data.product_name ? data.product_name : ""}
-                    />
-                  </div>
-
-                  {/* amount */}
-                  <div className="form-group mb-6">
-                    <div>
-                      <label
-                        htmlFor="amount"
-                        className="form-label inline-block mb-2"
-                      >
-                        <b>
-                          {theme.language === "Bahasa"
-                            ? "Jumlah (/Unit):"
-                            : "Amount (/Unit):"}
-                        </b>
-                      </label>
-
-                      <div className="flex">
+                <div className="lg:col-span-8 lg:pr-8">
+                  <div className="lg:grid lg:grid-cols-12 gap-10 font-medium text-base">
+                    {/* first col */}
+                    <div className="lg:col-span-6">
+                      {/* product name */}
+                      <div className="form-group mb-6">
+                        <label
+                          htmlFor="product_name"
+                          className="form-label inline-block mb-2"
+                        >
+                          <b>
+                            {theme.language === "Bahasa"
+                              ? "Nama Produk:"
+                              : "Product Name:"}
+                          </b>
+                        </label>
                         <input
                           autoComplete="off"
-                          type="number"
+                          type="text"
                           className={`${
                             theme.dark
                               ? "!bg-dm_secondary text-neutral"
                               : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
                           } form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
-                          name="amount"
-                          id="amount"
+                          name="product_name"
+                          id="product_name"
                           onChange={handleChange}
                           required
-                          defaultValue={data.amount ? data.amount : 0}
+                          defaultValue={
+                            data.product_name ? data.product_name : ""
+                          }
                         />
-                        <label htmlFor="unit" className="sr-only">
-                          Unit
-                        </label>
-                        <select
-                          id="unit"
-                          name="unit"
-                          className={`${
-                            theme.dark ? "!bg-[#99AEBA]" : "bg-white"
-                          } pl-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding rounded rounded-l-sm transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
-                          required
-                          onChange={handleChange}
-                          defaultValue={data.unit ? data.unit : ""}
+                      </div>
+
+                      {/* remarks */}
+                      <div className="form-group mb-6">
+                        <label
+                          htmlFor="remarks"
+                          className="form-label inline-block mb-2"
                         >
-                          <option disabled value=""></option>
-                          <option value="bh">
-                            {theme.language === "Bahasa" ? "bh" : "pcs"}
-                          </option>
-                          <option value="ls">
-                            {theme.language === "Bahasa" ? "ls" : "doz"}
-                          </option>
-                          <option value="grs">
-                            {theme.language === "Bahasa" ? "grs" : "gro"}
-                          </option>
-                          <option value="dus">
-                            {theme.language === "Bahasa" ? "dus" : "box"}
-                          </option>
-                        </select>
+                          <b>
+                            {theme.language === "Bahasa"
+                              ? "Keterangan:"
+                              : "Remarks:"}
+                          </b>
+                        </label>
+                        <textarea
+                          autoComplete="off"
+                          type="text"
+                          className={`${
+                            theme.dark
+                              ? "!bg-dm_secondary text-neutral"
+                              : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
+                          } form-control block px-3 py-1.5 w-full h-32 font-normal text-gray-700 bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
+                          name="remarks"
+                          id="remarks"
+                          onChange={handleChange}
+                          defaultValue={data.remarks ? data.remarks : ""}
+                        ></textarea>
+                      </div>
+                    </div>
+
+                    {/* second col */}
+                    <div className="lg:col-span-6">
+                      {/* amount */}
+                      <div className="form-group mb-6">
+                        <div>
+                          <label
+                            htmlFor="amount"
+                            className="form-label inline-block mb-2"
+                          >
+                            <b>
+                              {theme.language === "Bahasa"
+                                ? "Jumlah (/Unit):"
+                                : "Amount (/Unit):"}
+                            </b>
+                          </label>
+
+                          <div className="flex">
+                            <input
+                              autoComplete="off"
+                              type="number"
+                              className={`${
+                                theme.dark
+                                  ? "!bg-dm_secondary text-neutral"
+                                  : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
+                              } form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
+                              name="amount"
+                              id="amount"
+                              onChange={handleChange}
+                              required
+                              defaultValue={data.amount ? data.amount : 0}
+                            />
+                            <label htmlFor="unit" className="sr-only">
+                              Unit
+                            </label>
+                            <select
+                              id="unit"
+                              name="unit"
+                              className={`${
+                                theme.dark ? "!bg-[#99AEBA]" : "bg-white"
+                              } pl-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded rounded-l-sm transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none`}
+                              required
+                              onChange={handleChange}
+                              defaultValue={data.unit ? data.unit : ""}
+                            >
+                              <option disabled value=""></option>
+                              <option value="bh">
+                                {theme.language === "Bahasa" ? "bh" : "pcs"}
+                              </option>
+                              <option value="ls">
+                                {theme.language === "Bahasa" ? "ls" : "doz"}
+                              </option>
+                              <option value="grs">
+                                {theme.language === "Bahasa" ? "grs" : "gro"}
+                              </option>
+                              <option value="dus">
+                                {theme.language === "Bahasa" ? "dus" : "box"}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* price */}
+                      <div className="form-group mb-6">
+                        <label
+                          htmlFor="price"
+                          className="form-label inline-block mb-2"
+                        >
+                          <b>
+                            {theme.language === "Bahasa" ? "Harga:" : "Price:"}
+                          </b>
+                        </label>
+                        <input
+                          autoComplete="off"
+                          type="price"
+                          className={`${
+                            theme.dark
+                              ? "!bg-dm_secondary text-neutral"
+                              : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
+                          } form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
+                          name="price"
+                          id="price"
+                          onChange={handleChange}
+                          onFocus={(e) => onFocus(e)}
+                          onBlur={(e) => onBlur(e)}
+                          defaultValue={data.price.toLocaleString("en-US", {
+                            style: "currency",
+                            currency: "IDR",
+                            maximumFractionDigits: 0,
+                          })}
+                          required
+                        />
+                      </div>
+
+                      {/* VIP price */}
+                      <div className="form-group mb-6">
+                        <label
+                          htmlFor="vip_price"
+                          className="form-label inline-block mb-2"
+                        >
+                          <b>
+                            {theme.language === "Bahasa"
+                              ? "Harga VIP:"
+                              : "VIP Price:"}
+                          </b>
+                        </label>
+                        <input
+                          autoComplete="off"
+                          type="price"
+                          className={`${
+                            theme.dark
+                              ? "!bg-dm_secondary text-neutral"
+                              : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
+                          } form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
+                          name="vip_price"
+                          id="vip_price"
+                          onChange={handleChange}
+                          onFocus={(e) => onFocus(e)}
+                          onBlur={(e) => onBlur(e)}
+                          defaultValue={
+                            data.vip_price
+                              ? data.vip_price.toLocaleString("en-US", {
+                                  style: "currency",
+                                  currency: "IDR",
+                                  maximumFractionDigits: 0,
+                                })
+                              : ""
+                          }
+                        />
                       </div>
                     </div>
                   </div>
 
-                  {/* price */}
-                  <div className="form-group mb-6">
-                    <label
-                      htmlFor="price"
-                      className="form-label inline-block mb-2"
-                    >
-                      <b>{theme.language === "Bahasa" ? "Harga:" : "Price:"}</b>
-                    </label>
-                    <input
-                      autoComplete="off"
-                      type="price"
-                      className={`${
-                        theme.dark
-                          ? "!bg-dm_secondary text-neutral"
-                          : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
-                      } form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
-                      name="price"
-                      id="price"
-                      onChange={handleChange}
-                      onFocus={(e) => onFocus(e)}
-                      onBlur={(e) => onBlur(e)}
-                      defaultValue={data.price.toLocaleString("en-US", {
-                        style: "currency",
-                        currency: "IDR",
-                        maximumFractionDigits: 0,
-                      })}
-                      required
-                    />
-                  </div>
-
-                  {/* VIP price */}
-                  <div className="form-group mb-6">
-                    <label
-                      htmlFor="vip_price"
-                      className="form-label inline-block mb-2"
-                    >
-                      <b>
-                        {theme.language === "Bahasa"
-                          ? "Harga VIP:"
-                          : "VIP Price:"}
-                      </b>
-                    </label>
-                    <input
-                      autoComplete="off"
-                      type="price"
-                      className={`${
-                        theme.dark
-                          ? "!bg-dm_secondary text-neutral"
-                          : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
-                      } form-control block w-full px-3 py-1.5 font-normal text-gray-700 bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
-                      name="vip_price"
-                      id="vip_price"
-                      onChange={handleChange}
-                      onFocus={(e) => onFocus(e)}
-                      onBlur={(e) => onBlur(e)}
-                      defaultValue={
-                        data.vip_price
-                          ? data.vip_price.toLocaleString("en-US", {
-                              style: "currency",
-                              currency: "IDR",
-                              maximumFractionDigits: 0,
-                            })
-                          : ""
-                      }
-                    />
-                  </div>
-
-                  {/* remarks */}
-                  <div className="form-group mb-6">
-                    <label
-                      htmlFor="remarks"
-                      className="form-label inline-block mb-2"
-                    >
-                      <b>
-                        {theme.language === "Bahasa"
-                          ? "Keterangan:"
-                          : "Remarks:"}
-                      </b>
-                    </label>
-                    <textarea
-                      autoComplete="off"
-                      type="text"
-                      className={`${
-                        theme.dark
-                          ? "!bg-dm_secondary text-neutral"
-                          : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
-                      } form-control block px-3 py-1.5 w-full h-32 font-normal text-gray-700 bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
-                      name="remarks"
-                      id="remarks"
-                      // placeholder={
-                      //   theme.language === "Bahasa"
-                      //     ? "Masukkan Keterangan"
-                      //     : "Enter Remarks"
-                      // }
-                      onChange={handleChange}
-                      defaultValue={data.remarks ? data.remarks : ""}
-                    ></textarea>
-                  </div>
-
                   {/* submit button */}
-                  <div className="text-center">
+                  <div className="text-center mt-8">
                     <button
                       type="submit"
-                      className="group text-sm font-bold gap-2 py-2 px-8 md:px-4 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
+                      className="group text-sm font-bold gap-2 py-2 px-8 bg-primary text-white hover:opacity-80 transition duration-700 rounded-md"
                     >
                       {theme.language === "Bahasa" ? "Simpan" : "Save"}
                     </button>

@@ -53,7 +53,13 @@ export default () => {
       title={theme.language === "Bahasa" ? "Nota" : "Invoices"}
       role={session.role}
     >
-      <main className="container py-12 mx-10 md:mx-14">
+      <main
+        className={`pt-[76px] pb-12 md:py-12 px-8 md:px-14 w-full ${
+          loading || (!loading && (!invoices || invoices.length == 0))
+            ? "md:w-full"
+            : "md:w-auto"
+        } lg:w-full max-w-[1536px]`}
+      >
         {/* header section */}
         <div className="flex md:items-center justify-between flex-col md:flex-row gap-4 md:gap-0 w-full">
           <h3 className="text-3xl md:text-4xl font-bold">
@@ -77,7 +83,7 @@ export default () => {
 
         {/* invoices table */}
         <div
-          className={`table-div-custom p-6 my-4 md:my-12 ${
+          className={`table-div-custom p-6 my-4 md:mt-12 ${
             theme.dark ? "text-neutral !bg-dm_secondary" : ""
           }`}
         >
@@ -127,7 +133,7 @@ export default () => {
           {!loading && invoices && invoices.length != 0 && (
             <>
               {/* large screen view */}
-              <div className="overflow-auto shadow hidden md:block">
+              <div className="overflow-auto rounded-lg shadow hidden md:block">
                 <table className="w-full">
                   <thead
                     className={`${

@@ -133,7 +133,7 @@ export default ({ closeCalculator }) => {
 
       <div className="wrapper">
         <div className="w-full border py-2 px-2 mb-8">
-          <h1 className="resultado text-[1.5em]">{num}</h1>
+          <h1 className="result_area text-[1.5em]">{num}</h1>
         </div>
         <div className="grid grid-cols-12 gap-2">
           <button

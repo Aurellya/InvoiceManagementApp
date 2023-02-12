@@ -1,12 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap");
 
 .imgStyle {
-  /* @apply bg-gradient-to-r from-blue-500 to-indigo-500 rounded-l-md; */
-  /* @apply bg-gradient-to-r from-[#00C896] to-[#F2ECFF] rounded-l-md; */
-  /* @apply bg-gradient-to-r from-[#28ABF4] to-[#fff] rounded-l-md; */
-  /* @apply bg-gradient-to-r from-secondary to-neutral rounded-l-md; */
   @apply bg-gradient-to-r from-dm_secondary to-neutral rounded-l-md;
-  /* position: relative; */
   @apply flex items-center justify-center;
   overflow: hidden;
 }
@@ -16,7 +11,6 @@
 }
 
 .illustrationImg {
-  /* background: url("/assets/bg-login.jpg") no-repeat; */
   background-image: linear-gradient(
       45deg,
       rgba(43, 68, 80, 1),

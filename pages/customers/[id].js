@@ -9,7 +9,6 @@ import LayoutIn from "../../layout/layoutIn";
 
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { IoArrowBackOutline } from "react-icons/io5";
-import { TiUserOutline } from "react-icons/ti";
 
 export default function Customer() {
   // session
@@ -76,9 +75,9 @@ export default function Customer() {
       }
       role={session.role}
     >
-      <main className="container py-12 mx-10 md:mx-14">
+      <main className="pt-[76px] pb-12 md:py-12 px-8 md:px-14 w-full max-w-[1536px]">
         {/* header section */}
-        <div className="flex md:items-center justify-between flex-col md:flex-row gap-4 md:gap-0 w-full md:mb-12">
+        <div className="flex md:items-center justify-between w-full mb-6 md:mb-12">
           <div className="flex items-center gap-8">
             <Link
               className={`${
@@ -190,7 +189,7 @@ export default function Customer() {
 
         {/* content */}
         <div
-          className={`table-div-custom my-4 md:my-0 p-6 block mb-4 md:mb-0 ${
+          className={`table-div-custom my-4 md:my-0 p-6 block mb-0 ${
             theme.dark ? "text-neutral !bg-dm_secondary" : ""
           }`}
         >
@@ -233,78 +232,61 @@ export default function Customer() {
 
           {/* customer details */}
           {!loading && customer && (
-            <div className="flex flex-col lg:grid lg:grid-cols-12 lg:gap-10 pb-0 md:pb-2 pt-3">
+            <div className="flex flex-col md:grid md:grid-cols-12 px-2 max-w-[800px]">
               {/* left */}
-              <div
-                className={`${
-                  theme.dark ? "text-neutral" : "text-primary"
-                } lg:col-span-4 flex justify-center items-center mb-10 lg:mb-0`}
-              >
-                <div
-                  className={`${
-                    theme.dark ? "border-y-neutral" : "border-y-primary"
-                  } border-y-8 rounded-full w-fit p-3`}
-                >
-                  {React.createElement(TiUserOutline, { size: "220" })}
-                </div>
+              <div className="md:col-span-6">
+                <p>
+                  <b>
+                    {theme.language === "Bahasa"
+                      ? "Nomor Pelanggan: "
+                      : "Customer No: "}
+                  </b>
+                </p>
+                <p>{customer._id}</p>
+
+                <br />
+
+                <p>
+                  <b>
+                    {theme.language === "Bahasa"
+                      ? "Nama Pelanggan: "
+                      : "Customer Name: "}
+                  </b>
+                </p>
+                <p>{customer.name}</p>
+
+                <br />
+
+                <p>
+                  <b>
+                    {theme.language === "Bahasa"
+                      ? "Nomor Telepon: "
+                      : "Phone No: "}
+                  </b>
+                </p>
+                <p>{customer.phone_no}</p>
+                <br />
+                <p>
+                  <b>Email: </b>
+                </p>
+                <p className="mb-6 md:mb-0">{customer.email}</p>
               </div>
 
               {/* right */}
-              <div className="flex gap-0 md:gap-16 flex-col md:flex-row col-span-8">
-                <div className="md:px-4 py-1 md:flex gap-20 md:gap-40 font-medium text-base whitespace-nowrap">
-                  <div>
-                    <p>
-                      <b>
-                        {theme.language === "Bahasa"
-                          ? "Nomor Pelanggan: "
-                          : "Customer No: "}
-                      </b>
-                    </p>
-                    <p>{customer._id}</p>
-                    <br />
-                    <p>
-                      <b>
-                        {theme.language === "Bahasa"
-                          ? "Nama Pelanggan: "
-                          : "Customer Name: "}
-                      </b>
-                    </p>
-                    <p>{customer.name}</p>
-                    <br />
-                    <p>
-                      <b>
-                        {theme.language === "Bahasa"
-                          ? "Nomor Telepon: "
-                          : "Phone No: "}
-                      </b>
-                    </p>
-                    <p>{customer.phone_no}</p>
-                    <br />
-                    <p>
-                      <b>Email: </b>
-                    </p>
-                    <p>{customer.email}</p>
-                    <br className="md:hidden" />
-                  </div>
-
-                  <div className="font-medium text-base">
-                    <p>
-                      <b>
-                        {theme.language === "Bahasa" ? "Alamat: " : "Address: "}
-                      </b>
-                    </p>
-                    <p>{customer.address}</p>
-                    <br />
-                    <p>
-                      <b>
-                        {theme.language === "Bahasa"
-                          ? "Keterangan: "
-                          : "Remarks: "}
-                      </b>
-                    </p>
-                    <p>{customer.remarks ? customer.remarks : "-"}</p>
-                  </div>
-                </div>
+              <div className="md:col-span-6">
+                <p>
+                  <b>
+                    {theme.language === "Bahasa" ? "Alamat: " : "Address: "}
+                  </b>
+                </p>
+                <p>{customer.address}</p>
+                <br />
+                <p>
+                  <b>
+                    {theme.language === "Bahasa" ? "Keterangan: " : "Remarks: "}
+                  </b>
+                </p>
+                <p>{customer.remarks ? customer.remarks : "-"}</p>
 
                 <hr className="md:hidden my-6" />
 

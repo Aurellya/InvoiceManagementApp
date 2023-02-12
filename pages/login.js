@@ -61,10 +61,12 @@ export default function Login() {
         <title>Login</title>
       </Head>
 
-      <section className="w-3/4 mx-auto flex flex-col gap-10">
+      <section className="w-10/12 md:w-3/4 mx-auto flex flex-col md:gap-10">
         {/* header */}
         <div className="title">
-          <h1 className="text-gray-800 text-4xl font-bold py-4">Login</h1>
+          <h1 className="text-gray-800 text-4xl font-bold pb-4 md:py-4">
+            Login
+          </h1>
           <p className="w-3/4 mx-auto text-gray-400">
             Welcome to ASC App! Manage your invoice with Us.
           </p>
