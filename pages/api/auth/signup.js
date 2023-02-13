@@ -103,8 +103,6 @@ export default async function handler(req, res) {
 
     return res.status(201).json({ status: true });
   } else {
-    return res
-      .status(500)
-      .json({ error: "HTTP method not valid only POST Accepted" });
+    return res.status(500).json({ error: "HTTP method not valid" });
   }
 }

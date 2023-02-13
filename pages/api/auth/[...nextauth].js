@@ -44,7 +44,7 @@ export default NextAuth({
       },
     }),
   ],
-  secret: "zpxqxOrItmkfonECYRqwxtS/98tYj4SyHeFwsLP0UjU=",
+  secret: process.env.NEXTAUTH_SECRET, //$ openssl rand -base64 32
   session: {
     strategy: "jwt",
   },

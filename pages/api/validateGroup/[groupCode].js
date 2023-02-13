@@ -2,11 +2,13 @@ import connectMongo from "../../../database/conn";
 import Groups from "../../../model/GroupSchema";
 
 export default async function handler(req, res) {
+  // connect to db
   await connectMongo().catch((error) =>
     res.json({ error: "Connection Failed...!" })
   );
 
-  const groupId = req.query.groupId;
+  // get req parameter
+  const groupCode = req.query.groupCode;
 
   switch (req.method) {
     // validate group/company code
@@ -14,7 +16,7 @@ export default async function handler(req, res) {
       try {
         // find code
         const group = await Groups.find({
-          group_code: groupId,
+          group_code: groupCode,
         });
 
         return res.status(200).json({
