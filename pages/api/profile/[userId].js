@@ -78,7 +78,7 @@ export default async function handler(req, res) {
       case "DELETE":
         try {
           // authenticate => user can only delete their own account
-          if (check_user._id == userId) {
+          if (req_user._id == userId) {
             // check if user exists
             const user = await Users.findOne({
               _id: userId,

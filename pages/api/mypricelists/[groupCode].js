@@ -53,7 +53,7 @@ export default async function handler(req, res) {
           try {
             const userInput = JSON.parse(req.body);
 
-            if (check_role == "admin") {
+            if (check_role) {
               // add to pricelist docs
               const new_priceList = new PriceLists({
                 product_name: userInput.product_name,

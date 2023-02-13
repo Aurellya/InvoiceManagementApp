@@ -16,7 +16,7 @@ export default function LayoutIn({ children, title, role }) {
       </Head>
 
       <section className="flex">
-        <Sidebar handleSignOut={handleSignOut} role={role} />
+        {role && <Sidebar handleSignOut={handleSignOut} role={role} />}
 
         {children}
       </section>

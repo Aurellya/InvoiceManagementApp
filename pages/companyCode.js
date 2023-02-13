@@ -14,6 +14,7 @@ export default () => {
   const theme = useContext(ThemeContext);
 
   const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // fetch data or users that need approval
   const [approvalItem, setApprovalItem] = useState();
@@ -49,6 +50,7 @@ export default () => {
   const [user, setUser] = useState();
 
   const getUser = async () => {
+    setLoading(true);
     const res = await fetch(`http://localhost:3000/api/profile/${session._id}`);
     const profileObj = await res.json();
     const profileData = await profileObj.data;
@@ -60,6 +62,12 @@ export default () => {
     getItems();
     getStaff();
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      setLoading(false);
+    }
+  }, [user]);
 
   // pagination approval
   const pageSize = 10;
@@ -210,7 +218,32 @@ export default () => {
           <hr />
           <br />
 
-          {user && (
+          {loading && (
+            <div className="py-8">
+              <div className="mt-9 flex flex-col justify-center items-center">
+                <h3 className="text-xl mb-4 font-bold">
+                  {theme.language === "Bahasa" ? "Memuat" : "Loading"}
+                </h3>
+                {theme.dark ? (
+                  <ReactLoading
+                    type="bars"
+                    color="#F4F5F9"
+                    height={100}
+                    width={50}
+                  />
+                ) : (
+                  <ReactLoading
+                    type="bars"
+                    color="#2b4450"
+                    height={100}
+                    width={50}
+                  />
+                )}
+              </div>
+            </div>
+          )}
+
+          {!loading && user && (
             <>
               {/* current group details */}
               <div className="pt-3 px-2">

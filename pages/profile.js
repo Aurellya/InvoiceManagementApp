@@ -126,6 +126,13 @@ export default () => {
       document.getElementById("modal2").style.display = "block";
     }
 
+    // // TODO: no implementation for now, to avoid data lost from accidentally delete admin acc
+    // // if admin is the only group member: delete the group
+    // let x = find other users with the same group code
+    // else if(!x))){
+    //   // call API to remove group
+    // }
+
     // case 1b: if no staff proceed to delete acc
     // case 2: if delete acc staff
     else {
@@ -227,7 +234,9 @@ export default () => {
                   id="staff"
                   defaultValue={""}
                   className={`${
-                    theme.dark ? "bg-white text-primary" : ""
+                    theme.dark
+                      ? "bg-white text-primary"
+                      : "border border-primary"
                   } rounded pl-3 pr-8 py-1.5 w-fit`}
                 >
                   <option value="" disabled>

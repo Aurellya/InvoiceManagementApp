@@ -138,10 +138,10 @@ export default function addPriceList() {
               role="alert"
             >
               <svg
-                ariaHidden="true"
+                aria-hidden="true"
                 focusable="false"
-                dataPrefix="fas"
-                dataIcon="times-circle"
+                dataprefix="fas"
+                dataicon="times-circle"
                 className="w-4 h-4 mr-2 fill-current"
                 role="img"
                 xmlns="http://www.w3.org/2000/svg"
@@ -155,11 +155,11 @@ export default function addPriceList() {
               {errorMsg}
 
               <button
-                class="absolute top-0 bottom-0 right-0 px-4 py-3"
+                className="absolute top-0 bottom-0 right-0 px-4 py-3"
                 onClick={() => setErrorMsg("")}
               >
                 <svg
-                  class="fill-current h-6 w-6 text-red-500"
+                  className="fill-current h-6 w-6 text-red-500"
                   role="button"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
