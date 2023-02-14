@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { getSession, useSession } from "next-auth/react";
@@ -10,12 +10,18 @@ import LayoutIn from "../../layout/layoutIn";
 import { AiFillEdit, AiFillDelete, AiFillPrinter } from "react-icons/ai";
 import { IoArrowBackOutline } from "react-icons/io5";
 
+import ReactToPrint from "react-to-print";
+import { ComponentToPrint } from "../ComponentToPrint";
+
 export default function Invoice() {
   // session
   const { data: session } = useSession();
 
   // theme
   const theme = useContext(ThemeContext);
+
+  // ref
+  const componentRef = useRef();
 
   // fetch data
   const [invoice, setInvoice] = useState();
@@ -99,12 +105,32 @@ export default function Invoice() {
 
           {/* btn group: for large screen view */}
           <div className="items-center gap-2 hidden md:flex">
-            <button className="group button-custom bg-tertiary">
-              <div>{React.createElement(AiFillPrinter, { size: "12" })}</div>
-              <h2 className="whitespace-pre">
-                {theme.language === "Bahasa" ? "Cetak Nota" : "Print Invoice"}
-              </h2>
-            </button>
+            <div>
+              <ReactToPrint
+                trigger={() => (
+                  <button className="group button-custom bg-tertiary">
+                    <div>
+                      {React.createElement(AiFillPrinter, { size: "12" })}
+                    </div>
+                    <h2 className="whitespace-pre">
+                      {theme.language === "Bahasa"
+                        ? "Cetak Nota"
+                        : "Print Invoice"}
+                    </h2>
+                  </button>
+                )}
+                content={() => componentRef.current}
+              />
+              <div className="hidden">
+                {!loading && invoice && (
+                  <ComponentToPrint
+                    ref={componentRef}
+                    invoice={invoice}
+                    theme={theme}
+                  />
+                )}
+              </div>
+            </div>
             {session && session.role == "admin" && (
               <>
                 <Link
@@ -116,6 +142,7 @@ export default function Invoice() {
                   <div>{React.createElement(AiFillEdit, { size: "12" })}</div>
                   <h2 className="whitespace-pre">Edit</h2>
                 </Link>
+
                 <button
                   className="group button-custom bg-[#F44645]"
                   onClick={showModalDeleteConfirmation}
@@ -321,16 +348,33 @@ export default function Invoice() {
 
               {/* btn group: for mobile view */}
               <div className="grid grid-cols-7 gap-2 md:hidden">
-                <button className="group button-custom bg-tertiary col-span-4">
-                  <div>
-                    {React.createElement(AiFillPrinter, { size: "12" })}
+                <div className="col-span-4">
+                  <ReactToPrint
+                    trigger={() => (
+                      <button className="group button-custom bg-tertiary">
+                        <div>
+                          {React.createElement(AiFillPrinter, { size: "12" })}
+                        </div>
+                        <h2 className="whitespace-pre">
+                          {theme.language === "Bahasa"
+                            ? "Cetak Nota"
+                            : "Print Invoice"}
+                        </h2>
+                      </button>
+                    )}
+                    content={() => componentRef.current}
+                  />
+                  <div className="hidden">
+                    {!loading && invoice && (
+                      <ComponentToPrint
+                        ref={componentRef}
+                        invoice={invoice}
+                        theme={theme}
+                      />
+                    )}
                   </div>
-                  <h2 className="whitespace-pre">
-                    {theme.language === "Bahasa"
-                      ? "Cetak Nota"
-                      : "Print Invoice"}
-                  </h2>
-                </button>
+                </div>
+
                 {session && session.role == "admin" && (
                   <>
                     <Link
@@ -439,7 +483,12 @@ export default function Invoice() {
                               ? "gro"
                               : "box"}
                           </td>
-                          <td className="p-3 text-sm whitespace-nowrap">
+                          <td className="p-3 text-sm break-word">
+                            {/* {content.item_name
+                              ? content.item_name.length > 50
+                                ? content.item_name.slice(0, 50) + " ..."
+                                : content.item_name
+                              : "-"} */}
                             {content.item_name}
                           </td>
                           <td className="p-3 text-sm whitespace-nowrap">
