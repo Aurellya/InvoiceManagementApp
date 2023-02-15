@@ -8,7 +8,7 @@ import LayoutIn from "../layout/layoutIn";
 import { TiUserAddOutline } from "react-icons/ti";
 import { IoArrowBackOutline } from "react-icons/io5";
 
-export default function addCustomer() {
+const AddCustomer = () => {
   // auth
   const { data: session } = useSession();
 
@@ -49,7 +49,7 @@ export default function addCustomer() {
     };
 
     // Send data to the backend via POST
-    fetch(`http://localhost:3000/api/mycustomers/${session.group_code}`, {
+    fetch(`/api/mycustomers/${session.group_code}`, {
       method: "POST",
       mode: "cors",
       body: JSON.stringify(jsonData),
@@ -327,7 +327,9 @@ export default function addCustomer() {
       </main>
     </LayoutIn>
   );
-}
+};
+
+export default AddCustomer;
 
 export async function getServerSideProps({ req }) {
   // handle session

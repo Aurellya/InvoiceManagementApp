@@ -13,7 +13,7 @@ import { BsFillCalculatorFill } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa";
 import { IoArrowBackOutline } from "react-icons/io5";
 
-export default function editInvoice() {
+const EditInvoice = () => {
   // auth
   const { data: session } = useSession();
 
@@ -32,7 +32,7 @@ export default function editInvoice() {
     // Get ID from URL
     const { id } = router.query;
     // get invoices data from the database
-    const res = await fetch(`http://localhost:3000/api/invoices/${id}`);
+    const res = await fetch(`/api/invoices/${id}`);
     const invoiceObj = await res.json();
     const invoice = invoiceObj.data;
 
@@ -325,7 +325,7 @@ export default function editInvoice() {
     });
 
     // Send data to the backend via POST
-    fetch(`http://localhost:3000/api/invoices/${invoice._id}`, {
+    fetch(`/api/invoices/${invoice._id}`, {
       method: "PUT",
       mode: "cors",
       body: JSON.stringify(jsonData),
@@ -921,7 +921,9 @@ export default function editInvoice() {
       </main>
     </LayoutIn>
   );
-}
+};
+
+export default EditInvoice;
 
 export async function getServerSideProps({ req }) {
   // handle session

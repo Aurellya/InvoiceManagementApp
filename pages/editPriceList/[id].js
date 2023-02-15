@@ -10,7 +10,7 @@ import LayoutIn from "../../layout/layoutIn";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { TbFileInvoice } from "react-icons/tb";
 
-export default function editPriceList() {
+const EditPriceList = () => {
   // auth
   const { data: session } = useSession();
 
@@ -29,7 +29,7 @@ export default function editPriceList() {
     // Get ID from URL
     const { id } = router.query;
     // get item data from the database
-    const res = await fetch(`http://localhost:3000/api/priceLists/${id}`);
+    const res = await fetch(`/api/priceLists/${id}`);
     const itemObj = await res.json();
     const item = itemObj.data;
 
@@ -112,7 +112,7 @@ export default function editPriceList() {
     };
 
     // Send data to the backend via POST
-    fetch(`http://localhost:3000/api/priceLists/${item._id}`, {
+    fetch(`/api/priceLists/${item._id}`, {
       method: "PUT",
       mode: "cors",
       body: JSON.stringify(jsonData),
@@ -485,7 +485,9 @@ export default function editPriceList() {
       </main>
     </LayoutIn>
   );
-}
+};
+
+export default EditPriceList;
 
 export async function getServerSideProps({ req }) {
   // handle session

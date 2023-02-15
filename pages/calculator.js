@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import styles from "../styles/Calculator.module.css";
 import { ThemeContext } from "../context/ThemeContext";
 
-export default ({ closeCalculator }) => {
+const Calculator = ({ closeCalculator }) => {
   // theme
   const theme = useContext(ThemeContext);
 
@@ -299,3 +299,5 @@ export default ({ closeCalculator }) => {
     </div>
   );
 };
+
+export default Calculator;

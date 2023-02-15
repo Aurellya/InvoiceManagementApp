@@ -10,7 +10,7 @@ import LayoutIn from "../../layout/layoutIn";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { IoArrowBackOutline } from "react-icons/io5";
 
-export default function PriceList() {
+const PriceList = () => {
   // session
   const { data: session } = useSession();
 
@@ -29,7 +29,7 @@ export default function PriceList() {
     // Get ID from URL
     const { id } = router.query;
     // get item data from the database
-    const res = await fetch(`http://localhost:3000/api/priceLists/${id}`);
+    const res = await fetch(`/api/priceLists/${id}`);
     const itemObj = await res.json();
     const item = itemObj.data;
 
@@ -57,7 +57,7 @@ export default function PriceList() {
     document.getElementById("modal").style.display = "none";
 
     // Send data to the backend via POST
-    fetch(`http://localhost:3000/api/priceLists/${item._id}`, {
+    fetch(`/api/priceLists/${item._id}`, {
       method: "DELETE",
     }).then((response) => {
       if (response.status === 200) {
@@ -371,7 +371,9 @@ export default function PriceList() {
       </main>
     </LayoutIn>
   );
-}
+};
+
+export default PriceList;
 
 export async function getServerSideProps({ req }) {
   // handle session

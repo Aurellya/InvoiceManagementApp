@@ -11,9 +11,9 @@ import { AiFillEdit, AiFillDelete, AiFillPrinter } from "react-icons/ai";
 import { IoArrowBackOutline } from "react-icons/io5";
 
 import ReactToPrint from "react-to-print";
-import { ComponentToPrint } from "../ComponentToPrint";
+import { ComponentToPrint } from "../../components/ComponentToPrint";
 
-export default function Invoice() {
+const Invoice = () => {
   // session
   const { data: session } = useSession();
 
@@ -35,7 +35,7 @@ export default function Invoice() {
     // Get ID from URL
     const { id } = router.query;
     // get invoices data from the database
-    const res = await fetch(`http://localhost:3000/api/invoices/${id}`);
+    const res = await fetch(`/api/invoices/${id}`);
     const invoiceObj = await res.json();
     const invoice = invoiceObj.data;
 
@@ -63,7 +63,7 @@ export default function Invoice() {
     document.getElementById("modal").style.display = "none";
 
     // Send data to the backend via POST
-    fetch(`http://localhost:3000/api/invoices/${invoice._id}`, {
+    fetch(`/api/invoices/${invoice._id}`, {
       method: "DELETE",
     }).then((response) => {
       if (response.status === 200) {
@@ -588,7 +588,9 @@ export default function Invoice() {
       </main>
     </LayoutIn>
   );
-}
+};
+
+export default Invoice;
 
 export async function getServerSideProps({ req }) {
   // handle session

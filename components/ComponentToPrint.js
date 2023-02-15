@@ -1,6 +1,6 @@
 import React from "react";
 
-export const ComponentToPrint = React.forwardRef((props, ref) => {
+const ComponentToPrint = React.forwardRef((props, ref) => {
   const { invoice, theme } = props;
 
   return (
@@ -148,3 +148,7 @@ export const ComponentToPrint = React.forwardRef((props, ref) => {
     </div>
   );
 });
+
+ComponentToPrint.displayName = "ComponentToPrint";
+
+export default ComponentToPrint;

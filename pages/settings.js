@@ -6,7 +6,7 @@ import LayoutIn from "../layout/layoutIn";
 
 import { AiOutlineSetting } from "react-icons/ai";
 
-export default () => {
+const Settings = () => {
   const { data: session } = useSession();
 
   const theme = useContext(ThemeContext);
@@ -224,6 +224,8 @@ export default () => {
     </LayoutIn>
   );
 };
+
+export default Settings;
 
 export async function getServerSideProps({ req }) {
   const session = await getSession({ req });

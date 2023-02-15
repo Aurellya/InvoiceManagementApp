@@ -12,7 +12,7 @@ import styles from "../styles/Form.module.css";
 
 import { HiAtSymbol, HiFingerPrint } from "react-icons/hi";
 
-export default function Login() {
+const Login = () => {
   // theme
   const theme = useContext(ThemeContext);
 
@@ -52,7 +52,7 @@ export default function Login() {
 
   // Google Handler function
   // async function handleGoogleSignin() {
-  //   signIn("google", { callbackUrl: "http://localhost:3000" });
+  //   signIn("google", { callbackUrl: "/" });
   // }
 
   return (
@@ -203,7 +203,7 @@ export default function Login() {
 
         {/* register button */}
         <p className="text-center text-gray-400 mt-10">
-          don't have an account yet?{" "}
+          don&apos;t have an account yet?{" "}
           <Link href={"/register"} className="text-primary hover:underline">
             Sign Up
           </Link>
@@ -211,4 +211,6 @@ export default function Login() {
       </section>
     </Layout>
   );
-}
+};
+
+export default Login;

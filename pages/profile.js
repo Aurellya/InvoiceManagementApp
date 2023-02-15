@@ -9,7 +9,7 @@ import LayoutIn from "../layout/layoutIn";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { TiUserOutline } from "react-icons/ti";
 
-export default () => {
+const Profile = () => {
   const { data: session } = useSession();
 
   // theme
@@ -22,7 +22,7 @@ export default () => {
 
   const getProfile = async () => {
     setLoading(true);
-    const res = await fetch(`http://localhost:3000/api/profile/${session._id}`);
+    const res = await fetch(`/api/profile/${session._id}`);
     const profileObj = await res.json();
     const profileData = await profileObj.data;
     setProfile(profileData);
@@ -33,9 +33,7 @@ export default () => {
   const [staffLoaded, setStaffLoaded] = useState();
 
   const getStaff = async () => {
-    const res = await fetch(
-      `http://localhost:3000/api/staffs/${session.group_code}`
-    );
+    const res = await fetch(`/api/staffs/${session.group_code}`);
     const staffObj = await res.json();
     const staffData = await staffObj.data;
     setStaff(staffData);
@@ -75,7 +73,7 @@ export default () => {
 
   const deleteAcc = () => {
     // Delete account
-    fetch(`http://localhost:3000/api/profile/${session._id}`, {
+    fetch(`/api/profile/${session._id}`, {
       method: "DELETE",
     }).then((response) => {
       if (response.status === 200) {
@@ -101,7 +99,7 @@ export default () => {
     };
 
     // call API to change admin role
-    fetch(`http://localhost:3000/api/changeAdmin`, {
+    fetch(`/api/changeAdmin`, {
       method: "PUT",
       mode: "cors",
       body: JSON.stringify(jsonData),
@@ -470,6 +468,8 @@ export default () => {
     </LayoutIn>
   );
 };
+
+export default Profile;
 
 export async function getServerSideProps({ req }) {
   const session = await getSession({ req });

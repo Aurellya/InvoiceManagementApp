@@ -16,7 +16,7 @@ import {
   HiOutlineQrcode,
 } from "react-icons/hi";
 
-export default function Register() {
+const Register = () => {
   // theme
   const theme = useContext(ThemeContext);
 
@@ -54,15 +54,13 @@ export default function Register() {
     // if user enter company code
     if (values.companycode) {
       // check if company code is valid
-      const res = await fetch(
-        `http://localhost:3000/api/validateGroup/${values.companycode}`
-      );
+      const res = await fetch(`/api/validateGroup/${values.companycode}`);
       obj = await res.json();
     }
 
     // if company code is valid or if user do not enter company code
     if ((obj && obj.result) || !values.companycode) {
-      await fetch("http://localhost:3000/api/auth/signup", options)
+      await fetch("/api/auth/signup", options)
         .then((res) => res.json())
         .then((data) => {
           setData(data);
@@ -119,7 +117,7 @@ export default function Register() {
   const closeModal = (e) => {
     e.preventDefault();
     document.getElementById("modal").style.display = "none";
-    if (data && data.status) router.push("http://localhost:3000");
+    if (data && data.status) router.push("/");
   };
 
   return (
@@ -337,4 +335,6 @@ export default function Register() {
       </section>
     </Layout>
   );
-}
+};
+
+export default Register;

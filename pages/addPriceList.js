@@ -8,7 +8,7 @@ import LayoutIn from "../layout/layoutIn";
 import { TbFileInvoice } from "react-icons/tb";
 import { IoArrowBackOutline } from "react-icons/io5";
 
-export default function addPriceList() {
+const AddPriceList = () => {
   // auth
   const { data: session } = useSession();
 
@@ -80,7 +80,7 @@ export default function addPriceList() {
     };
 
     // Send data to the backend via POST
-    fetch(`http://localhost:3000/api/mypricelists/${session.group_code}`, {
+    fetch(`/api/mypricelists/${session.group_code}`, {
       method: "POST",
       mode: "cors",
       body: JSON.stringify(jsonData),
@@ -402,7 +402,9 @@ export default function addPriceList() {
       </LayoutIn>
     </>
   );
-}
+};
+
+export default AddPriceList;
 
 export async function getServerSideProps({ req }) {
   // handle session

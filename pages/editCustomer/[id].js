@@ -10,7 +10,7 @@ import LayoutIn from "../../layout/layoutIn";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { FaUserEdit } from "react-icons/fa";
 
-export default function editCustomer() {
+const EditCustomer = () => {
   // auth
   const { data: session } = useSession();
 
@@ -29,7 +29,7 @@ export default function editCustomer() {
     // Get ID from URL
     const { id } = router.query;
     // get customers data from the database
-    const res = await fetch(`http://localhost:3000/api/customers/${id}`);
+    const res = await fetch(`/api/customers/${id}`);
     const customerObj = await res.json();
     const customer = customerObj.data;
 
@@ -81,7 +81,7 @@ export default function editCustomer() {
     };
 
     // Send data to the backend via POST
-    fetch(`http://localhost:3000/api/customers/${customer._id}`, {
+    fetch(`/api/customers/${customer._id}`, {
       method: "PUT",
       mode: "cors",
       body: JSON.stringify(jsonData),
@@ -405,7 +405,9 @@ export default function editCustomer() {
       </main>
     </LayoutIn>
   );
-}
+};
+
+export default EditCustomer;
 
 export async function getServerSideProps({ req }) {
   // handle session

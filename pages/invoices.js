@@ -10,7 +10,7 @@ import LayoutIn from "../layout/layoutIn";
 
 import { BsPlusLg } from "react-icons/bs";
 
-export default () => {
+const Invoices = () => {
   // session
   const { data: session } = useSession();
 
@@ -23,9 +23,7 @@ export default () => {
 
   const getInvoices = async () => {
     setLoading(true);
-    const res = await fetch(
-      `http://localhost:3000/api/myinvoices/${session.group_code}`
-    );
+    const res = await fetch(`api/myinvoices/${session.group_code}`);
     const invoicesObj = await res.json();
     const invoices = invoicesObj.data;
     setInvoices(invoices);
@@ -343,6 +341,8 @@ export default () => {
     </LayoutIn>
   );
 };
+
+export default Invoices;
 
 export async function getServerSideProps({ req }) {
   // handle session

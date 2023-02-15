@@ -11,7 +11,7 @@ import { BsFillCalculatorFill } from "react-icons/bs";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa";
 
-export default function addInvoice() {
+const AddInvoice = () => {
   // auth
   const { data: session } = useSession();
 
@@ -259,7 +259,7 @@ export default function addInvoice() {
     });
 
     // Send data to the backend via POST
-    fetch(`http://localhost:3000/api/myinvoices/${session.group_code}`, {
+    fetch(`/api/myinvoices/${session.group_code}`, {
       method: "POST",
       mode: "cors",
       body: JSON.stringify(jsonData),
@@ -809,7 +809,9 @@ export default function addInvoice() {
       </main>
     </LayoutIn>
   );
-}
+};
+
+export default AddInvoice;
 
 export async function getServerSideProps({ req }) {
   // handle session

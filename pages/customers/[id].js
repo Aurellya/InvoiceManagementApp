@@ -10,7 +10,7 @@ import LayoutIn from "../../layout/layoutIn";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { IoArrowBackOutline } from "react-icons/io5";
 
-export default function Customer() {
+const Customer = () => {
   // session
   const { data: session } = useSession();
 
@@ -29,7 +29,7 @@ export default function Customer() {
     // Get ID from URL
     const { id } = router.query;
     // get customers data from the database
-    const res = await fetch(`http://localhost:3000/api/customers/${id}`);
+    const res = await fetch(`/api/customers/${id}`);
     const customerObj = await res.json();
     const customer = customerObj.data;
 
@@ -57,7 +57,7 @@ export default function Customer() {
     document.getElementById("modal").style.display = "none";
 
     // Send data to the backend via POST
-    fetch(`http://localhost:3000/api/customers/${customer._id}`, {
+    fetch(`/api/customers/${customer._id}`, {
       method: "DELETE",
     }).then((response) => {
       if (response.status === 200) {
@@ -339,7 +339,9 @@ export default function Customer() {
       </main>
     </LayoutIn>
   );
-}
+};
+
+export default Customer;
 
 export async function getServerSideProps({ req }) {
   // handle session

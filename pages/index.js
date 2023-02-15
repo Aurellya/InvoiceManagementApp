@@ -78,7 +78,7 @@ function User({ session }) {
   // fetch username
   const [username, setUsername] = useState();
   const getUsername = async () => {
-    const res = await fetch(`http://localhost:3000/api/profile/${session._id}`);
+    const res = await fetch(`/api/profile/${session._id}`);
     const profileObj = await res.json();
     const profileData = await profileObj.data;
     setUsername(profileData.username);
@@ -87,9 +87,7 @@ function User({ session }) {
   // fetch last 6 invoices
   const [invoices, setInvoices] = useState();
   const getInvoices = async () => {
-    const res = await fetch(
-      `http://localhost:3000/api/myinvoices/${session.group_code}`
-    );
+    const res = await fetch(`/api/myinvoices/${session.group_code}`);
     const invoicesObj = await res.json();
     const invoicesData = await invoicesObj.data;
     if (invoicesData) {
@@ -99,9 +97,7 @@ function User({ session }) {
 
   // fetch summary
   const getSummary = async () => {
-    const res = await fetch(
-      `http://localhost:3000/api/summary/${session.group_code}`
-    );
+    const res = await fetch(`/api/summary/${session.group_code}`);
     const summaryObj = await res.json();
 
     if (summaryObj.data) {
@@ -836,9 +832,7 @@ function UnapprovedUser({ session, handleSignOut }) {
   // if user is waiting for approval: get company info that they are applying for
   const getCC = async () => {
     setLoading(true);
-    const res = await fetch(
-      `http://localhost:3000/api/applicant/${session._id}`
-    );
+    const res = await fetch(`/api/applicant/${session._id}`);
     const ccObj = await res.json();
     const ccData = ccObj.data;
     setCC(ccData);
@@ -887,7 +881,7 @@ function UnapprovedUser({ session, handleSignOut }) {
     e.preventDefault();
     document.getElementById("modalDeleteConfirmation").style.display = "none";
 
-    fetch(`http://localhost:3000/api/profile/${session._id}`, {
+    fetch(`/api/profile/${session._id}`, {
       method: "DELETE",
     }).then((response) => {
       if (response.status === 200) {
@@ -912,9 +906,7 @@ function UnapprovedUser({ session, handleSignOut }) {
     // if user enter company code
     if (data.code) {
       // check if company code is valid
-      const res = await fetch(
-        `http://localhost:3000/api/validateGroup/${data.code}`
-      );
+      const res = await fetch(`/api/validateGroup/${data.code}`);
       obj = await res.json();
     }
 
@@ -925,7 +917,7 @@ function UnapprovedUser({ session, handleSignOut }) {
         applicantId: session._id,
       };
 
-      fetch(`http://localhost:3000/api/approval/${data.code}`, {
+      fetch(`/api/approval/${data.code}`, {
         method: "POST",
         mode: "cors",
         body: JSON.stringify(jsonData),

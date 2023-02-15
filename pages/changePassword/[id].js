@@ -9,7 +9,7 @@ import LayoutIn from "../../layout/layoutIn";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { FaUserEdit } from "react-icons/fa";
 
-export default function changePassword() {
+const ChangePassword = () => {
   // auth
   const { data: session } = useSession();
 
@@ -23,7 +23,7 @@ export default function changePassword() {
 
   const getProfile = async () => {
     setLoading(true);
-    const res = await fetch(`http://localhost:3000/api/profile/${session._id}`);
+    const res = await fetch(`/api/profile/${session._id}`);
     const profileObj = await res.json();
     const profileData = profileObj.data;
     setProfile(profileData);
@@ -70,7 +70,7 @@ export default function changePassword() {
     };
 
     // Send data to the backend via PUT
-    fetch(`http://localhost:3000/api/changePassword/${session._id}`, {
+    fetch(`/api/changePassword/${session._id}`, {
       method: "PUT",
       mode: "cors",
       body: JSON.stringify(jsonData),
@@ -354,7 +354,9 @@ export default function changePassword() {
       </main>
     </LayoutIn>
   );
-}
+};
+
+export default ChangePassword;
 
 export async function getServerSideProps({ req }) {
   // handle session

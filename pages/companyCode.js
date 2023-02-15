@@ -7,7 +7,7 @@ import Pagination from "../components/Pagination";
 import { paginate } from "../utils/paginate";
 import LayoutIn from "../layout/layoutIn";
 
-export default () => {
+const CompanyCode = () => {
   const { data: session } = useSession();
 
   // theme
@@ -22,9 +22,7 @@ export default () => {
 
   const getItems = async () => {
     setLoading1(true);
-    const res = await fetch(
-      `http://localhost:3000/api/approval/${session.group_code}`
-    );
+    const res = await fetch(`/api/approval/${session.group_code}`);
     const itemsObj = await res.json();
     const items = itemsObj.data;
     setApprovalItem(items);
@@ -37,9 +35,7 @@ export default () => {
 
   const getStaff = async () => {
     setLoading2(true);
-    const res = await fetch(
-      `http://localhost:3000/api/staffs/${session.group_code}`
-    );
+    const res = await fetch(`/api/staffs/${session.group_code}`);
     const staffObj = await res.json();
     const staffData = staffObj.data;
     setStaff(staffData);
@@ -51,7 +47,7 @@ export default () => {
 
   const getUser = async () => {
     setLoading(true);
-    const res = await fetch(`http://localhost:3000/api/profile/${session._id}`);
+    const res = await fetch(`/api/profile/${session._id}`);
     const profileObj = await res.json();
     const profileData = await profileObj.data;
     setUser(profileData);
@@ -99,7 +95,7 @@ export default () => {
       group_code: session.group_code,
     };
 
-    fetch(`http://localhost:3000/api/approvalItem/${approvalId}`, {
+    fetch(`/api/approvalItem/${approvalId}`, {
       method: "PUT",
       mode: "cors",
       body: JSON.stringify(jsonData),
@@ -120,7 +116,7 @@ export default () => {
       staffId: staffId,
     };
 
-    fetch(`http://localhost:3000/api/staffs/${session.group_code}`, {
+    fetch(`/api/staffs/${session.group_code}`, {
       method: "PUT",
       mode: "cors",
       body: JSON.stringify(jsonData),
@@ -712,6 +708,8 @@ export default () => {
     </LayoutIn>
   );
 };
+
+export default CompanyCode;
 
 export async function getServerSideProps({ req }) {
   const session = await getSession({ req });

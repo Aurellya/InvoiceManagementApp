@@ -11,7 +11,7 @@ import LayoutIn from "../layout/layoutIn";
 import { BsPlusLg } from "react-icons/bs";
 import { AiOutlineSearch } from "react-icons/ai";
 
-export default () => {
+const Customers = () => {
   // session
   const { data: session } = useSession();
 
@@ -24,9 +24,7 @@ export default () => {
 
   const getCustomers = async () => {
     setLoading(true);
-    const res = await fetch(
-      `http://localhost:3000/api/mycustomers/${session.group_code}`
-    );
+    const res = await fetch(`/api/mycustomers/${session.group_code}`);
     const customersObj = await res.json();
     const customers = customersObj.data;
     setCustomers(customers);
@@ -389,6 +387,8 @@ export default () => {
     </LayoutIn>
   );
 };
+
+export default Customers;
 
 export async function getServerSideProps({ req }) {
   const session = await getSession({ req });
