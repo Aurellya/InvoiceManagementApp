@@ -20,14 +20,16 @@ const PriceLists = () => {
 
   // fetch data
   const [priceLists, setPriceLists] = useState();
+  const [filteredPriceLists, setFilteredPriceLists] = useState();
   const [loading, setLoading] = useState(false);
 
   const getPriceLists = async () => {
     setLoading(true);
     const res = await fetch(`/api/mypricelists/${session.group_code}`);
     const priceListsObj = await res.json();
-    const priceLists = priceListsObj.data;
-    setPriceLists(priceLists);
+    const priceListsData = priceListsObj.data;
+    setPriceLists(priceListsData);
+    setFilteredPriceLists(priceListsData);
     setLoading(false);
   };
 
@@ -40,7 +42,7 @@ const PriceLists = () => {
   const pageSize = 10;
 
   const handlePageChange = (page) => {
-    if (page <= Math.ceil(priceLists.length / pageSize) && page > 0) {
+    if (page <= Math.ceil(filteredPriceLists.length / pageSize) && page > 0) {
       setCurrentPage(page);
     }
   };
@@ -51,16 +53,24 @@ const PriceLists = () => {
     if (priceLists) {
       setPaginatePriceLists(paginate(priceLists, currentPage, pageSize));
     }
-  }, [priceLists]);
+  }, [priceLists, currentPage, pageSize]);
+
+  useEffect(() => {
+    if (filteredPriceLists) {
+      setPaginatePriceLists(
+        paginate(filteredPriceLists, currentPage, pageSize)
+      );
+    }
+  }, [filteredPriceLists, currentPage, pageSize]);
 
   const [keyword, setKeyword] = useState("");
   useEffect(() => {
     if (priceLists) {
-      let filteredPriceLists = priceLists.filter((p) =>
-        p.product_name.includes(keyword)
-      );
-      setPaginatePriceLists(
-        paginate(filteredPriceLists, currentPage, pageSize)
+      setCurrentPage(1);
+      setFilteredPriceLists(
+        priceLists.filter((p) =>
+          p.product_name.toUpperCase().includes(keyword.toUpperCase())
+        )
       );
     }
   }, [keyword]);
@@ -158,13 +168,13 @@ const PriceLists = () => {
             <h1 className="text-lg md:text-xl mb-4">
               {theme.language === "Bahasa" ? "Rincian Item" : "Item Details"}
             </h1>
-            {paginatePriceLists && (
+            {filteredPriceLists && (
               <h2 className="text-sm hidden md:block">
                 <span className="font-bold">Total: </span>
-                {paginatePriceLists.length}{" "}
+                {filteredPriceLists.length}{" "}
                 {theme.language === "Bahasa"
                   ? "Jenis Barang"
-                  : paginatePriceLists.length > 1
+                  : filteredPriceLists.length > 1
                   ? "Items"
                   : "Item"}
               </h2>
@@ -225,19 +235,21 @@ const PriceLists = () => {
                           ? "Nama Produk"
                           : "Product Name"}
                       </th>
-                      <th className="w-36 p-3 text-sm font-semibold tracking-wide text-left">
+                      {/* <th className="w-36 p-3 text-sm font-semibold tracking-wide text-left">
                         {theme.language === "Bahasa"
                           ? "Jumlah (/Unit)"
                           : "Amount (/Unit)"}
-                      </th>
-                      <th className="w-36 p-3 text-sm font-semibold tracking-wide text-left">
-                        {theme.language === "Bahasa" ? "Harga" : "Price"}
+                      </th> */}
+                      <th className="w-44 p-3 text-sm font-semibold tracking-wide text-left">
+                        {theme.language === "Bahasa"
+                          ? "Harga (/Unit)"
+                          : "Price (/Unit)"}
                       </th>
                       {session && session.role == "admin" && (
                         <th className="w-36 p-3 text-sm font-semibold tracking-wide text-left">
                           {theme.language === "Bahasa"
-                            ? "Harga VIP"
-                            : "VIP Price"}
+                            ? "Modal"
+                            : "Capital Cost"}
                         </th>
                       )}
 
@@ -267,7 +279,7 @@ const PriceLists = () => {
                           <td className="p-3 text-sm whitespace-nowrap">
                             {item.product_name}
                           </td>
-                          <td className="p-3 text-sm whitespace-nowrap">
+                          {/* <td className="p-3 text-sm whitespace-nowrap">
                             {item.amount + " "}
                             {theme.language === "Bahasa"
                               ? item.unit
@@ -278,18 +290,28 @@ const PriceLists = () => {
                                   : item.unit == "grs"
                                   ? "gro"
                                   : "box")}
-                          </td>
+                          </td> */}
                           <td className="p-3 text-sm whitespace-nowrap">
                             {item.price.toLocaleString("en-US", {
                               style: "currency",
                               currency: "IDR",
                               maximumFractionDigits: 0,
                             })}
+                            {" /"}
+                            {theme.language === "Bahasa"
+                              ? item.unit
+                              : item.unit == "bh"
+                              ? "pcs"
+                              : (item.unit = "ls"
+                                  ? "doz"
+                                  : item.unit == "grs"
+                                  ? "gro"
+                                  : "box")}
                           </td>
                           {session && session.role == "admin" && (
                             <td className="p-3 text-sm whitespace-nowrap">
-                              {item.vip_price
-                                ? item.vip_price.toLocaleString("en-US", {
+                              {item.capital_cost
+                                ? item.capital_cost.toLocaleString("en-US", {
                                     style: "currency",
                                     currency: "IDR",
                                     maximumFractionDigits: 0,
@@ -312,13 +334,13 @@ const PriceLists = () => {
 
               {/* mobile view */}
               <hr className="md:hidden" />
-              {paginatePriceLists && (
+              {filteredPriceLists && (
                 <h2 className="text-sm md:hidden mt-5 text-right">
                   <span className="font-bold">Total: </span>
-                  {paginatePriceLists.length}{" "}
+                  {filteredPriceLists.length}{" "}
                   {theme.language === "Bahasa"
                     ? "Jenis Barang"
-                    : paginatePriceLists.length > 1
+                    : filteredPriceLists.length > 1
                     ? "Items"
                     : "Item"}
                 </h2>
@@ -351,7 +373,7 @@ const PriceLists = () => {
                         {item.product_name}
                       </div>
                       <hr />
-                      <div className="text-sm font-medium">
+                      {/* <div className="text-sm font-medium">
                         <b>
                           {theme.language === "Bahasa"
                             ? "Jumlah (/Unit): "
@@ -367,10 +389,12 @@ const PriceLists = () => {
                           : item.unit == "grs"
                           ? "gro"
                           : "box"}
-                      </div>
+                      </div> */}
                       <div className="text-sm font-medium">
                         <b>
-                          {theme.language === "Bahasa" ? "Harga: " : "Price: "}
+                          {theme.language === "Bahasa"
+                            ? "Harga (/Unit): "
+                            : "Price (/Unit): "}
                         </b>
                         <span className="text-sm font-medium">
                           {item.price.toLocaleString("en-US", {
@@ -378,17 +402,27 @@ const PriceLists = () => {
                             currency: "IDR",
                             maximumFractionDigits: 0,
                           })}
+                          {" /"}
+                          {theme.language === "Bahasa"
+                            ? item.unit
+                            : item.unit == "bh"
+                            ? "pcs"
+                            : item.unit == "ls"
+                            ? "doz"
+                            : item.unit == "grs"
+                            ? "gro"
+                            : "box"}
                         </span>
                       </div>
                       <div className="text-sm font-medium">
                         <b>
                           {theme.language === "Bahasa"
-                            ? "Harga VIP: "
-                            : "VIP Price: "}
+                            ? "Modal : "
+                            : "Capital Cost: "}
                         </b>
                         <span className="text-sm font-medium">
-                          {item.vip_price
-                            ? item.vip_price.toLocaleString("en-US", {
+                          {item.capital_cost
+                            ? item.capital_cost.toLocaleString("en-US", {
                                 style: "currency",
                                 currency: "IDR",
                                 maximumFractionDigits: 0,
@@ -424,7 +458,7 @@ const PriceLists = () => {
               </div>
 
               <Pagination
-                items={priceLists.length}
+                items={filteredPriceLists.length}
                 currentPage={currentPage}
                 pageSize={pageSize}
                 onPageChange={handlePageChange}

@@ -18,10 +18,9 @@ const AddPriceList = () => {
   // handle form data
   const [data, setData] = useState({
     product_name: "",
-    amount: 0,
     unit: "",
     price: "",
-    vip_price: "",
+    capital_cost: "",
     remarks: "",
   });
   const [errorMsg, setErrorMsg] = useState("");
@@ -56,7 +55,7 @@ const AddPriceList = () => {
     let value = e.target.value;
 
     // change format
-    if (name === "amount" || name === "price" || name === "vip_price") {
+    if (name === "price" || name === "capital_cost") {
       value = localStringToNumber(value);
     }
 
@@ -72,10 +71,9 @@ const AddPriceList = () => {
 
     var jsonData = {
       product_name: data.product_name,
-      amount: data.amount,
       unit: data.unit,
       price: data.price,
-      vip_price: data.vip_price,
+      capital_cost: data.capital_cost,
       remarks: data.remarks,
     };
 
@@ -239,61 +237,34 @@ const AddPriceList = () => {
                         />
                       </div>
 
-                      {/* remarks */}
-                      <div className="form-group mb-6">
-                        <label
-                          htmlFor="remarks"
-                          className="form-label inline-block mb-2"
-                        >
-                          <b>
-                            {theme.language === "Bahasa"
-                              ? "Keterangan:"
-                              : "Remarks:"}
-                          </b>
-                        </label>
-                        <textarea
-                          autoComplete="off"
-                          type="text"
-                          className={`${
-                            theme.dark
-                              ? "!bg-dm_secondary text-neutral"
-                              : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
-                          } form-control block px-3 py-1.5 w-full h-[135px] font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
-                          name="remarks"
-                          id="remarks"
-                          onChange={handleChange}
-                        ></textarea>
-                      </div>
-                    </div>
-
-                    {/* second col */}
-                    <div className="lg:col-span-6">
-                      {/* amount */}
+                      {/* Price */}
                       <div className="form-group mb-6">
                         <div>
                           <label
-                            htmlFor="amount"
+                            htmlFor="price"
                             className="form-label inline-block mb-2"
                           >
                             <b>
                               {theme.language === "Bahasa"
-                                ? "Jumlah (/Unit):"
-                                : "Amount (/Unit):"}
+                                ? "Harga (/Unit):"
+                                : "Price (/Unit):"}
                             </b>
                           </label>
 
                           <div className="flex">
                             <input
                               autoComplete="off"
-                              type="number"
+                              type="price"
                               className={`${
                                 theme.dark
                                   ? "!bg-dm_secondary text-neutral"
                                   : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
-                              } form-control block w-full px-3 py-1.5 font-normal bg-clip-padding border border-solid rounded-l transition ease-in-out m-0 focus:outline-none`}
-                              name="amount"
-                              id="amount"
+                              } form-control block w-full px-3 py-1.5 font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
+                              name="price"
+                              id="price"
                               onChange={handleChange}
+                              onFocus={(e) => onFocus(e)}
+                              onBlur={(e) => onBlur(e)}
                               required
                             />
                             <label htmlFor="unit" className="sr-only">
@@ -328,43 +299,16 @@ const AddPriceList = () => {
                         </div>
                       </div>
 
-                      {/* price */}
+                      {/* Capital Cost*/}
                       <div className="form-group mb-6">
                         <label
-                          htmlFor="price"
-                          className="form-label inline-block mb-2"
-                        >
-                          <b>
-                            {theme.language === "Bahasa" ? "Harga:" : "Price:"}
-                          </b>
-                        </label>
-                        <input
-                          autoComplete="off"
-                          type="price"
-                          className={`${
-                            theme.dark
-                              ? "!bg-dm_secondary text-neutral"
-                              : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
-                          } form-control block w-full px-3 py-1.5 font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
-                          name="price"
-                          id="price"
-                          onChange={handleChange}
-                          onFocus={(e) => onFocus(e)}
-                          onBlur={(e) => onBlur(e)}
-                          required
-                        />
-                      </div>
-
-                      {/* VIP price */}
-                      <div className="form-group mb-6">
-                        <label
-                          htmlFor="vip_price"
+                          htmlFor="capital_cost"
                           className="form-label inline-block mb-2"
                         >
                           <b>
                             {theme.language === "Bahasa"
-                              ? "Harga VIP:"
-                              : "VIP Price:"}
+                              ? "Modal:"
+                              : "Capital Cost:"}
                           </b>
                         </label>
                         <input
@@ -375,12 +319,41 @@ const AddPriceList = () => {
                               ? "!bg-dm_secondary text-neutral"
                               : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
                           } form-control block w-full px-3 py-1.5 font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
-                          name="vip_price"
-                          id="vip_price"
+                          name="capital_cost"
+                          id="capital_cost"
                           onChange={handleChange}
                           onFocus={(e) => onFocus(e)}
                           onBlur={(e) => onBlur(e)}
                         />
+                      </div>
+                    </div>
+
+                    {/* second col */}
+                    <div className="lg:col-span-6">
+                      {/* remarks */}
+                      <div className="form-group mb-6">
+                        <label
+                          htmlFor="remarks"
+                          className="form-label inline-block mb-2"
+                        >
+                          <b>
+                            {theme.language === "Bahasa"
+                              ? "Keterangan:"
+                              : "Remarks:"}
+                          </b>
+                        </label>
+                        <textarea
+                          autoComplete="off"
+                          type="text"
+                          className={`${
+                            theme.dark
+                              ? "!bg-dm_secondary text-neutral"
+                              : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
+                          } form-control block px-3 py-1.5 w-full h-[135px] font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
+                          name="remarks"
+                          id="remarks"
+                          onChange={handleChange}
+                        ></textarea>
                       </div>
                     </div>
                   </div>

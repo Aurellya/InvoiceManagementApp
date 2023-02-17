@@ -2,10 +2,9 @@ import mongoose, { Schema, model, models } from "mongoose";
 
 const priceListSchema = new Schema({
   product_name: String,
-  amount: Number,
   unit: String,
   price: Number,
-  vip_price: Number,
+  capital_cost: Number,
   remarks: String,
 });
 

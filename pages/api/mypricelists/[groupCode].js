@@ -60,7 +60,7 @@ export default async function handler(req, res) {
                 amount: userInput.amount,
                 unit: userInput.unit,
                 price: userInput.price,
-                vip_price: userInput.vip_price,
+                capital_cost: userInput.capital_cost,
                 remarks: userInput.remarks,
               });
               new_priceList.save();

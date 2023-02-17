@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import Link from "next/link";
 import { getSession, useSession } from "next-auth/react";
 
@@ -17,6 +17,35 @@ const AddInvoice = () => {
 
   // theme
   const theme = useContext(ThemeContext);
+  const ref = useRef(null);
+
+  // load product name
+  const [priceLists, setPriceLists] = useState();
+
+  const getPriceLists = async () => {
+    const res = await fetch(`/api/mypricelists/${session.group_code}`);
+    const priceListsObj = await res.json();
+    const priceListsData = priceListsObj.data;
+    setPriceLists(priceListsData);
+  };
+
+  useEffect(() => {
+    getPriceLists();
+
+    const handleClick = (event) => {
+      let get = document.getElementById("suggestionDiv");
+      if (!get.contains(event.target)) {
+        get.style.display = "none";
+      }
+    };
+
+    const element = ref.current;
+    element.addEventListener("click", handleClick);
+
+    return () => {
+      element.removeEventListener("click", handleClick);
+    };
+  }, []);
 
   // handle table rows
   const [noOfRows, setNoOfRows] = useState(1);
@@ -180,10 +209,77 @@ const AddInvoice = () => {
     });
   };
 
+  function fireEvent(element, event) {
+    if (document.createEventObject) {
+      // dispatch for IE
+      var evt = document.createEventObject();
+      return element.fireEvent("on" + event, evt);
+    } else {
+      // dispatch for firefox + others
+      var evt = document.createEvent("HTMLEvents");
+      evt.initEvent(event, true, true); // event type,bubbling,cancelable
+      return !element.dispatchEvent(evt);
+    }
+  }
+
+  const [suggestions, setSuggestions] = useState();
+  const handleSuggestion = (e, val, i) => {
+    e.preventDefault();
+    const event = new MouseEvent("dblclick", {
+      view: window,
+      bubbles: true,
+      cancelable: true,
+    });
+
+    let itemInputEle = document.getElementById("itemNameInput-" + i);
+    itemInputEle.value = val;
+    itemInputEle.dispatchEvent(event);
+
+    // find price of the item
+    let itemInfo = priceLists.filter(
+      (item) => item.product_name.toUpperCase() == val.toUpperCase()
+    )[0];
+
+    // change price format
+    if (itemInfo) {
+      let options = {
+        maximumFractionDigits: 0,
+        currency: "IDR",
+        style: "currency",
+        currencyDisplay: "symbol",
+      };
+
+      let pricePerItemEle = document.getElementById("pricePerItemInput-" + i);
+      pricePerItemEle.value = localStringToNumber(
+        itemInfo.price
+      ).toLocaleString(undefined, options);
+      pricePerItemEle.dispatchEvent(event);
+
+      let priceUnitEle = document.getElementById("price_unit-" + i);
+      priceUnitEle.value = itemInfo.unit;
+      priceUnitEle.dispatchEvent(event);
+    }
+
+    document.getElementById("suggestionDiv").style.display = "none";
+  };
+
   // when "content" data changes
   const handleChangeContent = (e) => {
     let name = e.target.name;
     let value = e.target.value;
+
+    // give suggestion on item/product name
+    if (name == "item_name") {
+      document.getElementById("suggestionDiv").style.display = "block";
+
+      let matches = [];
+      if (value.length > 0) {
+        matches = priceLists.filter((c) =>
+          c.product_name.toUpperCase().includes(value.toUpperCase())
+        );
+        setSuggestions(matches.slice(0, 8));
+      }
+    }
 
     // change format
     if (name === "amount" || name === "total" || name === "price_per_item") {
@@ -283,7 +379,10 @@ const AddInvoice = () => {
       }
       role={session.role}
     >
-      <main className="pt-[76px] pb-12 md:py-12 px-8 md:px-14 w-full max-w-[1536px]">
+      <main
+        className="pt-[76px] pb-12 md:py-12 px-8 md:px-14 w-full max-w-[1536px]"
+        ref={ref}
+      >
         {/* header section */}
         <div className="flex md:items-center justify-between flex-col md:flex-row gap-4 md:gap-0 w-full md:mb-12">
           <div className="flex items-center gap-8">
@@ -529,7 +628,9 @@ const AddInvoice = () => {
               </div>
 
               {/* right */}
-              <div className={`lg:col-span-9 lg:block w-full lg:overflow-auto`}>
+              <div
+                className={`lg:col-span-9 lg:block w-full lg:overflow-x-auto`}
+              >
                 <h2 className="text-lg md:hidden">
                   {theme.language === "Bahasa" ? "Barang" : "Items"}
                 </h2>
@@ -549,9 +650,11 @@ const AddInvoice = () => {
                       </span>
                     </b>
                   </h2>
-
                   {/* table */}
-                  <div className="overflow-auto rounded-lg shadow mt-4">
+                  <div
+                    className="rounded-lg shadow mt-4"
+                    // overflow-auto
+                  >
                     <table className="w-full">
                       <thead
                         className={`${
@@ -672,7 +775,7 @@ const AddInvoice = () => {
                                   ? "Nama Barang"
                                   : "Item Name"}
                               </h3>
-                              <div className="mt-2 lg:mt-0">
+                              <div className="mt-2 lg:mt-0 relative overflow-y-visible">
                                 <input
                                   name="item_name"
                                   autoComplete="off"
@@ -683,8 +786,30 @@ const AddInvoice = () => {
                                   id={`itemNameInput-${i}`}
                                   placeholder=""
                                   onChange={handleChangeContent}
+                                  onDoubleClick={handleChangeContent}
                                   required
                                 />
+                                <div id="suggestionDiv">
+                                  {suggestions && (
+                                    <div className="flex flex-col absolute top-11 z-50">
+                                      {suggestions.map((suggestion, k) => (
+                                        <button
+                                          key={k}
+                                          onClick={(e) =>
+                                            handleSuggestion(
+                                              e,
+                                              suggestion.product_name,
+                                              i
+                                            )
+                                          }
+                                          className="px-4 py-2 bg-primary border border-neutral text-neutral text-left"
+                                        >
+                                          {suggestion.product_name}
+                                        </button>
+                                      ))}
+                                    </div>
+                                  )}
+                                </div>
                               </div>
                             </td>
 
@@ -708,6 +833,7 @@ const AddInvoice = () => {
                                     onFocus={(e) => onFocus(e)}
                                     onBlur={(e) => onBlur(e)}
                                     onChange={handleChangeContent}
+                                    onDoubleClick={handleChangeContent}
                                     required
                                   />
 
@@ -725,6 +851,7 @@ const AddInvoice = () => {
                                     //   theme.dark ? "!bg-[#99AEBA]" : "bg-white"
                                     // }
                                     onChange={handleChangeContent}
+                                    onDoubleClick={handleChangeContent}
                                     required
                                     defaultValue={""}
                                   >
@@ -781,7 +908,6 @@ const AddInvoice = () => {
                       </tbody>
                     </table>
                   </div>
-
                   {/* add button */}
                   <div className="mt-4 mb-5 text-right mr-1">
                     <button
@@ -791,7 +917,6 @@ const AddInvoice = () => {
                       <FaPlus size={14} />
                     </button>
                   </div>
-
                   {/* submit button */}
                   <div className="text-center lg:hidden">
                     <button

@@ -23,7 +23,7 @@ const Invoices = () => {
 
   const getInvoices = async () => {
     setLoading(true);
-    const res = await fetch(`api/myinvoices/${session.group_code}`);
+    const res = await fetch(`/api/myinvoices/${session.group_code}`);
     const invoicesObj = await res.json();
     const invoices = invoicesObj.data;
     setInvoices(invoices);
@@ -207,7 +207,11 @@ const Invoices = () => {
                                 : "text-gray-800 bg-gray-200"
                             }  rounded-lg bg-opacity-50`}
                           >
-                            {invoice.status}
+                            {theme.language === "Bahasa"
+                              ? invoice.status === "paid"
+                                ? "sudah"
+                                : "belum"
+                              : invoice.status}
                           </span>
                         </td>
                         <td className="py-3 text-sm whitespace-nowrap text-center">

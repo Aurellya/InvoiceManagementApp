@@ -79,7 +79,19 @@ export default async function handler(req, res) {
           try {
             // check if req_user is admin
             if (check_role) {
+              // remove it from groups
+              await Groups.updateOne(
+                { group_code: req_user.groupId.group_code },
+                {
+                  $pull: {
+                    invoices: invoiceId,
+                  },
+                }
+              );
+
+              // remove invoice
               const docs = await Invoices.findByIdAndDelete(invoiceId);
+
               return res.status(200).json({ data: docs });
             } else {
               return res.status(401).json({

@@ -20,14 +20,16 @@ const Customers = () => {
 
   // fetch data
   const [customers, setCustomers] = useState();
+  const [filteredCustomers, setFilteredCustomers] = useState();
   const [loading, setLoading] = useState(false);
 
   const getCustomers = async () => {
     setLoading(true);
     const res = await fetch(`/api/mycustomers/${session.group_code}`);
     const customersObj = await res.json();
-    const customers = customersObj.data;
-    setCustomers(customers);
+    const customersData = customersObj.data;
+    setCustomers(customersData);
+    setFilteredCustomers(customersData);
     setLoading(false);
   };
 
@@ -40,7 +42,7 @@ const Customers = () => {
   const pageSize = 10;
 
   const handlePageChange = (page) => {
-    if (page <= Math.ceil(customers.length / pageSize) && page > 0) {
+    if (page <= Math.ceil(filteredCustomers.length / pageSize) && page > 0) {
       setCurrentPage(page);
     }
   };
@@ -51,13 +53,23 @@ const Customers = () => {
     if (customers) {
       setPaginateCustomer(paginate(customers, currentPage, pageSize));
     }
-  }, [customers]);
+  }, [customers, currentPage, pageSize]);
+
+  useEffect(() => {
+    if (filteredCustomers) {
+      setPaginateCustomer(paginate(filteredCustomers, currentPage, pageSize));
+    }
+  }, [filteredCustomers, currentPage, pageSize]);
 
   const [keyword, setKeyword] = useState("");
   useEffect(() => {
     if (customers) {
-      let filteredCustomer = customers.filter((p) => p.name.includes(keyword));
-      setPaginateCustomer(paginate(filteredCustomer, currentPage, pageSize));
+      setCurrentPage(1);
+      setFilteredCustomers(
+        customers.filter((c) =>
+          c.name.toUpperCase().includes(keyword.toUpperCase())
+        )
+      );
     }
   }, [keyword]);
 
@@ -154,13 +166,13 @@ const Customers = () => {
                 ? "Rincian Pelanggan"
                 : "Customer Details"}
             </h1>
-            {paginateCustomer && (
+            {filteredCustomers && (
               <h2 className="text-sm hidden md:block">
                 <span className="font-bold">Total: </span>
-                {paginateCustomer.length}{" "}
+                {filteredCustomers.length}{" "}
                 {theme.language === "Bahasa"
                   ? "Pelanggan"
-                  : paginateCustomer.length > 1
+                  : filteredCustomers.length > 1
                   ? "Customers"
                   : "Customer"}
               </h2>
@@ -288,13 +300,13 @@ const Customers = () => {
 
               {/* mobile view */}
               <hr className="md:hidden" />
-              {paginateCustomer && (
+              {filteredCustomers && (
                 <h2 className="text-sm md:hidden mt-5 text-right">
                   <span className="font-bold">Total: </span>
-                  {paginateCustomer.length}{" "}
+                  {filteredCustomers.length}{" "}
                   {theme.language === "Bahasa"
                     ? "Pelanggan"
-                    : paginateCustomer.length > 1
+                    : filteredCustomers.length > 1
                     ? "Customers"
                     : "Customer"}
                 </h2>
@@ -375,7 +387,7 @@ const Customers = () => {
               </div>
 
               <Pagination
-                items={customers.length}
+                items={filteredCustomers.length}
                 currentPage={currentPage}
                 pageSize={pageSize}
                 onPageChange={handlePageChange}

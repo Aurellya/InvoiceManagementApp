@@ -280,7 +280,7 @@ const PriceList = () => {
 
               {/* right */}
               <div className="md:col-span-6">
-                <p>
+                {/* <p>
                   <b>
                     {theme.language === "Bahasa"
                       ? "Jumlah (/Unit): "
@@ -298,12 +298,17 @@ const PriceList = () => {
                     : item.unit == "grs"
                     ? "gro"
                     : "box"}
-                </p>
+                </p> */}
 
-                <br />
+                {/* <br /> */}
 
                 <p>
-                  <b> {theme.language === "Bahasa" ? "Harga: " : "Price: "}</b>
+                  <b>
+                    {" "}
+                    {theme.language === "Bahasa"
+                      ? "Harga (/Unit): "
+                      : "Price (/Unit): "}
+                  </b>
                 </p>
                 <p>
                   {item.price.toLocaleString("en-US", {
@@ -311,6 +316,16 @@ const PriceList = () => {
                     currency: "IDR",
                     maximumFractionDigits: 0,
                   })}
+                  {" /"}
+                  {theme.language === "Bahasa"
+                    ? item.unit
+                    : item.unit == "bh"
+                    ? "pcs"
+                    : item.unit == "ls"
+                    ? "doz"
+                    : item.unit == "grs"
+                    ? "gro"
+                    : "box"}{" "}
                 </p>
 
                 <br />
@@ -320,13 +335,13 @@ const PriceList = () => {
                     <p>
                       <b>
                         {theme.language === "Bahasa"
-                          ? "Harga VIP: "
-                          : "VIP Price: "}
+                          ? "Modal: "
+                          : "Capital Cost: "}
                       </b>
                     </p>
                     <p>
-                      {item.vip_price
-                        ? item.vip_price.toLocaleString("en-US", {
+                      {item.capital_cost
+                        ? item.capital_cost.toLocaleString("en-US", {
                             style: "currency",
                             currency: "IDR",
                             maximumFractionDigits: 0,

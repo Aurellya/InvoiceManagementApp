@@ -11,7 +11,7 @@ import { AiFillEdit, AiFillDelete, AiFillPrinter } from "react-icons/ai";
 import { IoArrowBackOutline } from "react-icons/io5";
 
 import ReactToPrint from "react-to-print";
-import { ComponentToPrint } from "../../components/ComponentToPrint";
+import ComponentToPrint from "../../components/ComponentToPrint";
 
 const Invoice = () => {
   // session
@@ -197,10 +197,10 @@ const Invoice = () => {
             role="alert"
           >
             <svg
-              ariaHidden="true"
+              aria-hidden="true"
               focusable="false"
-              dataPrefix="fas"
-              dataIcon="times-circle"
+              dataprefix="fas"
+              dataicon="times-circle"
               className="w-4 h-4 mr-2 fill-current"
               role="img"
               xmlns="http://www.w3.org/2000/svg"

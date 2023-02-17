@@ -54,7 +54,7 @@ export default async function handler(req, res) {
                 amount: userInput.amount,
                 unit: userInput.unit,
                 price: userInput.price,
-                vip_price: userInput.vip_price,
+                capital_cost: userInput.capital_cost,
                 remarks: userInput.remarks,
               };
 
@@ -78,6 +78,17 @@ export default async function handler(req, res) {
           try {
             // check if req_user is admin
             if (check_role) {
+              // remove it from groups
+              await Groups.updateOne(
+                { group_code: req_user.groupId.group_code },
+                {
+                  $pull: {
+                    priceLists: priceListId,
+                  },
+                }
+              );
+
+              // remove customer
               const docs = await PriceLists.findByIdAndDelete(priceListId);
               return res.status(200).json({ data: docs });
             } else {
