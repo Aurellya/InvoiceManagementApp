@@ -48,6 +48,9 @@ export default NextAuth({
   session: {
     strategy: "jwt",
   },
+  pages: {
+    error: "/auth/error", // Error code passed in query string as ?error=
+  },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {

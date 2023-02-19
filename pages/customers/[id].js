@@ -136,7 +136,7 @@ const Customer = () => {
             >
               <h1 className="text-xl mb-6 font-bold">
                 {theme.language === "Bahasa"
-                  ? "Apakah Kamu Yakin Mau Menghapus Nota?"
+                  ? "Apakah Kamu Yakin Mau Menghapus Item?"
                   : "Do you Want Delete?"}
               </h1>
               <button
@@ -162,10 +162,10 @@ const Customer = () => {
             role="alert"
           >
             <svg
-              ariaHidden="true"
+              aria-hidden="true"
               focusable="false"
-              dataPrefix="fas"
-              dataIcon="times-circle"
+              dataprefix="fas"
+              dataicon="times-circle"
               className="w-4 h-4 mr-2 fill-current"
               role="img"
               xmlns="http://www.w3.org/2000/svg"

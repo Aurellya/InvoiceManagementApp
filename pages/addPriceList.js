@@ -45,7 +45,7 @@ const AddPriceList = () => {
     let value = e.target.value;
     e.target.value =
       value || value === 0
-        ? localStringToNumber(value).toLocaleString(undefined, options)
+        ? localStringToNumber(value).toLocaleString("en-US", options)
         : "";
   }
 
@@ -259,7 +259,7 @@ const AddPriceList = () => {
                                 theme.dark
                                   ? "!bg-dm_secondary text-neutral"
                                   : "bg-white border-gray-300 focus:text-gray-700 focus:bg-white focus:border-primary text-gray-700"
-                              } form-control block w-full px-3 py-1.5 font-normal bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:outline-none`}
+                              } form-control block w-full px-3 py-1.5 font-normal bg-clip-padding border border-solid rounded-l transition ease-in-out m-0 focus:outline-none`}
                               name="price"
                               id="price"
                               onChange={handleChange}

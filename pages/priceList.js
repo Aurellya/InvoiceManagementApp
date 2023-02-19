@@ -39,7 +39,7 @@ const PriceLists = () => {
 
   // pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10;
+  const pageSize = 20;
 
   const handlePageChange = (page) => {
     if (page <= Math.ceil(filteredPriceLists.length / pageSize) && page > 0) {
@@ -218,6 +218,14 @@ const PriceLists = () => {
 
           {!loading && priceLists && priceLists.length != 0 && (
             <>
+              <Pagination
+                items={filteredPriceLists.length}
+                currentPage={currentPage}
+                pageSize={pageSize}
+                onPageChange={handlePageChange}
+                pos="top"
+              />
+
               {/* large screen view */}
               <div className="overflow-auto rounded-lg shadow hidden md:block">
                 <table className="w-full">
@@ -462,6 +470,7 @@ const PriceLists = () => {
                 currentPage={currentPage}
                 pageSize={pageSize}
                 onPageChange={handlePageChange}
+                pos="bottom"
               />
             </>
           )}

@@ -7,6 +7,7 @@ export default function Pagination({
   pageSize,
   currentPage,
   onPageChange,
+  pos,
 }) {
   // theme
   const theme = useContext(ThemeContext);
@@ -16,14 +17,20 @@ export default function Pagination({
   const pages = _.range(1, pageCount + 1);
 
   return (
-    <div className="flex items-center justify-center pt-12 pb-4 lg:px-0 sm:px-6 px-4">
+    <div
+      className={`flex items-center justify-center ${
+        pos == "top" ? "pt-4 pb-12" : "pt-12 pb-4"
+      } lg:px-0 sm:px-6 px-4`}
+    >
       <div
-        className={`lg:w-3/5 w-full flex items-center justify-between border-t ${
-          theme.dark ? "border-neutral" : "border-[#0E3658]"
-        }`}
+        className={`lg:w-3/5 w-full flex items-center justify-between ${
+          pos == "top" ? "border-b" : "border-t"
+        } ${theme.dark ? "border-neutral" : "border-[#0E3658]"}`}
       >
         <div
-          className={`flex items-center pt-3 cursor-pointer ${
+          className={`flex items-center ${
+            pos == "top" ? "pb-3" : "pt-3"
+          } cursor-pointer ${
             theme.dark
               ? "text-neutral hover:opacity-70"
               : "text-gray-300 hover:text-[#0E3658]"
@@ -63,12 +70,15 @@ export default function Pagination({
             {theme.language === "Bahasa" ? "Sebelumnya" : "Previous"}
           </p>
         </div>
+
         <div className="sm:flex hidden">
           {pages.map((page) => (
             <button
               onClick={() => onPageChange(page)}
               key={page}
-              className={`text-sm font-medium leading-none cursor-pointer border-t pt-3 mr-4 px-2 ${
+              className={`text-sm font-medium leading-none cursor-pointer ${
+                pos == "top" ? "border-b pb-3" : "border-t pt-3"
+              } mr-4 px-2 ${
                 page === currentPage
                   ? theme.dark
                     ? "text-neutral border-neutral"
@@ -82,8 +92,11 @@ export default function Pagination({
             </button>
           ))}
         </div>
+
         <div
-          className={`flex items-center pt-3 cursor-pointer ${
+          className={`flex items-center ${
+            pos == "top" ? "pb-3" : "pt-3"
+          } cursor-pointer ${
             theme.dark
               ? "text-neutral hover:opacity-70"
               : "text-gray-300 hover:text-[#0E3658]"

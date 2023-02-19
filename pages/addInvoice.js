@@ -59,6 +59,11 @@ const AddInvoice = () => {
   });
   const [errorMsg, setErrorMsg] = useState("");
 
+  // helper function
+  function localStringToNumber(s) {
+    return Number(String(s).replace(/[^0-9.-]+/g, ""));
+  }
+
   useEffect(() => {
     // change grand total
     let grandTotal = 0;
@@ -71,7 +76,7 @@ const AddInvoice = () => {
 
     document.getElementById("grandTotal").innerText =
       grandTotal || grandTotal === 0
-        ? localStringToNumber(grandTotal).toLocaleString(undefined, {
+        ? localStringToNumber(grandTotal).toLocaleString("en-US", {
             maximumFractionDigits: 0,
             currency: "IDR",
             style: "currency",
@@ -110,11 +115,6 @@ const AddInvoice = () => {
       ["contents"]: filteredContents,
     });
   };
-
-  // helper function
-  function localStringToNumber(s) {
-    return Number(String(s).replace(/[^0-9.-]+/g, ""));
-  }
 
   function onFocus(e) {
     let value = e.target.value;
@@ -194,7 +194,7 @@ const AddInvoice = () => {
     let value = e.target.value;
     e.target.value =
       value || value === 0
-        ? localStringToNumber(value).toLocaleString(undefined, options)
+        ? localStringToNumber(value).toLocaleString("en-US", options)
         : "";
   }
 
@@ -208,19 +208,6 @@ const AddInvoice = () => {
       [name]: value,
     });
   };
-
-  function fireEvent(element, event) {
-    if (document.createEventObject) {
-      // dispatch for IE
-      var evt = document.createEventObject();
-      return element.fireEvent("on" + event, evt);
-    } else {
-      // dispatch for firefox + others
-      var evt = document.createEvent("HTMLEvents");
-      evt.initEvent(event, true, true); // event type,bubbling,cancelable
-      return !element.dispatchEvent(evt);
-    }
-  }
 
   const [suggestions, setSuggestions] = useState();
   const handleSuggestion = (e, val, i) => {
@@ -236,9 +223,11 @@ const AddInvoice = () => {
     itemInputEle.dispatchEvent(event);
 
     // find price of the item
-    let itemInfo = priceLists.filter(
-      (item) => item.product_name.toUpperCase() == val.toUpperCase()
-    )[0];
+    let itemInfo =
+      priceLists &&
+      priceLists.filter(
+        (item) => item.product_name.toUpperCase() == val.toUpperCase()
+      )[0];
 
     // change price format
     if (itemInfo) {
@@ -252,7 +241,7 @@ const AddInvoice = () => {
       let pricePerItemEle = document.getElementById("pricePerItemInput-" + i);
       pricePerItemEle.value = localStringToNumber(
         itemInfo.price
-      ).toLocaleString(undefined, options);
+      ).toLocaleString("en-US", options);
       pricePerItemEle.dispatchEvent(event);
 
       let priceUnitEle = document.getElementById("price_unit-" + i);
@@ -439,7 +428,7 @@ const AddInvoice = () => {
             role="alert"
           >
             <svg
-              ariahidden="true"
+              aria-hidden="true"
               focusable="false"
               dataprefix="fas"
               dataicon="times-circle"
@@ -641,7 +630,7 @@ const AddInvoice = () => {
                     <b>
                       Total:{" "}
                       <span id="grandTotal">
-                        {localStringToNumber(0).toLocaleString(undefined, {
+                        {localStringToNumber(0).toLocaleString("en-US", {
                           maximumFractionDigits: 0,
                           currency: "IDR",
                           style: "currency",

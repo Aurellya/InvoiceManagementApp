@@ -245,7 +245,7 @@ function User({ session }) {
                               {session &&
                                 session.role == "admin" &&
                                 (totalRevenue
-                                  ? totalRevenue.toLocaleString(undefined, {
+                                  ? totalRevenue.toLocaleString("en-US", {
                                       maximumFractionDigits: 0,
                                       currency: "IDR",
                                       style: "currency",
@@ -373,15 +373,12 @@ function User({ session }) {
                               {session &&
                                 session.role == "admin" &&
                                 (avgMonthlyRevenue
-                                  ? avgMonthlyRevenue.toLocaleString(
-                                      undefined,
-                                      {
-                                        maximumFractionDigits: 0,
-                                        currency: "IDR",
-                                        style: "currency",
-                                        currencyDisplay: "symbol",
-                                      }
-                                    )
+                                  ? avgMonthlyRevenue.toLocaleString("en-US", {
+                                      maximumFractionDigits: 0,
+                                      currency: "IDR",
+                                      style: "currency",
+                                      currencyDisplay: "symbol",
+                                    })
                                   : "IDR -")}
 
                               {session &&
@@ -793,7 +790,7 @@ function User({ session }) {
                                   </h5>
                                   <h3 className="text-xl md:text-2xl break-words">
                                     {mr.average
-                                      ? mr.average.toLocaleString(undefined, {
+                                      ? mr.average.toLocaleString("en-US", {
                                           maximumFractionDigits: 0,
                                           currency: "IDR",
                                           style: "currency",

@@ -139,10 +139,10 @@ const EditCustomer = () => {
             role="alert"
           >
             <svg
-              ariaHidden="true"
+              aria-hidden="true"
               focusable="false"
-              dataPrefix="fas"
-              dataIcon="times-circle"
+              dataprefix="fas"
+              dataicon="times-circle"
               className="w-4 h-4 mr-2 fill-current"
               role="img"
               xmlns="http://www.w3.org/2000/svg"

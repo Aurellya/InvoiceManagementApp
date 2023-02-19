@@ -108,7 +108,7 @@ const EditInvoice = () => {
 
       document.getElementById("grandTotal").innerText =
         grandTotal || grandTotal === 0
-          ? localStringToNumber(grandTotal).toLocaleString(undefined, {
+          ? localStringToNumber(grandTotal).toLocaleString("en-US", {
               maximumFractionDigits: 0,
               currency: "IDR",
               style: "currency",
@@ -232,7 +232,7 @@ const EditInvoice = () => {
     let value = e.target.value;
     e.target.value =
       value || value === 0
-        ? localStringToNumber(value).toLocaleString(undefined, options)
+        ? localStringToNumber(value).toLocaleString("en-US", options)
         : "";
   }
 
@@ -406,10 +406,10 @@ const EditInvoice = () => {
             role="alert"
           >
             <svg
-              ariaHidden="true"
+              aria-hidden="true"
               focusable="false"
-              dataPrefix="fas"
-              dataIcon="times-circle"
+              dataprefix="fas"
+              dataicon="times-circle"
               className="w-4 h-4 mr-2 fill-current"
               role="img"
               xmlns="http://www.w3.org/2000/svg"
@@ -657,7 +657,7 @@ const EditInvoice = () => {
                     <b>
                       Total:{" "}
                       <span id="grandTotal">
-                        {localStringToNumber(0).toLocaleString(undefined, {
+                        {localStringToNumber(0).toLocaleString("en-US", {
                           maximumFractionDigits: 0,
                           currency: "IDR",
                           style: "currency",
