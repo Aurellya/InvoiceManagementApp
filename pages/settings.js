@@ -135,9 +135,9 @@ const Settings = () => {
                   <br />
                   <label className="inline-flex relative items-center cursor-pointer mt-2">
                     <button
-                      className={`flex h-9 px-4 items-center justify-center rounded transition duration-700 ${
+                      className={`flex min-h-[36px] py-1 px-4 items-center justify-center rounded transition duration-700 ${
                         theme.language === "Bahasa" && theme.dark
-                          ? " dark bg-white text-black"
+                          ? " bg-white text-black"
                           : ""
                       } ${
                         theme.language === "Bahasa" && !theme.dark
@@ -153,11 +153,11 @@ const Settings = () => {
                     <button
                       className={`flex h-9 px-4 items-center justify-center rounded transition duration-700 ${
                         theme.language === "English" && theme.dark
-                          ? " dark bg-white text-black"
+                          ? "bg-white text-black"
                           : ""
                       } ${
                         theme.language === "English" && !theme.dark
-                          ? " light bg-primary text-white"
+                          ? "bg-primary text-white"
                           : ""
                       } ${
                         !theme.language === "English" && " hover:opacity-70"

@@ -19,7 +19,7 @@ export default function Pagination({
   return (
     <div
       className={`flex items-center justify-center ${
-        pos == "top" ? "pt-4 pb-12" : "pt-12 pb-4"
+        pos == "top" ? "pt-4 pb-6 md:pb-12" : "pt-8 md:pt-12 pb-4"
       } lg:px-0 sm:px-6 px-4`}
     >
       <div
@@ -29,11 +29,11 @@ export default function Pagination({
       >
         <div
           className={`flex items-center ${
-            pos == "top" ? "pb-3" : "pt-3"
+            pos == "top" ? "p-3 md:p-0 md:pb-3" : "p-3 md:p-0 md:pt-3"
           } cursor-pointer ${
             theme.dark
               ? "text-neutral hover:opacity-70"
-              : "text-gray-300 hover:text-[#0E3658]"
+              : "bg-primary text-white md:bg-transparent md:text-gray-300 hover:opacity-80 md:hover:text-[#0E3658]"
           }`}
           onClick={() => onPageChange(currentPage - 1)}
         >
@@ -66,7 +66,7 @@ export default function Pagination({
               strokeLinejoin="round"
             />
           </svg>
-          <p className="text-sm ml-3 font-medium leading-none ">
+          <p className="text-sm ml-3 font-medium leading-none hidden md:block">
             {theme.language === "Bahasa" ? "Sebelumnya" : "Previous"}
           </p>
         </div>
@@ -95,15 +95,15 @@ export default function Pagination({
 
         <div
           className={`flex items-center ${
-            pos == "top" ? "pb-3" : "pt-3"
+            pos == "top" ? "p-3 md:p-0 md:pb-3" : "p-3 md:p-0 md:pt-3"
           } cursor-pointer ${
             theme.dark
               ? "text-neutral hover:opacity-70"
-              : "text-gray-300 hover:text-[#0E3658]"
+              : "bg-primary text-white md:bg-transparent md:text-gray-300 hover:opacity-80 md:hover:text-[#0E3658]"
           }`}
           onClick={() => onPageChange(currentPage + 1)}
         >
-          <p className="text-sm font-medium leading-none mr-3">
+          <p className="text-sm font-medium leading-none mr-3 hidden md:block">
             {theme.language === "Bahasa" ? "Berikutnya" : "Next"}
           </p>
           <svg

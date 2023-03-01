@@ -33,9 +33,12 @@ const AddInvoice = () => {
     getPriceLists();
 
     const handleClick = (event) => {
-      let get = document.getElementById("suggestionDiv");
-      if (!get.contains(event.target)) {
-        get.style.display = "none";
+      let index = event.target.id.split("-")[1];
+      if (index) {
+        let get = document.getElementById("suggestionDiv-" + index);
+        if (!get.contains(event.target)) {
+          get.style.display = "none";
+        }
       }
     };
 
@@ -249,7 +252,11 @@ const AddInvoice = () => {
       priceUnitEle.dispatchEvent(event);
     }
 
-    document.getElementById("suggestionDiv").style.display = "none";
+    let targetId = e.target.parentNode.parentNode;
+    let index = targetId.id.split("-")[1];
+    if (index) {
+      document.getElementById("suggestionDiv-" + index).style.display = "none";
+    }
   };
 
   // when "content" data changes
@@ -259,7 +266,11 @@ const AddInvoice = () => {
 
     // give suggestion on item/product name
     if (name == "item_name") {
-      document.getElementById("suggestionDiv").style.display = "block";
+      let index = e.target.id.split("-")[1];
+      if (index) {
+        document.getElementById("suggestionDiv-" + index).style.display =
+          "block";
+      }
 
       let matches = [];
       if (value.length > 0) {
@@ -778,7 +789,10 @@ const AddInvoice = () => {
                                   onDoubleClick={handleChangeContent}
                                   required
                                 />
-                                <div id="suggestionDiv">
+                                <div
+                                  id={`suggestionDiv-${i}`}
+                                  className="hidden"
+                                >
                                   {suggestions && (
                                     <div className="flex flex-col absolute top-11 z-50">
                                       {suggestions.map((suggestion, k) => (

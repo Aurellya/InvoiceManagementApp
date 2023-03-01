@@ -232,9 +232,6 @@ function User({ session }) {
                         </div>
 
                         <div className="flex flex-row items-center">
-                          <div className="flex-shrink pl-1 pr-4">
-                            <i className="fa fa-wallet fa-2x fa-fw fa-inverse"></i>
-                          </div>
                           <div className="flex-1 text-right">
                             <h5 className="text-white text-sm lg:text-base">
                               {theme.language === "Bahasa"
@@ -280,9 +277,6 @@ function User({ session }) {
                         </div>
 
                         <div className="flex flex-row items-center">
-                          <div className="flex-shrink pl-1 pr-4">
-                            <i className="fas fa-users fa-2x fa-fw fa-inverse"></i>
-                          </div>
                           <div className="flex-1 text-right">
                             <h5 className="text-white text-sm lg:text-base">
                               {theme.language === "Bahasa"
@@ -319,9 +313,6 @@ function User({ session }) {
                         </div>
 
                         <div className="flex flex-row items-center">
-                          <div className="flex-shrink pl-1 pr-4">
-                            <i className="fas fa-user-plus fa-2x fa-fw fa-inverse"></i>
-                          </div>
                           <div className="flex-1 text-right pr-1">
                             <h5 className="text-white text-sm lg:text-base">
                               {theme.language === "Bahasa"
@@ -360,9 +351,6 @@ function User({ session }) {
                         </div>
 
                         <div className="flex flex-row items-center">
-                          <div className="flex-shrink pl-1 pr-4">
-                            <i className="fas fa-server fa-2x fa-fw fa-inverse"></i>
-                          </div>
                           <div className="flex-1 text-right">
                             <h5 className="text-white text-sm lg:text-base">
                               {theme.language === "Bahasa"
@@ -402,9 +390,6 @@ function User({ session }) {
                         </div>
 
                         <div className="flex flex-row items-center">
-                          <div className="flex-shrink pl-1 pr-4">
-                            <i className="fas fa-tasks fa-2x fa-fw fa-inverse"></i>
-                          </div>
                           <div className="flex-1 text-right">
                             <h5 className="text-white text-sm lg:text-base">
                               {theme.language === "Bahasa"
@@ -439,9 +424,6 @@ function User({ session }) {
                         </div>
 
                         <div className="flex flex-row items-center">
-                          <div className="flex-shrink pl-1 pr-4">
-                            <i className="fas fa-inbox fa-2x fa-fw fa-inverse"></i>
-                          </div>
                           <div className="flex-1 text-right">
                             <h5 className="text-white text-sm lg:text-base">
                               {theme.language === "Bahasa"
@@ -454,10 +436,6 @@ function User({ session }) {
                                 (totalPaidInvoices ? totalPaidInvoices : "-")}
 
                               {session && session.role == "staff" && "XXX"}
-
-                              <span className="text-pink-400">
-                                <i className="fas fa-caret-up"></i>
-                              </span>
                             </h3>
                             <h3 className="text-white text-xs lg:text-sm">
                               {theme.language === "Bahasa"
