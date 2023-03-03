@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import ReactLoading from "react-loading";
@@ -19,11 +19,23 @@ const EditInvoice = () => {
 
   // theme
   const theme = useContext(ThemeContext);
+  const ref = useRef(null);
 
+  // load product name
+  const [priceLists, setPriceLists] = useState();
   // fetch data
   const [invoice, setInvoice] = useState();
+
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+
+  const getPriceLists = async () => {
+    const res = await fetch(`/api/mypricelists/${session.group_code}`);
+    const priceListsObj = await res.json();
+    const priceListsData = priceListsObj.data;
+    setPriceLists(priceListsData);
+    setLoading(false);
+  };
 
   const router = useRouter();
   const getInvoice = async () => {
@@ -37,11 +49,29 @@ const EditInvoice = () => {
     const invoice = invoiceObj.data;
 
     setInvoice(invoice);
-    setLoading(false);
   };
 
   useEffect(() => {
     getInvoice();
+
+    getPriceLists();
+
+    const handleClick = (event) => {
+      let index = event.target.id.split("-")[1];
+      if (index) {
+        let get = document.getElementById("suggestionDiv-" + index);
+        if (!get.contains(event.target)) {
+          get.style.display = "none";
+        }
+      }
+    };
+
+    const element = ref.current;
+    element.addEventListener("click", handleClick);
+
+    return () => {
+      element.removeEventListener("click", handleClick);
+    };
   }, []);
 
   // handle table rows
@@ -73,6 +103,8 @@ const EditInvoice = () => {
     if (data && data.contents) {
       // executed once
       if (
+        document &&
+        document.getElementById("grandTotal") &&
         localStringToNumber(document.getElementById("grandTotal").innerText) ==
           0 &&
         noOfRows == invoice.contents.length
@@ -106,15 +138,17 @@ const EditInvoice = () => {
         }
       });
 
-      document.getElementById("grandTotal").innerText =
-        grandTotal || grandTotal === 0
-          ? localStringToNumber(grandTotal).toLocaleString("en-US", {
-              maximumFractionDigits: 0,
-              currency: "IDR",
-              style: "currency",
-              currencyDisplay: "symbol",
-            })
-          : "";
+      if (document.getElementById("grandTotal")) {
+        document.getElementById("grandTotal").innerText =
+          grandTotal || grandTotal === 0
+            ? localStringToNumber(grandTotal).toLocaleString("en-US", {
+                maximumFractionDigits: 0,
+                currency: "IDR",
+                style: "currency",
+                currencyDisplay: "symbol",
+              })
+            : "";
+      }
     }
   }, [data]);
 
@@ -247,10 +281,75 @@ const EditInvoice = () => {
     });
   };
 
+  const [suggestions, setSuggestions] = useState();
+  const handleSuggestion = (e, val, i) => {
+    e.preventDefault();
+    const event = new MouseEvent("dblclick", {
+      view: window,
+      bubbles: true,
+      cancelable: true,
+    });
+
+    let itemInputEle = document.getElementById("itemNameInput-" + i);
+    itemInputEle.value = val;
+    itemInputEle.dispatchEvent(event);
+
+    // find price of the item
+    let itemInfo =
+      priceLists &&
+      priceLists.filter(
+        (item) => item.product_name.toUpperCase() == val.toUpperCase()
+      )[0];
+
+    // change price format
+    if (itemInfo) {
+      let options = {
+        maximumFractionDigits: 0,
+        currency: "IDR",
+        style: "currency",
+        currencyDisplay: "symbol",
+      };
+
+      let pricePerItemEle = document.getElementById("pricePerItemInput-" + i);
+
+      pricePerItemEle.value = localStringToNumber(
+        itemInfo.price
+      ).toLocaleString("en-US", options);
+      pricePerItemEle.dispatchEvent(event);
+
+      let priceUnitEle = document.getElementById("price_unit-" + i);
+      priceUnitEle.value = itemInfo.unit;
+      priceUnitEle.dispatchEvent(event);
+    }
+
+    let targetId = e.target.parentNode.parentNode;
+    let index = targetId.id.split("-")[1];
+    if (index) {
+      document.getElementById("suggestionDiv-" + index).style.display = "none";
+    }
+  };
+
   // when "content" data changes
   const handleChangeContent = (e) => {
     let name = e.target.name;
     let value = e.target.value;
+
+    // give suggestion on item/product name
+    if (name == "item_name") {
+      let index = e.target.id.split("-")[1];
+      if (index) {
+        document.getElementById("suggestionDiv-" + index).style.display =
+          "block";
+      }
+
+      let matches = [];
+      if (value.length > 0) {
+        matches = priceLists.filter((c) =>
+          c.product_name.toUpperCase().includes(value.toUpperCase())
+        );
+        setSuggestions(matches.slice(0, 8));
+      }
+    }
 
     // change format
     if (name === "amount" || name === "total" || name === "price_per_item") {
@@ -349,7 +448,10 @@ const EditInvoice = () => {
       }
       role={session.role}
     >
-      <main className="pt-[76px] pb-12 md:py-12 px-8 md:px-14 w-full max-w-[1536px]">
+      <main
+        className="pt-[76px] pb-12 md:py-12 px-8 md:px-14 w-full max-w-[1536px]"
+        ref={ref}
+      >
         {/* header section */}
         <div className="flex md:items-center justify-between flex-col md:flex-row gap-4 md:gap-0 w-full md:mb-12">
           <div className="flex items-center gap-8">
@@ -393,7 +495,7 @@ const EditInvoice = () => {
         {/* calculator */}
         {showCalc && (
           <div className="" id="calculator">
-            <div className="z-20 bg-slate-800 bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0">
+            <div className="z-50 bg-slate-800 bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0">
               <Calculator closeCalculator={() => setShowCalc(!showCalc)} />
             </div>
           </div>
@@ -646,13 +748,13 @@ const EditInvoice = () => {
               </div>
 
               {/* bottom */}
-              <div className="mt-6">
+              <div className="mt-6 lg:overflow-x-auto">
                 <h2 className="text-lg md:text-xl mb-3">
                   {theme.language === "Bahasa" ? "Barang" : "Items"}
                 </h2>
                 <hr className="mb-4" />
 
-                <div className="px-0 md:px-4">
+                <div className="px-0 md:px-4 lg:overflow-x-auto">
                   <h2 className="text-right px-4">
                     <b>
                       Total:{" "}
@@ -668,7 +770,8 @@ const EditInvoice = () => {
                   </h2>
 
                   {/* table */}
-                  <div className="overflow-auto rounded-lg shadow mt-4">
+                  <div className="rounded-lg shadow mt-4">
+                    {/* overflow-auto  */}
                     <table className="w-full">
                       <thead
                         className={`${
@@ -785,7 +888,7 @@ const EditInvoice = () => {
                                   ? "Nama Barang"
                                   : "Item Name"}
                               </h3>
-                              <div className="mt-2 md:mt-0">
+                              <div className="mt-2 md:mt-0 relative overflow-y-visible">
                                 <input
                                   name="item_name"
                                   autoComplete="off"
@@ -796,8 +899,33 @@ const EditInvoice = () => {
                                   id={`itemNameInput-${i}`}
                                   placeholder=""
                                   onChange={handleChangeContent}
+                                  onDoubleClick={handleChangeContent}
                                   required
                                 />
+                                <div
+                                  id={`suggestionDiv-${i}`}
+                                  className="hidden"
+                                >
+                                  {suggestions && (
+                                    <div className="flex flex-col absolute top-11 z-40">
+                                      {suggestions.map((suggestion, k) => (
+                                        <button
+                                          key={k}
+                                          onClick={(e) =>
+                                            handleSuggestion(
+                                              e,
+                                              suggestion.product_name,
+                                              i
+                                            )
+                                          }
+                                          className="px-4 py-2 bg-primary border border-neutral text-neutral text-left"
+                                        >
+                                          {suggestion.product_name}
+                                        </button>
+                                      ))}
+                                    </div>
+                                  )}
+                                </div>
                               </div>
                             </td>
 
@@ -821,6 +949,7 @@ const EditInvoice = () => {
                                     onFocus={(e) => onFocus(e)}
                                     onBlur={(e) => onBlur(e)}
                                     onChange={handleChangeContent}
+                                    onDoubleClick={handleChangeContent}
                                     required
                                   />
                                   <label
@@ -837,6 +966,7 @@ const EditInvoice = () => {
                                     //   theme.dark ? "!bg-[#99AEBA]" : "bg-white"
                                     // }
                                     onChange={handleChangeContent}
+                                    onDoubleClick={handleChangeContent}
                                     required
                                     defaultValue={""}
                                   >

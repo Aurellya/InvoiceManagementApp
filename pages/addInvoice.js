@@ -426,7 +426,7 @@ const AddInvoice = () => {
         {/* calculator */}
         {showCalc && (
           <div className="" id="calculator">
-            <div className="z-20 bg-slate-800 bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0">
+            <div className="z-50 bg-slate-800 bg-opacity-50 flex justify-center items-center fixed top-0 right-0 bottom-0 left-0">
               <Calculator closeCalculator={() => setShowCalc(!showCalc)} />
             </div>
           </div>
@@ -794,7 +794,7 @@ const AddInvoice = () => {
                                   className="hidden"
                                 >
                                   {suggestions && (
-                                    <div className="flex flex-col absolute top-11 z-50">
+                                    <div className="flex flex-col absolute top-11 z-40">
                                       {suggestions.map((suggestion, k) => (
                                         <button
                                           key={k}
