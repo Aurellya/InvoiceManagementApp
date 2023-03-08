@@ -14,15 +14,15 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
             //     size: portrait;
             // }
 
-            // body {
-                // margin: 2mm 5mm 2mm 5mm;
-            // }
+            @page {
+                margin: 10mm 10mm 10mm 10mm;
+            }
     `,
         }}
       />
 
       <div id="pdf" ref={ref}>
-        <div id="header">
+        <div id="header" className="text-[1.3rem]">
           <h1>
             <b>
               {theme.language === "Bahasa" ? "Nomor Nota: " : "Invoice No: "}
@@ -43,19 +43,19 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
           </h1>
         </div>
 
-        <div className="content">
+        <div className="content text-[1.2rem]">
           <div className="mt-4 w-fit">
             <div className="w-full flex items-center justify-end my-4">
-              <div className="flex items-center justify-between flex-row gap-10 text-sm">
-                <p>
+              <div className="flex items-center justify-between flex-row gap-10">
+                <p className="pt-2">
                   <b>
                     {theme.language === "Bahasa"
-                      ? "Jumlah Barang: "
-                      : "Total Items: "}
+                      ? "Jenis Barang: "
+                      : "Total Products: "}
                   </b>
                   {invoice.total_items ? invoice.total_items : "-"}
                 </p>
-                <p>
+                <p className="border border-black pt-2 pb-1 px-4 text-[1.3rem]">
                   <b>Total: </b>
                   {invoice.total
                     ? invoice.total.toLocaleString("en-US", {
@@ -73,20 +73,20 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
               <table className="border border-y-gray-200">
                 <thead className={`bg-gray-50 border-b-2 border-gray-200`}>
                   <tr>
-                    <th className="p-3 text-sm font-semibold tracking-wide text-left">
+                    <th className="p-3 font-semibold tracking-wide text-left">
                       {theme.language === "Bahasa" ? "Jumlah" : "Quantity"}
                     </th>
-                    <th className="p-3 text-sm font-semibold tracking-wide text-left">
+                    <th className="p-3 font-semibold tracking-wide text-left">
                       {theme.language === "Bahasa"
                         ? "Nama Barang"
                         : "Item Name"}
                     </th>
-                    <th className="p-3 text-sm font-semibold tracking-wide text-left">
+                    <th className="p-3 font-semibold tracking-wide text-left">
                       {theme.language === "Bahasa"
                         ? "Harga (/Unit)"
                         : "Price (/Unit)"}
                     </th>
-                    <th className="p-3 text-sm font-semibold tracking-wide text-left">
+                    <th className="p-3 font-semibold tracking-wide text-left">
                       Total
                     </th>
                   </tr>
@@ -98,7 +98,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
                       className={`bg-white text-gray-700`}
                       key={invoice._id + "-" + i}
                     >
-                      <td className="p-3 text-sm whitespace-nowrap">
+                      <td className="p-3 whitespace-nowrap">
                         {content.amount + " "}
                         {theme.language === "Bahasa"
                           ? content.unit
@@ -110,10 +110,10 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
                           ? "gro"
                           : "box"}
                       </td>
-                      <td className="p-3 text-sm min-w-[360px] break-words">
+                      <td className="p-3 min-w-[360px] break-words">
                         {content.item_name}
                       </td>
-                      <td className="p-3 text-sm whitespace-nowrap">
+                      <td className="p-3 whitespace-nowrap">
                         {content.price_per_item.toLocaleString("en-US", {
                           style: "currency",
                           currency: "IDR",
@@ -130,7 +130,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
                           ? "gro"
                           : "box"}
                       </td>
-                      <td className="p-3 text-sm whitespace-nowrap">
+                      <td className="p-3 whitespace-nowrap">
                         {content.total.toLocaleString("en-US", {
                           style: "currency",
                           currency: "IDR",
